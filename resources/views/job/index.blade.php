@@ -26,7 +26,7 @@
         <!-- Navbar Start -->
 
 
-            @include('layout.navbar');
+            @include('layout.navbar')
 
 
         <!-- Navbar End -->
@@ -78,9 +78,6 @@
             @include('job.category')
 
         <!-- Category End -->
-
-
-        {{-- @include('job.job') --}}
 
 
         <!-- Footer Start -->
