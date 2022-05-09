@@ -123,10 +123,13 @@
             </div>
             <div class="form-group text-center pt-2 social-login">
               <h6>OR Continue with</h6>
-              <a href="#" class="google"> <i class="fa fa-google-plus fa-lg"></i> </a>
-              <a href="#" class="facebook"> <i class="fa fa-facebook fa-lg"></i> </a>
-              <a href="#" class="twitter"> <i class="fa fa-twitter fa-lg"></i> </a>
-              <a href="#" class="github"> <i class="fa fa-github fa-lg"></i> </a>
+              <a href="#" class="google"> <i class="fab fa-google" aria-hidden="true"></i> </a>
+              {{-- <i class="fab fa-google"></i> --}}
+
+
+              <a href="#" class="facebook"> <i class="fab fa-facebook fa-lg"></i> </a>
+              <a href="#" class="twitter"> <i class="fab fa-twitter fa-lg"></i> </a>
+              <a href="#" class="github"> <i class="fab fa-github fa-lg"></i> </a>
             </div>
           </form>
         </div>
@@ -203,7 +206,7 @@
 
 
     @include('layout.script')
-
+    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
 </body>
 
 </html>
