@@ -417,6 +417,12 @@ i.fa.fa-lock.sign-in {
     bottom: 52px;
 }
 
+i.fas.fa-key {
+    position: absolute;
+    left: -20px;
+    top: 13px;
+}
+
 
 i.fa.fa-lock.register {
     position: absolute;

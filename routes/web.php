@@ -4,6 +4,7 @@ use App\Http\Controllers\job\AboutController;
 use App\Http\Controllers\job\ContactController;
 use App\Http\Controllers\job\IndexController;
 use App\Http\Controllers\job\JobController;
+use App\Http\Controllers\Register\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::prefix('JobPortal')
      ->as('JobPortal.')
@@ -50,6 +55,15 @@ Route::prefix('JobPortal')
      ->group(function(){
 
         Route::get('/contact','contact')->name('Contact');
+
+     });
+
+Route::prefix('JobPortal')
+     ->as('JobPortal.')
+     ->controller(RegisterController::class)
+     ->group(function(){
+
+        Route::post('/RegisterUser','registerUser')->name('RegisterUser');
 
      });
 
