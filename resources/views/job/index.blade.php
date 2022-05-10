@@ -235,7 +235,7 @@
 						  			<div class="login-modal-footer">
 						  				<div class="row">
 											<div class="col-xs-8 col-sm-8 col-md-8">
-												<i class="fa fa-lock"></i>
+												<i class="fa fa-lock lg-ga"></i>
 												<a href="javascript:;" class="forgetpass-tab"> Forgot password? </a>
 
 											</div>
@@ -267,12 +267,20 @@
 								    	</div>
 								    	<span class="help-block has-error" data-error='0' id="remail-error"></span>
 								  	</div>
+
+								  	<div class="form-group">
+								    	<div class="input-group">
+								      		<div class="input-group-addon"><i class="fa fa-at"></i></div>
+								      		<input type="text" class="form-control" id="password" placeholder="password">
+								    	</div>
+								    	<span class="help-block has-error" data-error='0' id="password-error"></span>
+								  	</div>
 						  			<button type="button" id="register_btn" class="btn btn-block bt-login" data-loading-text="Registering....">Register</button>
 									<div class="clearfix"></div>
 									<div class="login-modal-footer">
 						  				<div class="row">
 											<div class="col-xs-8 col-sm-8 col-md-8">
-												<i class="fa fa-lock"></i>
+												<i class="fa fa-lock register"></i>
 												<a href="javascript:;" class="forgetpass-tab"> Forgot password? </a>
 
 											</div>
@@ -310,7 +318,7 @@
 										<div class="login-modal-footer">
 							  				<div class="row">
 												<div class="col-xs-6 col-sm-6 col-md-6">
-													<i class="fa fa-lock"></i>
+													<i class="fa fa-lock sign-in"></i>
 													<a href="javascript:;" class="signin-tab"> Sign In </a>
 
 												</div>
@@ -339,7 +347,7 @@
 
 
         <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <a href="" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
 

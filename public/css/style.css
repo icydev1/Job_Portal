@@ -412,6 +412,31 @@
     left: -20px;
 }
 
+i.fa.fa-lock.sign-in {
+    position: absolute;
+    bottom: 52px;
+}
+
+
+i.fa.fa-lock.register {
+    position: absolute;
+    bottom: 120px;
+}
+
+i.fa.fa-lock.lg-ga {
+    position: absolute;
+    bottom: 51px;
+}
+
+.login-modal-header .modal-title {
+    color: #fff;
+    margin-right: 86px;
+}
+
+.form-group {
+    padding: 10px;
+}
+
 a {
     color: #00B074;
     padding: 5px;
