@@ -1,10 +1,13 @@
 <?php
 
+
 use App\Http\Controllers\job\AboutController;
 use App\Http\Controllers\job\ContactController;
 use App\Http\Controllers\job\IndexController;
 use App\Http\Controllers\job\JobController;
-use App\Http\Controllers\Register\RegisterController;
+use App\Http\Controllers\register\RegisterController;
+use App\Http\Controllers\Register\SignUPController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +21,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::prefix('JobPortal')
      ->as('JobPortal.')
@@ -64,8 +69,22 @@ Route::prefix('JobPortal')
      ->group(function(){
 
         Route::post('/RegisterUser','registerUser')->name('RegisterUser');
+        Route::post('/Logout','logout')->name('Logout');
 
      });
+
+Route::prefix('JobPortal')
+     ->as('JobPortal.')
+     ->controller(SignUPController::class)
+     ->group(function(){
+
+        Route::post('/LoginUser','loginUser')->name('LoginUser');
+
+     });
+
+
+
+
 
 
 

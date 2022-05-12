@@ -8,7 +8,7 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="base_url" content="{{ url('/')}}">
+    <meta name="base-url" content="{{ url('/') }}">
     <input type="hidden" id="namePath" data-path="/JobPortal">
 
     <!-- Favicon -->
@@ -55,6 +55,8 @@
 </body>
 
 </html>
+
+
 
 
 

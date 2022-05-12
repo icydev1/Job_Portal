@@ -14,14 +14,49 @@
             <a href="{{ route('JobPortal.Job') }}" class="nav-item nav-link ">Jobs</a>
 
             <a href="{{ route('JobPortal.Contact') }}" class="nav-item nav-link">Contact</a>
+
+            <div id="ajaxRefreshLogout">
+            @if (Auth::user())
+
+            {{-- <a class="navbar-brand" href="#">
+                <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/logo_white.png" width="30" height="30" alt="logo">
+                BootstrapBay
+              </a> --}}
+              {{-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbar-list-4"> --}}
+
+
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg" width="40" height="40" class="rounded-circle">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                      <a class="dropdown-item" href="#">Dashboard</a>
+                      <a class="dropdown-item" href="#">Edit Profile</a>
+                      <a class="dropdown-item" id="logout" href="#">Log Out</a>
+                    </div>
+
+              {{-- </div> --}}
+
+            {{-- <button id="logout" class="nav-item nav-link">Logout</button> --}}
+            @endif
+           </div>
+
         </div>
         {{-- <a href="#" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block loginAjax"  >Post A Job<i class="fa fa-arrow-right ms-3"></i></a> --}}
-        <a href="#" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block loginAjax" data-toggle="modal"
-            data-target="#loginModal">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
+
+        <div id="ajaxRefresh">
+@if (Auth::user())
+<a href="#" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block loginAjax" >Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
+@else
+<a href="#" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block loginAjax" data-toggle="modal"
+data-target="#loginModal">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
+@endif
+        </div>
+
     </div>
 </nav>
-
-
 
 
 
@@ -57,11 +92,12 @@
                                 <span id="login_fail" class="response_error" style="display: none;">Loggin failed,
                                     please try again.</span>
                                 <div class="clearfix"></div>
-                                <form>
+                                <form method="POST" id="loginForm"  autocomplete="off">
+
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-at"></i></div>
-                                            <input type="email" class="form-control" id="login_email"
+                                            <input type="email" class="form-control" name="login_email" id="login_email"
                                                 placeholder="email">
                                         </div>
                                         <span class="help-block has-error" id="email-error"></span>
@@ -69,12 +105,12 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-lock"></i></div>
-                                            <input type="password" class="form-control" id="password"
+                                            <input type="password" name="login_password" class="form-control" id="login_password"
                                                 placeholder="Password">
                                         </div>
                                         <span class="help-block has-error" id="password-error"></span>
                                     </div>
-                                    <button type="button" id="login_btn" class="btn btn-block bt-login"
+                                    <button type="submit" id="login_btn" class="btn btn-block bt-login"
                                         data-loading-text="Signing In....">Login</button>
                                     <div class="clearfix"></div>
                                     <div class="login-modal-footer">
@@ -98,7 +134,7 @@
                                 <span id="registration_fail" class="response_error" style="display: none;">Registration
                                     failed, please try again.</span>
                                 <div class="clearfix"></div>
-                                <form>
+                                <form autocomplete="off">
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-user"></i></div>
@@ -120,7 +156,7 @@
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fas fa-key"></i></div>
                                             <input type="password" class="form-control" id="password"
-                                                placeholder="password">
+                                  name="password" placeholder="password">
                                         </div>
                                         <span class="help-block has-error" data-error='0' id="password-error"></span>
                                     </div>
@@ -159,7 +195,7 @@
                                 &nbsp;&nbsp;
                                 <span id="reset_fail" class="response_error" style="display: none;"></span>
                                 <div class="clearfix"></div>
-                                <form>
+                                <form autocomplete="off">
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-user"></i></div>
@@ -202,3 +238,4 @@
 
 
 <!-- - Login Model Ends Here -->
+
