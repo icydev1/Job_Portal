@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-md-4">
                     <select class="form-select border-0">
-                        <option selected>Category</option>
+                        <option value="" disabled selected>Category</option>
                         @foreach ($jobCategory as $jobcat)
                         <option value="{{$jobcat->id}}">{{$jobcat->job_category_name}}</option>
                         @endforeach
