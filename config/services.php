@@ -30,4 +30,17 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'client_id' => '934196010830-crqbjncsi878ajs38l6ujesrect43mrl.apps.googleusercontent.com',
+        'client_secret' => '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',
+        // 'redirect' => 'http://localhost:8000/JobPortal/google/callback',
+        'redirect' => 'http://localhost:8000/JobPortal/callback',
+    ],
+    'facebook' => [
+        'client_id' => '524157536033952',
+        'client_secret' => 'a0930183bc4ab4a664d8465f26e676fd',
+        // 'redirect' => 'http://localhost:8000/JobPortal/google/callback',
+        'redirect' => 'http://localhost:8000/JobPortal/fbcallback',
+    ],
+
 ];

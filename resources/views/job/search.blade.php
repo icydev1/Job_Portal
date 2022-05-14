@@ -9,9 +9,9 @@
                 <div class="col-md-4">
                     <select class="form-select border-0">
                         <option selected>Category</option>
-                        <option value="1">Category 1</option>
-                        <option value="2">Category 2</option>
-                        <option value="3">Category 3</option>
+                        @foreach ($jobCategory as $jobcat)
+                        <option value="{{$jobcat->id}}">{{$jobcat->job_category_name}}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-md-4">

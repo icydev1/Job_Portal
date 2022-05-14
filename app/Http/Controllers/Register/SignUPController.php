@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Register;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class SignUPController extends Controller
 {
+
+
 
 public function loginUser(Request $request){
 
@@ -23,5 +27,7 @@ public function loginUser(Request $request){
         return response()->json([ [2] ]);
      }
 }
+
+
 
 }

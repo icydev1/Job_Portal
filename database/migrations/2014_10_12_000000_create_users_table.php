@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('avatar')->nullable();
             $table->string('image')->nullable();
+            $table->string('provider_id')->nullable();
             $table->tinyInteger('is_subscribe')->nullable();
             $table->tinyInteger('status')->default('0')->nullable();
             $table->rememberToken();

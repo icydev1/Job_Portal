@@ -36,6 +36,7 @@ $(document).on('click','.userLogin',function(e){
                 $('#loginModal').hide();
                 $('body').removeClass('modal-open');
                    $('.modal-backdrop').remove();
+                   document.getElementById("registerForm").reset();
                    $("#ajaxRefresh").load(" #ajaxRefresh > *");
                    $("#ajaxRefreshLogout").load(" #ajaxRefreshLogout > *");
                 }
@@ -55,8 +56,6 @@ $(document).on('click','#login_btn',function(e){
     e.preventDefault();
 
 
-    let email = $('#login_email').val();
-    let password = $('#login_password').val();
 
     let data = $("#loginForm").serialize();
 
@@ -80,6 +79,7 @@ $(document).on('click','#login_btn',function(e){
                 $('body').removeClass('modal-open');
                    $('.modal-backdrop').remove();
 
+                   document.getElementById("loginForm").reset();
                    $("#ajaxRefresh").load(" #ajaxRefresh > *");
                    $("#ajaxRefreshLogout").load(" #ajaxRefreshLogout > *");
 
@@ -111,13 +111,14 @@ $(document).on('click','#logout',function(e){
         type: "POST",
         url: url,
 
-        // data: data,
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (response) {
             if(response=="logout"){
-
+                $('#logoutModal').hide();
+                $('body').removeClass('modal-open');
+                   $('.modal-backdrop').remove();
                 $("#ajaxRefresh").load(" #ajaxRefresh > *");
                 $("#ajaxRefreshLogout").load(" #ajaxRefreshLogout > *");
 

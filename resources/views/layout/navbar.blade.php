@@ -15,44 +15,45 @@
 
             <a href="{{ route('JobPortal.Contact') }}" class="nav-item nav-link">Contact</a>
 
+
+
+
             <div id="ajaxRefreshLogout">
-            @if (Auth::user())
+                @if (Auth::user())
 
-            {{-- <a class="navbar-brand" href="#">
-                <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/logo_white.png" width="30" height="30" alt="logo">
-                BootstrapBay
-              </a> --}}
-              {{-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbar-list-4"> --}}
+                    @if (!empty(Auth::user()->avatar))
+                        <a class="nav-item nav-link dropdown-toggle navbottom" href="#" id="navbarDropdownMenuLink"
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="{{ Auth::user()->avatar }}" width="40" height="40" class="rounded-circle">
+                        </a>
+                    @else
+                        <a class="nav-item nav-link dropdown-toggle navbottom" href="#" id="navbarDropdownMenuLink"
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg"
+                                width="40" height="40" class="rounded-circle">
+                        </a>
+                    @endif
 
-
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg" width="40" height="40" class="rounded-circle">
-                    </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                      <a class="dropdown-item" href="#">Dashboard</a>
-                      <a class="dropdown-item" href="#">Edit Profile</a>
-                      <a class="dropdown-item" id="logout" href="#">Log Out</a>
+                        <a class="dropdown-item" href="#">My Profile</a>
+                        <a class="dropdown-item" href="#">Edit Profile</a>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal" href="#">Log Out</a>
                     </div>
 
-              {{-- </div> --}}
-
-            {{-- <button id="logout" class="nav-item nav-link">Logout</button> --}}
-            @endif
-           </div>
+                @endif
+            </div>
 
         </div>
         {{-- <a href="#" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block loginAjax"  >Post A Job<i class="fa fa-arrow-right ms-3"></i></a> --}}
 
         <div id="ajaxRefresh">
-@if (Auth::user())
-<a href="#" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block loginAjax" >Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
-@else
-<a href="#" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block loginAjax" data-toggle="modal"
-data-target="#loginModal">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
-@endif
+            @if (Auth::user())
+                <a href="#" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block loginAjax">Post A Job<i
+                        class="fa fa-arrow-right ms-3"></i></a>
+            @else
+                <a href="#" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block loginAjax"
+                    data-toggle="modal" data-target="#loginModal">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
+            @endif
         </div>
 
     </div>
@@ -92,21 +93,35 @@ data-target="#loginModal">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
                                 <span id="login_fail" class="response_error" style="display: none;">Loggin failed,
                                     please try again.</span>
                                 <div class="clearfix"></div>
-                                <form method="POST" id="loginForm"  autocomplete="off">
+                                <form method="POST" id="loginForm" autocomplete="off">
+
+                                    <div class="form-group text-center pt-2 social-login">
+                                        <h6>Login with</h6>
+                                        <a href="{{ route('JobPortal.Google') }}" class="google"> <i
+                                                class="fab fa-google" aria-hidden="true"></i> </a>
+                                        <a href="{{ route('JobPortal.Facebook') }}" class="facebook"> <i
+                                                class="fab fa-facebook fa-lg"></i> </a>
+                                        <a href="#" class="twitter"> <i class="fab fa-twitter fa-lg"></i>
+                                        </a>
+                                        <a href="#" class="github"> <i class="fab fa-github fa-lg"></i>
+                                        </a>
+                                    </div>
+
+                                    <h6>Or</h6>
 
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-at"></i></div>
-                                            <input type="email" class="form-control" name="login_email" id="login_email"
-                                                placeholder="email">
+                                            <input type="email" class="form-control" name="login_email"
+                                                id="login_email" placeholder="email">
                                         </div>
                                         <span class="help-block has-error" id="email-error"></span>
                                     </div>
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-lock"></i></div>
-                                            <input type="password" name="login_password" class="form-control" id="login_password"
-                                                placeholder="Password">
+                                            <input type="password" name="login_password" class="form-control"
+                                                id="login_password" placeholder="Password">
                                         </div>
                                         <span class="help-block has-error" id="password-error"></span>
                                     </div>
@@ -134,7 +149,7 @@ data-target="#loginModal">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
                                 <span id="registration_fail" class="response_error" style="display: none;">Registration
                                     failed, please try again.</span>
                                 <div class="clearfix"></div>
-                                <form autocomplete="off">
+                                <form id="registerForm" autocomplete="off">
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-user"></i></div>
@@ -155,8 +170,8 @@ data-target="#loginModal">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fas fa-key"></i></div>
-                                            <input type="password" class="form-control" id="password"
-                                  name="password" placeholder="password">
+                                            <input type="password" class="form-control" id="password" name="password"
+                                                placeholder="password">
                                         </div>
                                         <span class="help-block has-error" data-error='0' id="password-error"></span>
                                     </div>
@@ -177,13 +192,15 @@ data-target="#loginModal">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
                                             </div>
                                             <div class="form-group text-center pt-2 social-login">
                                                 <h6>OR Continue with</h6>
-                                                <a href="#" class="google"> <i class="fab fa-google"
-                                                        aria-hidden="true"></i> </a>
+                                                <a href="{{ route('JobPortal.Google') }}" class="google"> <i
+                                                        class="fab fa-google" aria-hidden="true"></i> </a>
                                                 <a href="#" class="facebook"> <i
                                                         class="fab fa-facebook fa-lg"></i> </a>
-                                                <a href="#" class="twitter"> <i class="fab fa-twitter fa-lg"></i>
+                                                <a href="#" class="twitter"> <i
+                                                        class="fab fa-twitter fa-lg"></i>
                                                 </a>
-                                                <a href="#" class="github"> <i class="fab fa-github fa-lg"></i>
+                                                <a href="#" class="github"> <i
+                                                        class="fab fa-github fa-lg"></i>
                                                 </a>
                                             </div>
                                         </div>
@@ -233,9 +250,36 @@ data-target="#loginModal">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
     </div>
 </div>
 
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content login-modal">
+            <div class="modal-header login-modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-center" id="loginModalLabel">Are You Sure To Logout</h4>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+
+                    <div class="row">
+                        <div id="logout" class="col-md-6"><button class="btn btn-danger"
+                                type="button">Yes</button></div>
+                        <div class="col-md-6"><button type="button" class="btn btn-success close"
+                                data-dismiss="modal" aria-label="Close">NO</button></div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
 
 
 
 
 <!-- - Login Model Ends Here -->
+
 

@@ -510,15 +510,25 @@ a {
   }
 
 
-  div#ajaxRefreshLogout {
+  /* div#ajaxRefreshLogout {
     margin-top: -7px;
-}
+} */
 
-.navbar-dark .navbar-nav .nav-link, .navbar-light .navbar-nav .nav-link {
-
-    padding: 20px 0 0 0;
-
+.navbar-dark .navbar-nav .nav-link, .navbar-light .navbar-nav .nav-link{
+    padding: 3px 0 0 0;
 }
 .p-lg-0 {
-    padding: 16px !important;
+    padding: -2px !important;
+    position: relative;
+    top: 4px;
 }
+
+
+a#navbarDropdownMenuLink {
+    position: relative;
+    bottom: 9px;
+}
+
+
+
+
