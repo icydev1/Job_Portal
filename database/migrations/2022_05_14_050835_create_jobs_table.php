@@ -18,13 +18,14 @@ class CreateJobsTable extends Migration
             $table->string('company_logo')->nullable();
             $table->string('company_name')->nullable();
             $table->string('company_email')->nullable();
-            $table->string('company_deatil')->nullable();
+            $table->string('company_detail')->nullable();
             $table->string('job_name')->nullable();
             $table->string('job_location')->nullable();
             $table->string('job_salary')->nullable();
             $table->string('job_description')->nullable();
             $table->string('job_responsibility')->nullable();
             $table->string('job_qualification')->nullable();
+            $table->string('job_benefit')->nullable();
             $table->tinyInteger('job_shift_id')->nullable();
             $table->tinyInteger('job_vacancy')->nullable();
             $table->string('job_end_date')->nullable();

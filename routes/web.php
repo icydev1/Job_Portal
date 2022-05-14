@@ -54,6 +54,7 @@ Route::prefix('JobPortal')
      ->group(function(){
 
         Route::get('/job','job')->name('Job');
+        Route::get('/PostJob','postJob')->name('PostJob');
 
      });
 Route::prefix('JobPortal')
