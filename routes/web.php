@@ -53,8 +53,10 @@ Route::prefix('JobPortal')
      ->controller(JobController::class)
      ->group(function(){
 
-        Route::get('/job','job')->name('Job');
+        Route::get('/Job','job')->name('Job');
         Route::get('/PostJob','postJob')->name('PostJob');
+        Route::get('/GetJobDetail/{job_id}','getJobDetail')->name('GetJobDetail');
+        Route::post('/StoreJobPost','storeJobPost')->name('StoreJobPost');
 
      });
 Route::prefix('JobPortal')

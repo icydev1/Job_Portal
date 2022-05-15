@@ -569,5 +569,23 @@ a#navbarDropdownMenuLink {
     margin-left: 150px
   }
 
+  textarea.form-control {
+    height: 100px;
+}
 
+span.removeBtn {
+    font-size: 30px;
+    color: red;
+    cursor: pointer;
 
+}
+
+.zoom {
+    transition: transform .2s;
+  }
+
+  .zoom:hover {
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Safari 3-8 */
+    transform: scale(1.5);
+  }

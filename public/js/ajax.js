@@ -39,6 +39,7 @@ $(document).on('click','.userLogin',function(e){
                    document.getElementById("registerForm").reset();
                    $("#ajaxRefresh").load(" #ajaxRefresh > *");
                    $("#ajaxRefreshLogout").load(" #ajaxRefreshLogout > *");
+                   $("#ajaxRef").load(" #ajaxRef > *");
                 }
                else{
                   alert('Login Failed')
@@ -82,6 +83,7 @@ $(document).on('click','#login_btn',function(e){
                    document.getElementById("loginForm").reset();
                    $("#ajaxRefresh").load(" #ajaxRefresh > *");
                    $("#ajaxRefreshLogout").load(" #ajaxRefreshLogout > *");
+                   $("#ajaxRef").load(" #ajaxRef > *");
 
                 }
                else{
@@ -121,6 +123,7 @@ $(document).on('click','#logout',function(e){
                    $('.modal-backdrop').remove();
                 $("#ajaxRefresh").load(" #ajaxRefresh > *");
                 $("#ajaxRefreshLogout").load(" #ajaxRefreshLogout > *");
+                $("#ajaxRef").load(" #ajaxRef > *");
 
                 }
                else{

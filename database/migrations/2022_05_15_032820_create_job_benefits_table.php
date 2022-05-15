@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class JobBenefit extends Migration
+class CreateJobBenefitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,7 @@ class JobBenefit extends Migration
         Schema::create('job_benefits', function (Blueprint $table) {
             $table->id();
             $table->tinyInteger('job_id')->nullable();
-            $table->string('job_bebefit_name')->nullable();
+            $table->string('job_benefit_name')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
@@ -29,6 +29,6 @@ class JobBenefit extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('job_benefits');
     }
 }

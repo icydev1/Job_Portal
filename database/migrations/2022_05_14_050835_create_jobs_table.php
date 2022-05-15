@@ -27,11 +27,11 @@ class CreateJobsTable extends Migration
             $table->string('job_qualification')->nullable();
             $table->string('job_benefit')->nullable();
             $table->tinyInteger('job_shift_id')->nullable();
-            $table->tinyInteger('job_vacancy')->nullable();
-            $table->string('job_end_date')->nullable();
+            $table->string('job_vacancy')->nullable();
             $table->string('job_category_id')->nullable();
             $table->tinyInteger('user_id')->nullable();
             $table->tinyInteger('status')->default(0);
+            $table->timestamp('job_end_date')->nullable();
             $table->timestamps();
         });
     }
