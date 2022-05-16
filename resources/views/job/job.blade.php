@@ -5,7 +5,7 @@
         <div class="container">
             <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Job Listing</h1>
             <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
-                <div id="ajaxRef">
+
                     <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
 
                         @php $i = 0 @endphp
@@ -65,20 +65,13 @@
                                                     class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
 
 
-                                                    @if (Auth::user())
+
                                                         <div class="d-flex mb-3">
                                                             <a class="btn btn-light btn-square me-3" href=""><i
                                                                     class="far fa-heart text-primary"></i></a>
                                                             <a class="btn btn-primary" href="{{route('JobPortal.GetJobDetail',['job_id'=>$getJobsList->id])}}">Apply Now</a>
                                                         </div>
-                                                    @else
-                                                        <div class="d-flex mb-3">
-                                                            <a class="btn btn-light btn-square me-3" href=""><i
-                                                                    class="far fa-heart text-primary"></i></a>
-                                                            <a class="btn btn-primary" data-toggle="modal"
-                                                                data-target="#loginModal" href="">Apply Now</a>
-                                                        </div>
-                                                    @endif
+
 
 
                                                     <small class="text-truncate"><i
@@ -100,7 +93,7 @@
 
 
                     </div>
-                </div>
+
 
 
             </div>

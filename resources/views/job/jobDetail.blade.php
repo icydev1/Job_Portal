@@ -87,9 +87,22 @@
                                     <div class="col-12">
                                         <textarea class="form-control" rows="5" placeholder="Coverletter"></textarea>
                                     </div>
-                                    <div class="col-12">
-                                        <button class="btn btn-primary w-100" type="submit">Apply Now</button>
-                                    </div>
+                  <div id="ajaxRef">
+                    @if (Auth::user())
+                    <div class="col-12">
+                        <button class="btn btn-primary w-100" type="button">Apply Now</button>
+                    </div>
+                    @else
+                    <div class="col-12">
+                        <button class="btn btn-primary w-100" data-toggle="modal"
+                        data-target="#loginModal" type="button">Apply Now</button>
+                    </div>
+                    @endif
+                </div>
+
+
+
+
                                 </div>
                             </form>
                         </div>
