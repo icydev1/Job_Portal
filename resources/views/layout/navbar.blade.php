@@ -8,12 +8,12 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
-            <a href="{{ route('JobPortal.Index') }}" class="nav-item nav-link active">Home</a>
-            <a href="{{ route('JobPortal.About') }}" class="nav-item nav-link">About</a>
+            <a href="{{ route('JobPortal.Index') }}" class="nav-item nav-link @if (Route::is('JobPortal.Index')) active  @endif">Home</a>
+            <a href="{{ route('JobPortal.About') }}" class="nav-item nav-link @if (Route::is('JobPortal.About')) active  @endif">About</a>
 
-            <a href="{{ route('JobPortal.Job') }}" class="nav-item nav-link ">Jobs</a>
+            <a href="{{ route('JobPortal.Job') }}" class="nav-item nav-link @if (Route::is('JobPortal.Job')) active  @endif ">Jobs</a>
 
-            <a href="{{ route('JobPortal.Contact') }}" class="nav-item nav-link">Contact</a>
+            <a href="{{ route('JobPortal.Contact') }}" class="nav-item nav-link @if (Route::is('JobPortal.Contact')) active  @endif">Contact</a>
 
 
 
