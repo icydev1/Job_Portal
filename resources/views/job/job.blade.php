@@ -46,19 +46,19 @@
                                                     style="width: 80px; height: 80px;"></a>
                                                     @endif
 
-
+                                                        <input type="hidden" id="jobId" value="{{$getJobsList->id}}">
                                                     <div class="text-start ps-4">
                                                         <h5 class="mb-3">{{ $getJobsList->job_name }}</h5>
                                                         <span class="text-truncate me-3"><i
                                                                 class="fa fa-map-marker-alt text-primary me-2"></i>{{ $getJobsList->job_location }}</span>
                                                         <span class="text-truncate me-3"><i
-                                                                class="far fa-clock text-primary me-2"></i>
+                                                                class="far fa-clock text-primary me-2" data-id={{$jobShift->id}}></i>
                                                             @if ($getJobsList->job_shift_id == $jobShift->id)
                                                                 {{ $jobShift->job_shift_name }}
                                                             @endif
                                                         </span>
                                                         <span class="text-truncate me-0"><i
-                                                                class="far fa-money-bill-alt text-primary me-2"></i>{{ $getJobsList->job_salary }}</span>
+                                                                class="far fa-money-bill-alt text-primary me-2" data-category = {{$getJobsList->job_category_id}}></i>{{ $getJobsList->job_salary }}</span>
                                                     </div>
                                                 </div>
                                                 <div
@@ -67,7 +67,7 @@
 
 
                                                         <div class="d-flex mb-3">
-                                                            <a class="btn btn-light btn-square me-3" href=""><i
+                                                            <a id="addWishList" class="btn btn-light btn-square me-3" href="#"><i
                                                                     class="far fa-heart text-primary"></i></a>
                                                             <a class="btn btn-primary" href="{{route('JobPortal.GetJobDetail',['job_id'=>$getJobsList->id])}}">Apply Now</a>
                                                         </div>

@@ -131,4 +131,18 @@ class JobController extends Controller
 
     }
 
+    public function favJobList(Request $request){
+
+
+        return view('job.favJobList');
+
+    }
+
+    public function storeFavJob(Request $request){
+
+       dd($request->all());
+
+    }
+
+
 }

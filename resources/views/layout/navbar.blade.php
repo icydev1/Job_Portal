@@ -15,6 +15,9 @@
 
             <a href="{{ route('JobPortal.Contact') }}" class="nav-item nav-link @if (Route::is('JobPortal.Contact')) active  @endif">Contact</a>
 
+            <a class=" nav-item nav-link" href="{{ route('JobPortal.FavJobList') }}"><i class="far fa-heart text-primary"></i></a>
+            {{-- <a href="{{ route('JobPortal.Wishlist') }}" class="nav-item nav-link" ></a> --}}
+
 
 
 
