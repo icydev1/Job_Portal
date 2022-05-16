@@ -4,7 +4,7 @@
 
     <div class="row">
 
-        <div class="col-md-5">
+        <div class="col-md-5 zoom ">
             <!-- Item-->
             <div class="cart-item d-md-flex justify-content-between">
                 <div class="px-3 my-3">
@@ -24,7 +24,7 @@
         <div class="col-md-1 zoom">
             <span class="dynamic"><i class="fa fa-trash"></i></span>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-5 zoom">
             <!-- Item-->
             <div class="cart-item d-md-flex justify-content-between">
                 <div class="px-3 my-3">
