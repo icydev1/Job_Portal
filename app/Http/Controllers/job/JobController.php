@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\job;
 
 use App\Http\Controllers\Controller;
+use App\Models\AddToWishList;
 use App\Models\Job;
 use App\Models\JobBenefit;
 use App\Models\JobCategory;
@@ -131,16 +132,36 @@ class JobController extends Controller
 
     }
 
-    public function favJobList(Request $request){
+    public function favJobList(){
 
+        $favLists = AddToWishList::where(['user_id'=>Auth::id()])
+        ->get();
 
-        return view('job.favJobList');
+        return view('job.favJobList',['favLists'=>$favLists]);
 
     }
 
     public function storeFavJob(Request $request){
 
-       dd($request->all());
+    //    dd($request->all());
+
+        $jobID = $request->get('jobID');
+        $cat = $request->get('cat');
+        $shiftId = $request->get('shiftId');
+
+        $storeWishList  = new AddToWishList([
+                'fav_job_id' => $jobID,
+                'job_cat_id' => $cat,
+                'job_shift_id' => $shiftId,
+                'user_id' => Auth::id(),
+        ]);
+
+            $storeWishList->save();
+
+            return "Saved";
+
+
+
 
     }
 

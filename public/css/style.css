@@ -1162,3 +1162,9 @@ span.removeBtn {
     top: 60px;
     margin-left: 25px;
 }
+
+.labels{
+    font-size: 20px;
+    font-weight: 500;
+
+}
