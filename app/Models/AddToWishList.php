@@ -13,4 +13,10 @@ class AddToWishList extends Model
     protected $gaurded = [];
     protected $guarded = [];
 
+
+    public function getFavList(){
+        return $this->hasMany(Job::class,'id','fav_job_id');
+    }
+
+
 }

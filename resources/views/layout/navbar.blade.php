@@ -1,3 +1,8 @@
+@php
+ $count = Session::get('count');
+@endphp
+
+{{-- @dd($count) --}}
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
     <a href="{{ route('JobPortal.Index') }}"
         class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
@@ -15,7 +20,7 @@
 
             <a href="{{ route('JobPortal.Contact') }}" class="nav-item nav-link @if (Route::is('JobPortal.Contact')) active  @endif">Contact</a>
 
-            <a class=" nav-item nav-link" href="{{ route('JobPortal.FavJobList') }}"><i class="far fa-heart text-primary"></i></a>
+            <a class=" nav-item nav-link" href="{{ route('JobPortal.FavJobList') }}"><i class="fa fa-heart text-primary"></i></a><span></span>
             {{-- <a href="{{ route('JobPortal.Wishlist') }}" class="nav-item nav-link" ></a> --}}
 
 

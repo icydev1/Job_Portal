@@ -1035,7 +1035,7 @@ span.removeBtn {
     margin-bottom: 8px;
     transition: color, 0.3s;
     color: #343b43;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
   }
 
@@ -1168,3 +1168,11 @@ span.removeBtn {
     font-weight: 500;
 
 }
+
+img.comp-logo {
+    height: 125px;
+    object-fit: fill;
+}
+
+/* <i  class="fa fa-heart text-primary"></i> */
+

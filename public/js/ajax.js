@@ -1,69 +1,56 @@
-
 const base_url = $('meta[name="base-url"]').attr("content");
-const  token  = $('meta[name="csrf-token"]').attr("content");
+const token = $('meta[name="csrf-token"]').attr("content");
 
-$(document).on('click','.userLogin',function(e){
-
+$(document).on("click", ".userLogin", function (e) {
     e.preventDefault();
 
-    let name = $('#name').val();
-    let email = $('#email').val();
-    let password = $('#password').val();
+    let name = $("#name").val();
+    let email = $("#email").val();
+    let password = $("#password").val();
 
-
-    let path = $('#namePath').data('path');
+    let path = $("#namePath").data("path");
 
     let url = `${base_url}${path}/RegisterUser`;
-
 
     $.ajax({
         type: "POST",
         url: url,
 
         data: {
-
-            name:name,
-            email:email,
-            password:password,
-
+            name: name,
+            email: email,
+            password: password,
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (response) {
-            if(response=="login"){
-
-                $('#loginModal').hide();
-                $('body').removeClass('modal-open');
-                   $('.modal-backdrop').remove();
-                   document.getElementById("registerForm").reset();
-                   $("#ajaxRefresh").load(" #ajaxRefresh > *");
-                   $("#ajaxRefreshLogout").load(" #ajaxRefreshLogout > *");
-                   $("#ajaxRef").load(" #ajaxRef > *");
-                }
-               else{
-                  alert('Login Failed')
-               }
-        }
+            if (response == "login") {
+                $("#loginModal").hide();
+                $("body").removeClass("modal-open");
+                $(".modal-backdrop").remove();
+                document.getElementById("registerForm").reset();
+                $("#ajaxRefresh").load(" #ajaxRefresh > *");
+                $("#ajaxRefreshLogout").load(" #ajaxRefreshLogout > *");
+                $("#ajaxRef").load(" #ajaxRef > *");
+                $("#ajaxFavList").load(" #ajaxFavList > *");
+            } else {
+                alert("Login Failed");
+            }
+        },
     });
-
-})
-
+});
 
 // login function
 
-$(document).on('click','#login_btn',function(e){
-
+$(document).on("click", "#login_btn", function (e) {
     e.preventDefault();
-
-
 
     let data = $("#loginForm").serialize();
 
-    let path = $('#namePath').data('path');
+    let path = $("#namePath").data("path");
 
     let url = `${base_url}${path}/LoginUser`;
-
 
     $.ajax({
         type: "POST",
@@ -74,40 +61,31 @@ $(document).on('click','#login_btn',function(e){
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (response) {
-            if(response=="1"){
+            if (response == "1") {
+                $("#loginModal").hide();
+                $("body").removeClass("modal-open");
+                $(".modal-backdrop").remove();
 
-                $('#loginModal').hide();
-                $('body').removeClass('modal-open');
-                   $('.modal-backdrop').remove();
-
-                   document.getElementById("loginForm").reset();
-                   $("#ajaxRefresh").load(" #ajaxRefresh > *");
-                   $("#ajaxRefreshLogout").load(" #ajaxRefreshLogout > *");
-                   $("#ajaxRef").load(" #ajaxRef > *");
-
-                }
-               else{
-                  alert('Login Failed')
-               }
-        }
+                document.getElementById("loginForm").reset();
+                $("#ajaxRefresh").load(" #ajaxRefresh > *");
+                $("#ajaxRefreshLogout").load(" #ajaxRefreshLogout > *");
+                $("#ajaxRef").load(" #ajaxRef > *");
+                $("#ajaxFavList").load(" #ajaxFavList > *");
+            } else {
+                alert("Login Failed");
+            }
+        },
     });
-
-})
-
-
+});
 
 // logout function with ajax
 
-$(document).on('click','#logout',function(e){
-
+$(document).on("click", "#logout", function (e) {
     e.preventDefault();
 
-
-    let path = $('#namePath').data('path');
+    let path = $("#namePath").data("path");
 
     let url = `${base_url}${path}/Logout`;
-
-
 
     $.ajax({
         type: "POST",
@@ -117,59 +95,96 @@ $(document).on('click','#logout',function(e){
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (response) {
-            if(response=="logout"){
-                $('#logoutModal').hide();
-                $('body').removeClass('modal-open');
-                   $('.modal-backdrop').remove();
+            if (response == "logout") {
+                $("#logoutModal").hide();
+                $("body").removeClass("modal-open");
+                $(".modal-backdrop").remove();
                 $("#ajaxRefresh").load(" #ajaxRefresh > *");
                 $("#ajaxRefreshLogout").load(" #ajaxRefreshLogout > *");
                 $("#ajaxRef").load(" #ajaxRef > *");
-
-                }
-               else{
-                  alert('Logout Failed')
-               }
-        }
+                $("#ajaxFavList").load(" #ajaxFavList > *");
+            } else {
+                alert("Logout Failed");
+            }
+        },
     });
-
-})
-
+});
 
 //add to wishlist function
 
-function addWishList($id){
-
+function addWishList($id) {
     let favId = $id;
 
-    let jobID = $('#job'+favId).val();
-    let cat = $('#cat'+favId).val();
-    let shiftId = $('#shiftId'+favId).val();
-    let path = $('#namePath').data('path');
+    let jobID = $("#job" + favId).val();
+    let cat = $("#cat" + favId).val();
+    let shiftId = $("#shiftId" + favId).val();
+    let path = $("#namePath").data("path");
     let url = `${base_url}${path}/StoreFavJob`;
 
     // console.log(jobID,cat,shiftId);
 
-// return false;
+    // return false;
     $.ajax({
         type: "POST",
         url: url,
-        data:{
-            jobID:jobID,
-            cat:cat,
-            shiftId:shiftId
-
+        data: {
+            jobID: jobID,
+            cat: cat,
+            shiftId: shiftId,
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (response) {
+            $("#ajaxFavList").load(" #ajaxFavList > *");
 
-            alert('done');
+            if (response == "Saved") {
 
-        }
+                // document.getElementById('changeIcon'+favId).attributes('$(selector).toggleClass(className);')
+                // alert("Added To wishlist");
+
+                $('#changeIcon'+favId).removeClass('far fa-heart');
+
+                $('#changeIcon'+favId).addClass('fa fa-heart');
+
+
+            } else {
+
+            }
+        },
     });
-
 }
 
-
 //add to wishlist function
+
+//remove to wishlist function
+
+function removeList($id) {
+    let removeId = $id;
+    // let removeId = $('#removeList'+id).val();
+
+    let path = $("#namePath").data("path");
+    let url = `${base_url}${path}/RemoveFavList`;
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+            removeId: removeId,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (response) {
+            $("#ajaxFavList").load(" #ajaxFavList > *");
+
+            if (response == "delete") {
+                // alert("Removed from list");
+            } else {
+                alert("not deleted");
+            }
+        },
+    });
+}
+
+//remove to wishlist function
