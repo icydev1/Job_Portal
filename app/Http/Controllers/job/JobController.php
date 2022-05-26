@@ -11,8 +11,10 @@ use App\Models\JobCategory;
 use App\Models\JobQualificationList;
 use App\Models\JobResponsibiltyList;
 use App\Models\JobShift;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 // use Illuminate\Support\Facades\Session;
 
@@ -285,7 +287,20 @@ class JobController extends Controller
 
     public function getJobList(){
 
-        return view('job.jobApplyList');
+        $myjobs = Job::where('user_id',Auth::id())->get();
+
+        $jobShifts = JobShift::get();
+
+        return view('job.jobApplyList',['myjobs'=>$myjobs,'jobShifts'=>$jobShifts]);
+
+    }
+
+    public function getJobUserList($job_id){
+
+        $jobusers = User::join('apply_job_posts','apply_job_posts.user_id','=','users.id')
+        ->where('apply_job_id',$job_id)->get();
+
+        return view('job.jobUserList',['jobusers'=>$jobusers]);
 
     }
 

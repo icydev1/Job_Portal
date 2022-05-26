@@ -62,6 +62,7 @@ Route::prefix('JobPortal')
         Route::post('/RemoveFavList','removeFavList')->name('RemoveFavList');
         Route::post('/ApplyForJob','applyForJob')->name('ApplyForJob');
         Route::get('/GetJobList','getJobList')->name('GetJobList');
+        Route::get('/GetJobUserList/{job_id}','getJobUserList')->name('GetJobUserList');
 
 
      });

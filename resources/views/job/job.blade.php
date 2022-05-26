@@ -22,7 +22,7 @@
 
                 </ul>
 
-
+<div id="ajaxJob">
                 <div class="tab-content">
                     @php $tab = 0 @endphp
                     @foreach ($jobShifts as $jobShift)
@@ -78,7 +78,8 @@
                                                 @if (Auth::user())
                                                     <div class="d-flex mb-3">
                                                         <a onclick="addWishList({{ $getJobsList->id }})"
-                                                            class=" btn btn-light btn-square me-3" href="javascript:void(0)">
+                                                            class=" btn btn-light btn-square me-3"
+                                                            href="javascript:void(0)">
 
                                                             <i id="changeIcon{{ $getJobsList->id }}"
                                                                 class=" far fa-heart @foreach ($getFavJob as $getFav) @if ($getJobsList->id == $getFav->fav_job_id)
@@ -88,9 +89,15 @@
                                                                     text-primary"></i>
 
                                                         </a>
-                                                        <a class="btn btn-primary"
-                                                            href="{{ route('JobPortal.GetJobDetail', ['job_id' => $getJobsList->id]) }}">Apply
-                                                            Now</a>
+                                                        @if (DB::table('apply_job_posts')->where(['user_id' => Auth::id(), 'apply_job_id' => $getJobsList->id])->exists())
+                                                            <a class="btn btn-primary"
+                                                                href="{{ route('JobPortal.GetJobDetail', ['job_id' => $getJobsList->id]) }}">Already
+                                                                Applied</a>
+                                                        @else
+                                                            <a class="btn btn-primary"
+                                                                href="{{ route('JobPortal.GetJobDetail', ['job_id' => $getJobsList->id]) }}">Apply
+                                                                Now</a>
+                                                        @endif
                                                     </div>
                                                 @else
                                                     <div class="d-flex mb-3">
@@ -127,7 +134,7 @@
 
                 </div>
 
-
+            </div>
 
             </div>
         </div>

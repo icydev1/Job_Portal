@@ -97,7 +97,8 @@ $(document).on("click", ".userLogin", function (e) {
                     $("#ajaxRefreshLogout").load(" #ajaxRefreshLogout > *");
                     $("#ajaxRef").load(" #ajaxRef > *");
                     $("#ajaxFavList").load(" #ajaxFavList > *");
-                    $("#ajaxPro").load(" #ajaxPro > *");
+                    $("#ajaxPros").load(" #ajaxPros > *");
+                    $("#ajaxJob").load(" #ajaxJob > *");
                 } else {
                     alert("Login Failed");
                 }
@@ -145,7 +146,8 @@ $(document).on("click", "#login_btn", function (e) {
                     $("#ajaxRefreshLogout").load(" #ajaxRefreshLogout > *");
                     $("#ajaxRef").load(" #ajaxRef > *");
                     $("#ajaxFavList").load(" #ajaxFavList > *");
-                    $("#ajaxPro").load(" #ajaxPro > *");
+                    $("#ajaxPros").load(" #ajaxPros > *");
+                    $("#ajaxJob").load(" #ajaxJob > *");
                 } else {
                     alert("Login Failed");
                 }
@@ -186,7 +188,8 @@ $(document).on("click", "#logout", function (e) {
                 $("#ajaxRefreshLogout").load(" #ajaxRefreshLogout > *");
                 $("#ajaxRef").load(" #ajaxRef > *");
                 $("#ajaxFavList").load(" #ajaxFavList > *");
-                $("#ajaxPro").load(" #ajaxPro > *");
+                $("#ajaxPros").load(" #ajaxPros > *");
+                $("#ajaxJob").load(" #ajaxJob > *");
 
                 window.location.href = home;
             } else {

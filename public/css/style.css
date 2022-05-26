@@ -1260,3 +1260,16 @@ span.count {
 .user-info small {
   color: #545d7a;
 }
+.col-md-6.btn-primary.hired {
+    position: relative;
+    left: 100px;
+}
+.col-md-6.btn-danger.reject {
+    position: relative;
+    left: 41px;
+}
+
+.col-md-12.btn-primary.resume {
+    position: relative;
+    left: 57px;
+}

@@ -18,8 +18,13 @@
 
             <a href="{{ route('JobPortal.Contact') }}" class="nav-item nav-link @if (Route::is('JobPortal.Contact')) active  @endif">Contact</a>
 
+            <div id="ajaxPros">
+            @if(DB::table('jobs')->where('user_id',Auth::id())->exists())
+            <a href="{{ route('JobPortal.GetJobList') }}" class="nav-item nav-link @if (Route::is('JobPortal.GetJobList')) active  @endif">My Jobs</a>
+            @endif
+            </div>
             <a class=" nav-item nav-link" href="{{ route('JobPortal.FavJobList') }}"><i class="fa fa-heart text-primary"></i></a><span id="countJob" class="count">{{$count}}</span>
-            {{-- <a href="{{ route('JobPortal.Wishlist') }}" class="nav-item nav-link" ></a> --}}
+
 
 
 
