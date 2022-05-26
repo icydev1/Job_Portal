@@ -60,6 +60,7 @@ Route::prefix('JobPortal')
         Route::get('/FavJobList','favJobList')->name('FavJobList');
         Route::post('/StoreFavJob','storeFavJob')->name('StoreFavJob');
         Route::post('/RemoveFavList','removeFavList')->name('RemoveFavList');
+        Route::post('/ApplyForJob','applyForJob')->name('ApplyForJob');
 
 
      });

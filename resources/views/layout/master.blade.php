@@ -27,7 +27,6 @@
         </div>
 
 
-
         @include('layout.navbar')
 
 

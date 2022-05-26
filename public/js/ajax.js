@@ -138,14 +138,16 @@ function addWishList($id) {
         success: function (response) {
             $("#ajaxFavList").load(" #ajaxFavList > *");
 
-            if (response == "Saved") {
+            // alert(response.data);
+            $('#countJob').html(response.data);
 
-                // document.getElementById('changeIcon'+favId).attributes('$(selector).toggleClass(className);')
-                // alert("Added To wishlist");
+            if (response.message == "Saved") {
 
                 $('#changeIcon'+favId).removeClass('far fa-heart');
 
                 $('#changeIcon'+favId).addClass('fa fa-heart');
+
+
 
 
             } else {
@@ -178,7 +180,8 @@ function removeList($id) {
         success: function (response) {
             $("#ajaxFavList").load(" #ajaxFavList > *");
 
-            if (response == "delete") {
+            $('#countJob').html(response.data);
+            if (response.message == "delete") {
                 // alert("Removed from list");
             } else {
                 alert("not deleted");

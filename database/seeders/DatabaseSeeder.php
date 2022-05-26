@@ -17,11 +17,11 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        $jobCat = ['Marketing','Customer Service','Human Resource','Project Management','Business Development','Sales & Communication','Teaching & Education','Design & Creative'];
+        $jobCat     = ['Marketing','Customer Service','Human Resource','Project Management','Business Development','Sales & Communication','Teaching & Education','Design & Creative'];
 
         $jobVacancy = ['400','604','500','104','543','456','435','543'];
 
-        $jobIcons = ['fa fa-3x fa-mail-bulk','fa fa-3x fa-headset','fa fa-3x fa-user-tie','fa fa-3x fa-tasks','fa fa-3x fa-chart-line','fa fa-3x fa-hands-helping','fa fa-3x fa-book-reader','fa fa-3x fa-drafting-compass'];
+        $jobIcons   = ['fa fa-3x fa-mail-bulk','fa fa-3x fa-headset','fa fa-3x fa-user-tie','fa fa-3x fa-tasks','fa fa-3x fa-chart-line','fa fa-3x fa-hands-helping','fa fa-3x fa-book-reader','fa fa-3x fa-drafting-compass'];
 
 
         for($i = 0; $i < count($jobCat); $i++){
@@ -33,6 +33,8 @@ class DatabaseSeeder extends Seeder
                 $storeJobcat->save();
 
         }
+
+
 
         $jobShift = ['Featured','Full Time','Part Time'];
 

@@ -71,27 +71,43 @@
 
                         <div class="">
                             <h4 class="mb-4">Apply For The Job</h4>
-                            <form>
+                            <form action="{{route('JobPortal.ApplyForJob')}}" method="POST" enctype="multipart/form-data">
+                                @csrf
                                 <div class="row g-3">
                                     <div class="col-12 col-sm-6">
-                                        <input type="text" class="form-control" placeholder="Your Name">
+                                        <input type="text" class="form-control" name="user_name" value="{{old('user_name')}}" placeholder="Your Name">
+                                        @error('user_name')
+                                        <span class="text-danger">The Name Field is Required..!</span>
+                                        @enderror
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <input type="email" class="form-control" placeholder="Your Email">
+                                        <input type="email" class="form-control" value="{{old('user_email')}}" name="user_email" placeholder="Your Email">
+                                        @error('user_email')
+                                        <span class="text-danger">The Email Field is Required..!</span>
+                                        @enderror
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <input type="text" class="form-control" placeholder="Portfolio Website">
+                                        <input type="text" class="form-control" value="{{old('website_link')}}" name="website_link" placeholder="Portfolio Website">
+                                        @error('website_link')
+                                        <span class="text-danger">The Portfolio Website is Required..!</span>
+                                        @enderror
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <input type="file" class="form-control bg-white">
+                                        <input type="file"  accept = "application/pdf,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="user_file" class="form-control bg-white">
+                                        @error('user_file')
+                                        <span class="text-danger">Must Be a Pdf File and it's Required..!</span>
+                                        @enderror
                                     </div>
                                     <div class="col-12">
-                                        <textarea class="form-control" rows="5" placeholder="Coverletter"></textarea>
+                                        <textarea class="form-control" value="{{old('coverletter')}}" name="coverletter" rows="5" placeholder="Coverletter"></textarea>
+                                        @error('coverletter')
+                                        <span class="text-danger">Cover Letter is Required..!</span>
+                                        @enderror
                                     </div>
                                     <div id="ajaxRef">
                                         @if (Auth::user())
                                             <div class="col-12">
-                                                <button class="btn btn-primary w-100" type="button">Apply Now</button>
+                                                <button class="btn btn-primary w-100" type="submit">Apply Now</button>
                                             </div>
                                         @else
                                             <div class="col-12">

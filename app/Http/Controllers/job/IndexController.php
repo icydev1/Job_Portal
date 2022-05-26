@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\job;
 
 use App\Http\Controllers\Controller;
+
 use App\Models\JobCategory;
-use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {

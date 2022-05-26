@@ -1176,3 +1176,8 @@ img.comp-logo {
 
 /* <i  class="fa fa-heart text-primary"></i> */
 
+span.count {
+    position: relative;
+    left: -30px;
+    font-weight: 900;
+}
