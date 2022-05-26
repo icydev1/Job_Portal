@@ -61,6 +61,7 @@ Route::prefix('JobPortal')
         Route::post('/StoreFavJob','storeFavJob')->name('StoreFavJob');
         Route::post('/RemoveFavList','removeFavList')->name('RemoveFavList');
         Route::post('/ApplyForJob','applyForJob')->name('ApplyForJob');
+        Route::get('/GetJobList','getJobList')->name('GetJobList');
 
 
      });
@@ -86,6 +87,9 @@ Route::prefix('JobPortal')
 
         Route::get('/facebook','redirectToFacebook')->name('Facebook');
         Route::get('/fbcallback','loginWithFacebook');
+
+        Route::get('EditProfile/{user_id}','editProfile')->name('EditProfile');
+        Route::post('UpdateProfile/{user_id}','updateProfile')->name('UpdateProfile');
 
 
      });

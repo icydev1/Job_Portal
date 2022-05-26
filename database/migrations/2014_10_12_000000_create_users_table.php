@@ -22,6 +22,12 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('avatar')->nullable();
             $table->string('image')->nullable();
+            $table->string('country')->nullable();
+            $table->string('position')->nullable();
+            $table->string('education')->nullable();
+            $table->string('state')->nullable();
+            $table->longText('short_bio')->nullable();
+            $table->longText('address')->nullable();
             $table->string('provider_id')->nullable();
             $table->tinyInteger('is_subscribe')->nullable();
             $table->tinyInteger('status')->default('0')->nullable();

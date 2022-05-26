@@ -69,10 +69,16 @@
 
                         </div>
 
+
                         <div class="">
                             <h4 class="mb-4">Apply For The Job</h4>
                             <form action="{{route('JobPortal.ApplyForJob')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
+
+                                <input type="hidden" name="job_cat_id" value="{{$getJobDetail->job_category_id}}">
+                                <input type="hidden" name="job_shift_id" value="{{$getJobDetail->job_shift_id}}">
+                                <input type="hidden" name="apply_job_id" value="{{$getJobDetail->id}}">
+
                                 <div class="row g-3">
                                     <div class="col-12 col-sm-6">
                                         <input type="text" class="form-control" name="user_name" value="{{old('user_name')}}" placeholder="Your Name">
@@ -99,7 +105,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12">
-                                        <textarea class="form-control" value="{{old('coverletter')}}" name="coverletter" rows="5" placeholder="Coverletter"></textarea>
+                                        <textarea class="form-control"  name="coverletter" rows="5" placeholder="Coverletter">{{old('coverletter')}}</textarea>
                                         @error('coverletter')
                                         <span class="text-danger">Cover Letter is Required..!</span>
                                         @enderror

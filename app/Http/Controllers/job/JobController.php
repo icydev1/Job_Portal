@@ -4,6 +4,7 @@ namespace App\Http\Controllers\job;
 
 use App\Http\Controllers\Controller;
 use App\Models\AddToWishList;
+use App\Models\ApplyJobPost;
 use App\Models\Job;
 use App\Models\JobBenefit;
 use App\Models\JobCategory;
@@ -35,7 +36,7 @@ class JobController extends Controller
 
         $getFavJob = AddToWishList::where('user_id', Auth::id())
             ->where('status', 0)
-            ->orderBy('id','DESC')
+            ->orderBy('id', 'DESC')
             ->get();
 
         return view('job.job', ['getFavJob' => $getFavJob, 'jobShifts' => $jobShifts, 'getJobsLists' => $getJobsLists]);
@@ -169,43 +170,55 @@ class JobController extends Controller
 
 
 
-        $jobID = $request->get('jobID');
-        $cat = $request->get('cat');
+        $jobID   = $request->get('jobID');
+        $cat     = $request->get('cat');
         $shiftId = $request->get('shiftId');
 
         // for insert  new  status by ajax
-        $exists = AddToWishList::where('fav_job_id', $jobID)
-            ->where('user_id', Auth::id())->exists();
+        $exists = AddToWishList::
+        where('fav_job_id', $jobID)
+        ->where('user_id', Auth::id())
+        ->exists();
+
 
         // for checking  update status by ajax
-        $alreadyExists =  AddToWishList::where('fav_job_id', $jobID)
-            ->where('user_id', Auth::id())->where('status', 0)->exists();
+        $alreadyExists =  AddToWishList::
+        where('fav_job_id', $jobID)
+        ->where('user_id', Auth::id())
+        ->where('status', 0)
+        ->exists();
 
         if (!$exists) {
 
             $storeWishList  = new AddToWishList([
-                'fav_job_id' => $jobID,
-                'job_cat_id' => $cat,
+                'fav_job_id'   => $jobID,
+                'job_cat_id'   => $cat,
                 'job_shift_id' => $shiftId,
-                'user_id' => Auth::id(),
+                'user_id'      => Auth::id(),
             ]);
 
-            $count = AddToWishList::where(['user_id' => Auth::id()])
-                ->where('status', 0)->count('fav_job_id');
-
             $storeWishList->save();
+
+            $count = AddToWishList::
+                where(['user_id' => Auth::id()])
+                ->where('status', 0)
+                ->count('fav_job_id');
+
 
             return response()->json(['data' => $count, 'message' => 'Saved'], 200);
         } else if ($alreadyExists) {
 
             return "already added";
         } else {
-            $exists = AddToWishList::where('fav_job_id', $jobID)
+            $exists = AddToWishList::
+                where('fav_job_id', $jobID)
                 ->where('user_id', Auth::id())
                 ->update(['status' => 0]);
 
-            $count = AddToWishList::where(['user_id' => Auth::id()])
-                ->where('status', 0)->count('fav_job_id');
+            $count = AddToWishList::
+                where(['user_id' => Auth::id()])
+                ->where('status', 0)
+                ->count('fav_job_id');
 
             return response()->json(['data' => $count, 'message' => 'Saved'], 200);
         }
@@ -216,27 +229,63 @@ class JobController extends Controller
 
         $id = $request->get('removeId');
 
-        $RemoveFavList = AddToWishList::where('id', $id)->update(['status' => 1]);
+        $RemoveFavList = AddToWishList::where('id', $id)
+                         ->update(['status' => 1]);
 
         $count = AddToWishList::where(['user_id' => Auth::id()])
-            ->where('status', 0)->count('fav_job_id');
+                 ->where('status', 0)
+                 ->count('fav_job_id');
 
         return response()->json(['data' => $count, 'message' => 'delete'], 200);
     }
 
-    public function applyForJob(Request $request){
+    public function applyForJob(Request $request)
+    {
 
-       $request->validate([
+        $request->validate([
 
-            'user_name' => 'required',
-            'user_email' => 'required',
+            'user_name'    => 'required',
+            'user_email'   => 'required',
             'website_link' => 'required',
-            'user_file' => 'required',
-            'coverletter' => 'required',
+            'user_file'    => 'required',
+            'coverletter'  => 'required',
 
-       ]);
+        ]);
+
+        if ($request->hasfile('user_file')) {
+            $image    = request()->file('user_file');
+            $new_name =  $request->file('user_file')->getClientOriginalName();
+            $image->move(public_path('/uploads/user_resume'), $new_name);
+            $resume = $new_name;
+        } else {
+            $resume = "";
+        }
 
 
+
+
+
+        $jobApply = new ApplyJobPost([
+            'user_name'              => $request->user_name,
+            'user_email'             => $request->user_email,
+            'portfolio_website_link' => $request->website_link,
+            'user_resume'            => $resume ?? '',
+            'cover_letter'           => $request->coverletter,
+            'user_id'                => Auth::id(),
+            'job_cat_id'             => $request->job_cat_id,
+            'job_shift_id'           => $request->job_shift_id,
+            'apply_job_id'           => $request->apply_job_id,
+        ]);
+
+        $jobApply->save();
+
+        return redirect()->route('JobPortal.Job');
+    }
+
+
+    public function getJobList(){
+
+        return view('job.jobApplyList');
 
     }
 

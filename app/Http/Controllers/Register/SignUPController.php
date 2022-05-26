@@ -15,6 +15,15 @@ class SignUPController extends Controller
 
 public function loginUser(Request $request){
 
+
+
+    $request->validate([
+
+        'login_email' => 'required',
+        'login_password' => 'required',
+
+    ]);
+
     $email = $request->login_email;
     $pass  = $request->login_password;
 

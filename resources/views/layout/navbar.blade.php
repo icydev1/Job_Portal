@@ -27,22 +27,31 @@
             <div id="ajaxRefreshLogout">
                 @if (Auth::user())
 
-                    @if (!empty(Auth::user()->avatar))
+                    @if (!empty(Auth::user()->image))
                         <a class="nav-item nav-link dropdown-toggle navbottom" href="#" id="navbarDropdownMenuLink"
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="{{ asset('uploads/user_profile/'.Auth::user()->image) }}" width="40" height="40" class="rounded-circle">
+                        </a>
+                    @elseif (!empty(Auth::user()->avatar))
+
+                    <a class="nav-item nav-link dropdown-toggle navbottom" href="#" id="navbarDropdownMenuLink"
                             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="{{ Auth::user()->avatar }}" width="40" height="40" class="rounded-circle">
                         </a>
+
                     @else
-                        <a class="nav-item nav-link dropdown-toggle navbottom" href="#" id="navbarDropdownMenuLink"
+
+                    <a class="nav-item nav-link dropdown-toggle navbottom" href="#" id="navbarDropdownMenuLink"
                             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg"
                                 width="40" height="40" class="rounded-circle">
                         </a>
+
                     @endif
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="#">My Profile</a>
-                        <a class="dropdown-item" href="#">Edit Profile</a>
+                        <a class="dropdown-item" href="{{route('JobPortal.EditProfile',['user_id'=>Auth::id()])}}">Edit Profile</a>
                         <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal" href="#">Log Out</a>
                     </div>
 
@@ -120,16 +129,18 @@
                                             <div class="input-group-addon"><i class="fa fa-at"></i></div>
                                             <input type="email" class="form-control" name="login_email"
                                                 id="login_email" placeholder="email">
+
                                         </div>
-                                        <span class="help-block has-error" id="email-error"></span>
+                                        <span class="help-block has-error" style="color:red" id="emailError"></span>
                                     </div>
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-lock"></i></div>
                                             <input type="password" name="login_password" class="form-control"
                                                 id="login_password" placeholder="Password">
+
                                         </div>
-                                        <span class="help-block has-error" id="password-error"></span>
+                                        <span class="help-block has-error" style="color:red" id="passwordError"></span>
                                     </div>
                                     <button type="submit" id="login_btn" class="btn btn-block bt-login"
                                         data-loading-text="Signing In....">Login</button>
@@ -161,16 +172,20 @@
                                             <div class="input-group-addon"><i class="fa fa-user"></i></div>
                                             <input type="text" class="form-control" name="name" id="name"
                                                 placeholder="Name">
+
                                         </div>
-                                        <span class="help-block has-error" data-error='0' id="username-error"></span>
+                                        <div id="err"></div>
+                                        <span class="help-block has-error" style="color: red" data-error='0' id="usernameError"></span>
                                     </div>
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-at"></i></div>
-                                            <input type="text" class="form-control" name="email" id="email"
+                                            <input type="email" required class="form-control"  name="email" id="email"
                                                 placeholder="Email">
+
                                         </div>
-                                        <span class="help-block has-error" data-error='0' id="remail-error"></span>
+                                        <div id="errEmail"></div>
+                                        <span class="help-block has-error" data-error="0" style="color: red" id="remail-error"></span>
                                     </div>
 
                                     <div class="form-group">
@@ -178,8 +193,10 @@
                                             <div class="input-group-addon"><i class="fas fa-key"></i></div>
                                             <input type="password" class="form-control" id="password" name="password"
                                                 placeholder="password">
+
                                         </div>
-                                        <span class="help-block has-error" data-error='0' id="password-error"></span>
+                                        <div id="errPass"></div>
+                                        <span class="help-block has-error" style="color: red" data-error="0" id="password-error"></span>
                                     </div>
                                     <button type="button" id="register_btn" class="btn btn-block bt-login userLogin"
                                         data-loading-text="Registering....">Register</button>
