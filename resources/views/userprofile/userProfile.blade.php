@@ -76,26 +76,110 @@
         <div class="col-md-4">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span
-                        class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div>
+                        data-toggle="modal" data-target="#expModal" class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div>
 
                 <hr>
-                <div class="d-flex flex-row mt-3 exp-container"><img
-                        src="https://img.icons8.com/color/100/000000/facebook.png" width="45" height="45">
-                    <div class="work-experience ml-1"><span class="font-weight-bold d-block">Senior UI/UX
-                            Designer</span><span class="d-block text-black-50 labels">Facebook Inc.</span><span
-                            class="d-block text-black-50 labels">March,2017 - May 2020</span></div>
-                </div>
-                <hr>
-                <div class="d-flex flex-row mt-3 exp-container"><img
-                        src="https://img.icons8.com/color/50/000000/google-logo.png" width="45" height="45">
-                    <div class="work-experience ml-1"><span class="font-weight-bold d-block">UI/UX Designer</span><span
-                            class="d-block text-black-50 labels">Google Inc.</span><span
-                            class="d-block text-black-50 labels">March,2017 - May 2020</span></div>
-                </div>
+                @foreach ($exps as $exp)
+                @php $crypt  = Crypt::encrypt($editProfiles->id);
+                @endphp
+                <a href="{{route('JobPortal.MyProfile',['profile_id'=>$crypt])}}"><div class="d-flex flex-row mt-3 exp-container">
+                    @if (!empty($exp->company_image))
+                    <img class="p-0" src="{{asset('uploads/company_logo/'.$exp->company_image)}}" width="45" height="45">
+                    @else
+                    <img src="{{asset('img/nologo.png')}}" width="45" height="45">
+                    @endif
+
+                <div class="work-experience ml-1"><span class="font-weight-bold d-block">{{$exp->company_position}}</span><span class="d-block text-black-50 labels">{{$exp->company_name}}</span><span
+                        class="d-block text-black-50 labels">{{$exp->company_from}} - {{$exp->company_to ?? 'Till Date'}}</span></div>
+            </div></a>
+            <hr>
+                @endforeach
+
+
+
             </div>
         </div>
     </div>
     </div>
+
+
+
+    {{-- modal for add Experience --}}
+
+
+    <div class="modal fade" id="expModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content login-modal">
+            <div class="modal-header login-modal-header">
+                {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button> --}}
+                <h4 class="modal-title text-center" id="loginModalLabel">Add Experience</h4>
+            </div>
+            <div class="modal-body">
+
+                <form id="storeForm">
+                <div class="container">
+                <div class="text-center ">
+
+                    <div class="row">
+                        <div id="lastCompanyName" class="col-md-6">
+                            <label>Company Name</label>
+                            <input id="profileId" type="hidden" name="profile_id" value="{{$editProfiles->id}}">
+                            <input type="text" id="companyName" name="company_name" class="form form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Designation</label>
+                            <input type="text" id="companyDesignation" name="company_designation" class="form-control">
+
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div id="lastCompanyName" class="col-md-6">
+                            <label>Date of Joining</label>
+                            <input type="date" id="startDate" name="start_date" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Last date of Leaving</label>
+                            <input type="date" id="endDate" name="end_date" class="form-control">
+
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div id="lastCompanyName" class="col-md-6">
+                            <label>Choose File</label>
+                            <input id="inputCompLogo"  type="file" name="company_logo" class="form-control">
+                        </div>
+                        <div class="col-md-6 mt-3">
+
+                            <img width="45" height="45" id="outputCompLogo"
+                        src="https://img.icons8.com/color/50/000000/google-logo.png">
+
+                    </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div  class="col-md-6"><button onclick="addExp()" class="btn btn-success"
+                                type="button">Save</button></div>
+                        <div class="col-md-6"><button type="button" class="btn btn-danger close"
+                                data-dismiss="modal" aria-label="Close">Cancel</button></div>
+                    </div>
+
+
+                </div>
+                </div>
+            </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+    {{--end modal for add Experience --}}
 
 
     <script>
@@ -111,6 +195,21 @@ document.getElementById('inputUserFile').onchange = function () {
     }
 
 // end  user image
+    </script>
+
+    <script>
+
+        // add comp image
+
+
+document.getElementById('inputCompLogo').onchange = function () {
+    var file=this.files[0]
+         var src = URL.createObjectURL(this.files[0])
+            document.getElementById('outputCompLogo').src = src
+
+    }
+
+// end  comp image
     </script>
 
 @endsection

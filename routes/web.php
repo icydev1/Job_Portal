@@ -90,7 +90,9 @@ Route::prefix('JobPortal')
         Route::get('/fbcallback','loginWithFacebook');
 
         Route::get('EditProfile/{user_id}','editProfile')->name('EditProfile');
+        Route::get('MyProfile/{profile_id}','myProfile')->name('MyProfile');
         Route::post('UpdateProfile/{user_id}','updateProfile')->name('UpdateProfile');
+        Route::post('AddExp','addExp')->name('AddExp');
 
 
      });

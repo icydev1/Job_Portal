@@ -222,7 +222,7 @@ class JobController extends Controller
                 ->where('status', 0)
                 ->count('fav_job_id');
 
-            return response()->json(['data' => $count, 'message' => 'Saved'], 200);
+            return  'Saved';
         }
     }
 
@@ -298,7 +298,11 @@ class JobController extends Controller
     public function getJobUserList($job_id){
 
         $jobusers = User::join('apply_job_posts','apply_job_posts.user_id','=','users.id')
-        ->where('apply_job_id',$job_id)->get();
+        ->where('apply_job_id',$job_id)
+        ->orderBy('apply_job_posts.id','DESC')
+        ->get();
+
+
 
         return view('job.jobUserList',['jobusers'=>$jobusers]);
 

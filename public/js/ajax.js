@@ -274,3 +274,43 @@ function removeList($id) {
 }
 
 //remove to wishlist function
+
+
+// add experience in profile
+
+function addExp() {
+
+    let formData=new FormData($('#storeForm')[0]);
+
+    let path = $("#namePath").data("path");
+    let url = `${base_url}${path}/AddExp`;
+
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: formData,
+
+        contentType:false,
+        processData:false,
+
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (response) {
+
+            if(response.messge = "Saved"){
+
+                $("#storeForm")[0].reset();
+                $("#expModal").hide();
+                $("body").removeClass("modal-open");
+                $(".modal-backdrop").remove();
+            }else{
+                alert('Not saved')
+            }
+
+        },
+    });
+}
+
+// end experience in profile

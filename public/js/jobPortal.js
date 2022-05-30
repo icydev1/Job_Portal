@@ -79,6 +79,27 @@ function clearBenefit(z){
 
 //end for add more benefit
 
+// for download pdf
+
+function downloadResume($id){
+
+    let id = $id;
+
+    let img = document.getElementById('outputResume'+id);
+
+        let imagePath = img.getAttribute('src');
+        let fileName = getFileName(imagePath);
+        saveAs(imagePath, fileName);
+
+
+    function getFileName(str) {
+        return str.substring(str.lastIndexOf('/') + 1)
+    }
+
+}
+
+
+//end for download pdf
 
 
 // add logo image
@@ -92,6 +113,8 @@ function clearBenefit(z){
         }
 
 // end  add logo image
+
+
 
 
 

@@ -16,6 +16,7 @@ class CreateUserExpsTable extends Migration
         Schema::create('user_exps', function (Blueprint $table) {
             $table->id();
             $table->string('company_image')->nullable();
+            $table->tinyInteger('profile_id')->nullable();
             $table->string('company_name')->nullable();
             $table->string('company_position')->nullable();
             $table->string('company_from')->nullable();

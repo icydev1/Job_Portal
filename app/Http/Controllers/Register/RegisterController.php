@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Register;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserExp;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Crypt;
 use Laravel\Socialite\Facades\Socialite;
 
 class RegisterController extends Controller
@@ -119,14 +120,23 @@ protected function _registerOrLoginUser($data)
 
     public function editProfile($user_id){
 
-        $editProfiles  = User::where('id',$user_id)->first();
+        $decrypted = Crypt::decrypt($user_id);
 
-        return view('userprofile.userProfile',['editProfiles' => $editProfiles]);
+        $editProfiles  = User::where('users.id',$decrypted)->first();
+
+        $exps =  User::join('user_exps as exp','exp.profile_id','=','users.id')
+        ->where('users.id',$decrypted)->get();
+
+        return view('userprofile.userProfile',['editProfiles' => $editProfiles,'exps'=>$exps]);
 
     }
 
 
     public function updateProfile(Request $request,$user_id){
+
+
+
+
 
 
 
@@ -168,6 +178,45 @@ protected function _registerOrLoginUser($data)
         User::where('id',$user_id)->update($updateUser);
 
         return back();
+
+    }
+
+      public function addExp(Request $request){
+
+        // dd($request->all());
+
+
+        if ($request->hasFile('company_logo')) {
+            $image    = request()->file('company_logo');
+            $new_name =  $request->file('company_logo')->getClientOriginalName();
+            $image->move(public_path('/uploads/company_logo'), $new_name);
+            $company_logo = $new_name;
+        } else {
+            $company_logo = "";
+        }
+
+        $storeExp = new UserExp([
+
+            'company_image' => $company_logo,
+            'company_name' => $request->get('company_name'),
+            'company_position' => $request->get('company_designation'),
+            'company_from' => $request->get('start_date'),
+            'company_to' => $request->get('end_date'),
+            'profile_id' => $request->get('profile_id'),
+            'user_id' => Auth::id(),
+
+        ]);
+
+        $storeExp->save();
+
+        return response()->json(['message' => 'Saved'], 200);
+
+
+    }
+
+    public function myProfile($profile_id){
+
+        return view('userprofile.myProfile');
 
     }
 

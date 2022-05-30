@@ -33,6 +33,7 @@
                 @if (Auth::user())
 
                     @if (!empty(Auth::user()->image))
+
                         <a class="nav-item nav-link dropdown-toggle navbottom" href="#" id="navbarDropdownMenuLink"
                             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="{{ asset('uploads/user_profile/'.Auth::user()->image) }}" width="40" height="40" class="rounded-circle">
@@ -56,7 +57,9 @@
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="#">My Profile</a>
-                        <a class="dropdown-item" href="{{route('JobPortal.EditProfile',['user_id'=>Auth::id()])}}">Edit Profile</a>
+                        @php $dcrypt  = Crypt::encrypt(Auth::id());
+                        @endphp
+                        <a class="dropdown-item" href="{{route('JobPortal.EditProfile',['user_id'=>$dcrypt])}}">Edit Profile</a>
                         <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal" href="#">Log Out</a>
                     </div>
 
