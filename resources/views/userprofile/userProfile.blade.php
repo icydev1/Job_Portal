@@ -79,6 +79,7 @@
                         data-toggle="modal" data-target="#expModal" class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div>
 
                 <hr>
+                <div id="refreshExp">
                 @foreach ($exps as $exp)
                 @php $crypt  = Crypt::encrypt($editProfiles->id);
                 @endphp
@@ -94,7 +95,7 @@
             </div></a>
             <hr>
                 @endforeach
-
+                </div>
 
 
             </div>

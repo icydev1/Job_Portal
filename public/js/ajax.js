@@ -293,11 +293,14 @@ function addExp() {
 
         contentType:false,
         processData:false,
+        dataType:'json',
 
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (response) {
+
+
 
             if(response.messge = "Saved"){
 
@@ -305,9 +308,17 @@ function addExp() {
                 $("#expModal").hide();
                 $("body").removeClass("modal-open");
                 $(".modal-backdrop").remove();
+                $('#refreshExp').load(' #refreshExp > *')
+
+
+
+
+
             }else{
                 alert('Not saved')
             }
+
+
 
         },
     });

@@ -54,11 +54,11 @@
                         </a>
 
                     @endif
-
+                    @php $dcrypt  = Crypt::encrypt(Auth::id());
+                    @endphp
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">My Profile</a>
-                        @php $dcrypt  = Crypt::encrypt(Auth::id());
-                        @endphp
+                        <a class="dropdown-item" href="{{route('JobPortal.MyProfile',['profile_id'=>$dcrypt])}}">My Profile</a>
+
                         <a class="dropdown-item" href="{{route('JobPortal.EditProfile',['user_id'=>$dcrypt])}}">Edit Profile</a>
                         <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal" href="#">Log Out</a>
                     </div>

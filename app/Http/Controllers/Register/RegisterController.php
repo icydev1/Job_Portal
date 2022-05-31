@@ -209,14 +209,24 @@ protected function _registerOrLoginUser($data)
 
         $storeExp->save();
 
-        return response()->json(['message' => 'Saved'], 200);
+        return response()->json(['storeExp'=>$storeExp,'message' => 'Saved'], 200);
 
 
     }
 
     public function myProfile($profile_id){
 
-        return view('userprofile.myProfile');
+
+        $decrypted = Crypt::decrypt($profile_id);
+
+        $editProfiles  = User::where('users.id',$decrypted)->first();
+
+        $exps =  User::join('user_exps as exp','exp.profile_id','=','users.id')
+        ->where('users.id',$decrypted)->get();
+
+        return view('userprofile.myProfile',['editProfiles' => $editProfiles,'exps'=>$exps]);
+
+        // return view('userprofile.myProfile');
 
     }
 
