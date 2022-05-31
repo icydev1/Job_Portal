@@ -38,29 +38,22 @@ class RegisterController extends Controller
 
         $saveData->save();
 
-        if (Auth::attempt(array('email' => $email, 'password' => $password)))
-        {
+        if (Auth::attempt(array('email' => $email, 'password' => $password))) {
 
-           return "login";
-
+            return "login";
+        } else {
+            return "fail";
         }
-        else
-        {
-             return "fail";
-
-        }
-
     }
 
 
 
-   public function logout()
+    public function logout()
     {
 
         Auth::logout();
 
         return "logout";
-
     }
 
     public function redirectToGoogle()
@@ -74,43 +67,43 @@ class RegisterController extends Controller
     }
 
 
-// Google callback
-public function loginWithGoogle()
-{
+    // Google callback
+    public function loginWithGoogle()
+    {
 
 
-    $user = Socialite::driver('google')->stateless()->user();
+        $user = Socialite::driver('google')->stateless()->user();
 
-    $this->_registerOrLoginUser($user);
+        $this->_registerOrLoginUser($user);
 
-    return redirect()->route('JobPortal.Index');
-}
+        return redirect()->route('JobPortal.Index');
+    }
 
-// Google callback
-public function loginWithFacebook()
-{
-
-
-    $user = Socialite::driver('facebook')->stateless()->user();
-
-    $this->_registerOrLoginUser($user);
-
-    return redirect()->route('JobPortal.Index');
-}
+    // Google callback
+    public function loginWithFacebook()
+    {
 
 
+        $user = Socialite::driver('facebook')->stateless()->user();
 
-protected function _registerOrLoginUser($data)
+        $this->_registerOrLoginUser($user);
+
+        return redirect()->route('JobPortal.Index');
+    }
+
+
+
+    protected function _registerOrLoginUser($data)
     {
 
         $user = User::where('email', '=', $data->email)->first();
         if (!$user) {
             $user = new User();
-            $user->name = $data->name;
-            $user->email = $data->email;
+            $user->name        = $data->name;
+            $user->email       = $data->email;
             $user->provider_id = $data->id;
-            $user->avatar = $data->avatar;
-            $user->password = bcrypt('123456');
+            $user->avatar      = $data->avatar;
+            $user->password    = bcrypt('123456');
             $user->save();
         }
 
@@ -118,21 +111,22 @@ protected function _registerOrLoginUser($data)
     }
 
 
-    public function editProfile($user_id){
+    public function editProfile($user_id)
+    {
 
         $decrypted = Crypt::decrypt($user_id);
 
-        $editProfiles  = User::where('users.id',$decrypted)->first();
+        $editProfiles  = User::where('users.id', $decrypted)->first();
 
-        $exps =  User::join('user_exps as exp','exp.profile_id','=','users.id')
-        ->where('users.id',$decrypted)->get();
+        $exps =  User::join('user_exps as exp', 'exp.profile_id', '=', 'users.id')
+            ->where('users.id', $decrypted)->get();
 
-        return view('userprofile.userProfile',['editProfiles' => $editProfiles,'exps'=>$exps]);
-
+        return view('userprofile.userProfile', ['editProfiles' => $editProfiles, 'exps' => $exps]);
     }
 
 
-    public function updateProfile(Request $request,$user_id){
+    public function updateProfile(Request $request, $user_id)
+    {
 
 
 
@@ -145,10 +139,9 @@ protected function _registerOrLoginUser($data)
             $new_name =  $request->file('user_avatar')->getClientOriginalName();
             $image->move(public_path('/uploads/user_profile'), $new_name);
             $resume = $new_name;
-        } else if(!empty($request->hidden_avatar)){
+        } else if (!empty($request->hidden_avatar)) {
             $avatar = $request->hidden_avatar;
-
-        }else{
+        } else {
             $resume = $request->hidden_image;
         }
 
@@ -160,38 +153,38 @@ protected function _registerOrLoginUser($data)
         $country    = $request->country;
         $state      = $request->state;
         $address    = $request->address;
-        $website   = $request->website_link;
-        $fb    = $request->fb_link;
-        $insta    = $request->insta_link;
-        $github    = $request->github_link;
+        $website    = $request->website_link;
+        $fb         = $request->fb_link;
+        $insta      = $request->insta_link;
+        $github     = $request->github_link;
         $twitter    = $request->twitter_link;
 
         $updateUser = [
 
-            'name' => $name,
-            'education' => $education,
-            'position' => $position,
-            'short_bio' => $bio,
-            'country' => $country,
-            'state' => $state,
-            'address'  => $address,
+            'name'          => $name,
+            'education'     => $education,
+            'position'      => $position,
+            'short_bio'     => $bio,
+            'country'       => $country,
+            'state'         => $state,
+            'address'       => $address,
             'website_link'  => $website,
-            'fb_link'  => $fb,
-            'insta_link'  => $insta,
-            'github_link'  => $github,
+            'fb_link'       => $fb,
+            'insta_link'    => $insta,
+            'github_link'   => $github,
             'twitter_link'  => $twitter,
-            'image'   => $user_image ?? '',
-            'avatar' => $avatar ?? '',
+            'image'         => $user_image ?? '',
+            'avatar'        => $avatar ?? '',
 
         ];
 
-        User::where('id',$user_id)->update($updateUser);
+        User::where('id', $user_id)->update($updateUser);
 
         return back();
-
     }
 
-      public function addExp(Request $request){
+    public function addExp(Request $request)
+    {
 
         // dd($request->all());
 
@@ -207,51 +200,43 @@ protected function _registerOrLoginUser($data)
 
         $storeExp = new UserExp([
 
-            'company_image' => $company_logo,
-            'company_name' => $request->get('company_name'),
+            'company_image'    => $company_logo,
+            'company_name'     => $request->get('company_name'),
             'company_position' => $request->get('company_designation'),
-            'company_from' => $request->get('start_date'),
-            'company_to' => $request->get('end_date'),
-            'profile_id' => $request->get('profile_id'),
-            'user_id' => Auth::id(),
+            'company_from'     => $request->get('start_date'),
+            'company_to'       => $request->get('end_date'),
+            'profile_id'       => $request->get('profile_id'),
+            'user_id'          => Auth::id(),
 
         ]);
 
         $storeExp->save();
 
-        return response()->json(['storeExp'=>$storeExp,'message' => 'Saved'], 200);
-
-
+        return response()->json(['storeExp' => $storeExp, 'message' => 'Saved'], 200);
     }
 
-    public function myProfile($profile_id){
+    public function myProfile($profile_id)
+    {
 
 
         $decrypted = Crypt::decrypt($profile_id);
 
-        $editProfile  = User::where('id',$decrypted)->first();
+        $editProfile  = User::where('id', $decrypted)->first();
 
-        $exps =  User::join('user_exps as exp','exp.profile_id','=','users.id')
-        ->where('users.id',$decrypted)->get();
+        $exps =  User::join('user_exps as exp', 'exp.profile_id', '=', 'users.id')
+            ->where('users.id', $decrypted)->get();
 
 
         // not used yet
-        $portfolios =  User::join('apply_job_posts as job','job.user_id','=','users.id')
-        ->where('users.id',$decrypted)
-        ->select('job.portfolio_website_link')
-        ->distinct()
-        ->get();
+        $portfolios =  User::join('apply_job_posts as job', 'job.user_id', '=', 'users.id')
+            ->where('users.id', $decrypted)
+            ->select('job.portfolio_website_link')
+            ->distinct()
+            ->get();
 
 
 
 
-        return view('userprofile.myProfile',['editProfile' => $editProfile,'exps'=>$exps,'portfolios'=>$portfolios]);
-
-
-
+        return view('userprofile.myProfile', ['editProfile' => $editProfile, 'exps' => $exps, 'portfolios' => $portfolios]);
     }
-
-
-    }
-
-
+}

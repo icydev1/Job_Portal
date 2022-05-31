@@ -134,7 +134,8 @@ class JobController extends Controller
 
 
 
-    public function editJobPost($job_id){
+    public function editJobPost($job_id)
+    {
 
 
 
@@ -146,15 +147,14 @@ class JobController extends Controller
             ->where('status', 0)
             ->get();
 
-        return view('job.editJobPost', ['jobShifts' => $jobShifts, 'jobCategory' => $jobCategory,'getJobDetails'=>$getJobDetails]);
-
+        return view('job.editJobPost', ['jobShifts' => $jobShifts, 'jobCategory' => $jobCategory, 'getJobDetails' => $getJobDetails]);
     }
 
 
-    public function updateJobPost(Request $request,$job_id) {
+    public function updateJobPost(Request $request, $job_id)
+    {
 
         dd($request->all());
-
     }
 
 
