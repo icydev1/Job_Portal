@@ -28,6 +28,11 @@ class CreateUsersTable extends Migration
             $table->string('state')->nullable();
             $table->longText('short_bio')->nullable();
             $table->longText('address')->nullable();
+            $table->string('website_link')->nullable();
+            $table->string('insta_link')->nullable();
+            $table->string('fb_link')->nullable();
+            $table->string('twitter_link')->nullable();
+            $table->string('github_link')->nullable();
             $table->string('provider_id')->nullable();
             $table->tinyInteger('is_subscribe')->nullable();
             $table->tinyInteger('status')->default('0')->nullable();

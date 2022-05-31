@@ -1,21 +1,32 @@
 @extends("layout.master")
 @section('content')
 
+
 <div class="row">
 <div class="container-job">
+
     @forelse ($jobusers as $jobuser)
+
+    @php $dcrypt  = Crypt::encrypt($jobuser->user_id);
+@endphp
     <div class="card-job">
         @if (!empty($jobuser->image))
         <div class="card-header-job">
-            <img src="{{asset('uploads/user_profile/'.$jobuser->image)}}" alt="rover" />
-        </div>
+            <a href="{{route('JobPortal.MyProfile',['profile_id'=>$dcrypt])}}">
+                <img src="{{asset('uploads/user_profile/'.$jobuser->image)}}" alt="rover" />
+            </a>
+            </div>
         @elseif(!empty($jobuser->avatar))
         <div class="card-header-job">
+            <a href="{{route('JobPortal.MyProfile',['profile_id'=>$dcrypt])}}">
             <img src="{{$jobuser->avatar}}" alt="rover" />
+        </a>
         </div>
         @else
         <div class="card-header-job">
-            <img src="{{asset('img/yourlogo.png')}}" alt="rover" />
+            <a href="{{route('JobPortal.MyProfile',['profile_id'=>$dcrypt])}}">
+            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="rover" />
+        </a>
         </div>
         @endif
 

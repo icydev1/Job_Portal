@@ -10,7 +10,7 @@
         {{-- @if (Auth::user()) --}}
 
 
-        <div class="row">
+        <div class="row mt-3">
             @forelse ($favLists as $favList)
                 {{-- <input type="hidden" id="removeList{{$favList->id}}" value="{{$favList->id}}" > --}}
                 <div class="col-md-5 zoom">

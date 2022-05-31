@@ -49,7 +49,7 @@
 
                     <a class="nav-item nav-link dropdown-toggle navbottom" href="#" id="navbarDropdownMenuLink"
                             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg"
+                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png"
                                 width="40" height="40" class="rounded-circle">
                         </a>
 
