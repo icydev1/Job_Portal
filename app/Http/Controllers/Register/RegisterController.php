@@ -219,14 +219,23 @@ protected function _registerOrLoginUser($data)
 
         $decrypted = Crypt::decrypt($profile_id);
 
-        $editProfiles  = User::where('users.id',$decrypted)->first();
+        $editProfile  = User::where('id',$decrypted)->first();
 
         $exps =  User::join('user_exps as exp','exp.profile_id','=','users.id')
         ->where('users.id',$decrypted)->get();
 
-        return view('userprofile.myProfile',['editProfiles' => $editProfiles,'exps'=>$exps]);
+        $portfolios =  User::join('apply_job_posts as job','job.user_id','=','users.id')
+        ->where('users.id',$decrypted)
+        ->select('job.portfolio_website_link')
+        ->distinct()
+        ->get();
 
-        // return view('userprofile.myProfile');
+
+
+
+        return view('userprofile.myProfile',['editProfile' => $editProfile,'exps'=>$exps,'portfolios'=>$portfolios]);
+
+
 
     }
 

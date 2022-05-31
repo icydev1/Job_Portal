@@ -747,7 +747,7 @@ span.removeBtn {
       font-size: 12px;
       font-weight: 600;
       letter-spacing: .08em;
-      text-transform: uppercase;
+      /* text-transform: uppercase; */
       text-decoration: none;
   }
   .list-group-item {
