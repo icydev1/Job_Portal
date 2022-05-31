@@ -34,7 +34,7 @@ class JobController extends Controller
 
 
         $getJobsLists = Job::orderBy('id', 'DESC')
-            ->where('status',0)
+            ->where('status', 0)
             ->get();
 
         $getFavJob = AddToWishList::where('user_id', Auth::id())
@@ -132,6 +132,32 @@ class JobController extends Controller
         return redirect()->route('JobPortal.Job');
     }
 
+
+
+    public function editJobPost($job_id){
+
+
+
+        $jobCategory = JobCategory::get();
+        $jobShifts   = JobShift::get();
+
+        $getJobDetails = Job::with(['getJobBenefits', 'getQualification', 'getResp'])
+            ->where('id', $job_id)
+            ->where('status', 0)
+            ->get();
+
+        return view('job.editJobPost', ['jobShifts' => $jobShifts, 'jobCategory' => $jobCategory,'getJobDetails'=>$getJobDetails]);
+
+    }
+
+
+    public function updateJobPost(Request $request,$job_id) {
+
+        dd($request->all());
+
+    }
+
+
     public function getJobDetail(Request $request, $job_id)
     {
 
@@ -140,7 +166,7 @@ class JobController extends Controller
 
         $getJobDetails = Job::with(['getJobBenefits', 'getQualification', 'getResp'])
             ->where('id', $job_id)
-            ->where('status',0)
+            ->where('status', 0)
             ->get();
 
         $jobShifts   = JobShift::get();
@@ -179,18 +205,16 @@ class JobController extends Controller
         $shiftId = $request->get('shiftId');
 
         // for insert  new  status by ajax
-        $exists = AddToWishList::
-        where('fav_job_id', $jobID)
-        ->where('user_id', Auth::id())
-        ->exists();
+        $exists = AddToWishList::where('fav_job_id', $jobID)
+            ->where('user_id', Auth::id())
+            ->exists();
 
 
         // for checking  update status by ajax
-        $alreadyExists =  AddToWishList::
-        where('fav_job_id', $jobID)
-        ->where('user_id', Auth::id())
-        ->where('status', 0)
-        ->exists();
+        $alreadyExists =  AddToWishList::where('fav_job_id', $jobID)
+            ->where('user_id', Auth::id())
+            ->where('status', 0)
+            ->exists();
 
         if (!$exists) {
 
@@ -203,8 +227,7 @@ class JobController extends Controller
 
             $storeWishList->save();
 
-            $count = AddToWishList::
-                where(['user_id' => Auth::id()])
+            $count = AddToWishList::where(['user_id' => Auth::id()])
                 ->where('status', 0)
                 ->count('fav_job_id');
 
@@ -214,13 +237,11 @@ class JobController extends Controller
 
             return "already added";
         } else {
-            $exists = AddToWishList::
-                where('fav_job_id', $jobID)
+            $exists = AddToWishList::where('fav_job_id', $jobID)
                 ->where('user_id', Auth::id())
                 ->update(['status' => 0]);
 
-            $count = AddToWishList::
-                where(['user_id' => Auth::id()])
+            $count = AddToWishList::where(['user_id' => Auth::id()])
                 ->where('status', 0)
                 ->count('fav_job_id');
 
@@ -234,11 +255,11 @@ class JobController extends Controller
         $id = $request->get('removeId');
 
         $RemoveFavList = AddToWishList::where('id', $id)
-                         ->update(['status' => 1]);
+            ->update(['status' => 1]);
 
         $count = AddToWishList::where(['user_id' => Auth::id()])
-                 ->where('status', 0)
-                 ->count('fav_job_id');
+            ->where('status', 0)
+            ->count('fav_job_id');
 
         return response()->json(['data' => $count, 'message' => 'delete'], 200);
     }
@@ -287,41 +308,37 @@ class JobController extends Controller
     }
 
 
-    public function getJobList(){
+    public function getJobList()
+    {
 
-        $myjobs = Job::where(['user_id'=>Auth::id(),'status'=>0])->get();
+        $myjobs = Job::where(['user_id' => Auth::id(), 'status' => 0])->get();
 
         $jobShifts = JobShift::get();
 
-        return view('job.jobApplyList',['myjobs'=>$myjobs,'jobShifts'=>$jobShifts]);
-
+        return view('job.jobApplyList', ['myjobs' => $myjobs, 'jobShifts' => $jobShifts]);
     }
 
-    public function getJobUserList($job_id){
+    public function getJobUserList($job_id)
+    {
 
-        $jobusers = User::join('apply_job_posts','apply_job_posts.user_id','=','users.id')
-        ->where('apply_job_id',$job_id)
-        ->orderBy('apply_job_posts.id','DESC')
-        ->get();
+        $jobusers = User::join('apply_job_posts', 'apply_job_posts.user_id', '=', 'users.id')
+            ->where('apply_job_id', $job_id)
+            ->orderBy('apply_job_posts.id', 'DESC')
+            ->get();
 
 
 
-        return view('job.jobUserList',['jobusers'=>$jobusers]);
-
+        return view('job.jobUserList', ['jobusers' => $jobusers]);
     }
 
-    public function deleteJob($delete_job_id){
+    public function deleteJob($delete_job_id)
+    {
 
-        Job::where('id',$delete_job_id)->update(['status'=>1]);
+        Job::where('id', $delete_job_id)->update(['status' => 1]);
 
         AddToWishList::where('fav_job_id', $delete_job_id)
-                         ->update(['status' => 1]);
+            ->update(['status' => 1]);
 
         return redirect()->route('JobPortal.Index');
-
-
     }
-
-
-
 }

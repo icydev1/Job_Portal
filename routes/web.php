@@ -57,6 +57,8 @@ Route::prefix('JobPortal')
         Route::get('/PostJob','postJob')->name('PostJob');
         Route::get('/GetJobDetail/{job_id}','getJobDetail')->name('GetJobDetail');
         Route::post('/StoreJobPost','storeJobPost')->name('StoreJobPost');
+        Route::get('/EditJobPost/{job_id}','editJobPost')->name('EditJobPost');
+        Route::post('/UpdateJobPost/{job_id}','updateJobPost')->name('UpdateJobPost');
         Route::get('/FavJobList','favJobList')->name('FavJobList');
         Route::post('/StoreFavJob','storeFavJob')->name('StoreFavJob');
         Route::post('/RemoveFavList','removeFavList')->name('RemoveFavList');

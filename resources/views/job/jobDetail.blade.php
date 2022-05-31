@@ -20,7 +20,7 @@
                                 <h3 class="mb-3">{{ $getJobDetail->job_name }}  <span class="dropdown">
                                     <span class="dropbtn"><i class="fas fa-edit"></i></span>
                                     <span class="dropdown-content">
-                                      <a href="#"><span><i class="fas fa-edit span-edit"></i></span></a>
+                                      <a href="{{route('JobPortal.EditJobPost',['job_id'=>$getJobDetail->id])}}"><span><i class="fas fa-edit span-edit"></i></span></a>
 
                                       <a href="{{route('JobPortal.DeleteJob',['delete_job_id'=>$getJobDetail->id])}}"><span><i class="fas fa-trash span-delete"></i></span></a>
                                     </span>
