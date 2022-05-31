@@ -63,6 +63,7 @@ Route::prefix('JobPortal')
         Route::post('/ApplyForJob','applyForJob')->name('ApplyForJob');
         Route::get('/GetJobList','getJobList')->name('GetJobList');
         Route::get('/GetJobUserList/{job_id}','getJobUserList')->name('GetJobUserList');
+        Route::get('/DeleteJob/{delete_job_id}','deleteJob')->name('DeleteJob');
 
 
      });

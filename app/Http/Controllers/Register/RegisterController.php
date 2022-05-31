@@ -160,6 +160,11 @@ protected function _registerOrLoginUser($data)
         $country    = $request->country;
         $state      = $request->state;
         $address    = $request->address;
+        $website   = $request->website_link;
+        $fb    = $request->fb_link;
+        $insta    = $request->insta_link;
+        $github    = $request->github_link;
+        $twitter    = $request->twitter_link;
 
         $updateUser = [
 
@@ -170,6 +175,11 @@ protected function _registerOrLoginUser($data)
             'country' => $country,
             'state' => $state,
             'address'  => $address,
+            'website_link'  => $website,
+            'fb_link'  => $fb,
+            'insta_link'  => $insta,
+            'github_link'  => $github,
+            'twitter_link'  => $twitter,
             'image'   => $user_image ?? '',
             'avatar' => $avatar ?? '',
 
@@ -224,6 +234,8 @@ protected function _registerOrLoginUser($data)
         $exps =  User::join('user_exps as exp','exp.profile_id','=','users.id')
         ->where('users.id',$decrypted)->get();
 
+
+        // not used yet
         $portfolios =  User::join('apply_job_posts as job','job.user_id','=','users.id')
         ->where('users.id',$decrypted)
         ->select('job.portfolio_website_link')

@@ -34,6 +34,7 @@ class JobController extends Controller
 
 
         $getJobsLists = Job::orderBy('id', 'DESC')
+            ->where('status',0)
             ->get();
 
         $getFavJob = AddToWishList::where('user_id', Auth::id())
@@ -139,6 +140,7 @@ class JobController extends Controller
 
         $getJobDetails = Job::with(['getJobBenefits', 'getQualification', 'getResp'])
             ->where('id', $job_id)
+            ->where('status',0)
             ->get();
 
         $jobShifts   = JobShift::get();
@@ -287,7 +289,7 @@ class JobController extends Controller
 
     public function getJobList(){
 
-        $myjobs = Job::where('user_id',Auth::id())->get();
+        $myjobs = Job::where(['user_id'=>Auth::id(),'status'=>0])->get();
 
         $jobShifts = JobShift::get();
 
@@ -307,6 +309,19 @@ class JobController extends Controller
         return view('job.jobUserList',['jobusers'=>$jobusers]);
 
     }
+
+    public function deleteJob($delete_job_id){
+
+        Job::where('id',$delete_job_id)->update(['status'=>1]);
+
+        AddToWishList::where('fav_job_id', $delete_job_id)
+                         ->update(['status' => 1]);
+
+        return redirect()->route('JobPortal.Index');
+
+
+    }
+
 
 
 }
