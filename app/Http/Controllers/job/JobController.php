@@ -154,7 +154,103 @@ class JobController extends Controller
     public function updateJobPost(Request $request, $job_id)
     {
 
-        dd($request->all());
+
+
+        if (!empty($request->hasfile('company_logo'))) {
+            $image    = request()->file('company_logo');
+            $new_name =  $request->file('company_logo')->getClientOriginalName();
+            $image->move(public_path('/uploads/company_logo'), $new_name);
+            $company_logo = $new_name;
+        } else {
+
+            $company_logo = $request->hidden_company_logo;
+        }
+
+
+
+        $updateData = [
+
+            'company_name'       => $request->company_name,
+            'company_email'      => $request->company_email,
+            'company_detail'     => $request->comp_detail,
+            'job_name'           => $request->job_name,
+            'job_description'    => $request->job_description,
+            'job_location'       => $request->job_location,
+            'job_salary'         => $request->salary,
+            'job_responsibility' => $request->resp_desc,
+            'job_qualification'  => $request->qualification_desc,
+            'job_benefit'        => $request->benefit_desc,
+            'job_vacancy'        => $request->job_vacancy,
+            'job_shift_id'       => $request->job_shift,
+            'job_category_id'    => $request->job_category,
+            'company_logo'       => $company_logo,
+
+        ];
+
+        Job::where('id', $job_id)->update($updateData);
+
+        if ($request->hidden_benefit) {
+
+
+            for ($i = 0; $i < count($request->hidden_benefit); $i++) {
+
+                JobBenefit::where('id', $request->benefit_id[$i])->update(['job_benefit_name' => $request->benefits_list_update[$i]]);
+            }
+        } else {
+        }
+        if ($request->hidden_resp) {
+
+
+            for ($i = 0; $i < count($request->hidden_resp); $i++) {
+
+                JobResponsibiltyList::where('id', $request->resp_id[$i])->update(['job_responsibilty_list' => $request->resp_list_update[$i]]);
+            }
+        } else {
+        }
+        if ($request->hidden_qual) {
+
+
+            for ($i = 0; $i < count($request->hidden_qual); $i++) {
+
+                JobQualificationList::where('id', $request->qual_id[$i])->update(['job_qualification_list' => $request->qualification_list_update[$i]]);
+            }
+        } else {
+        }
+
+        if ($request->benefits_list) {
+            foreach ($request->benefits_list as $key => $addBenefit) {
+
+                $saveBenefit = new JobBenefit();
+                $saveBenefit->job_id           = $job_id;
+                $saveBenefit->job_benefit_name = $request->benefits_list[$key];
+                $saveBenefit->save();
+            }
+        } else {
+        }
+
+        if ($request->resp_list) {
+            for ($i = 0; $i < count($request->resp_list); $i++) {
+
+                $saveRespList = new JobResponsibiltyList();
+                $saveRespList->job_id                 = $job_id;
+                $saveRespList->job_responsibilty_list = $request->resp_list[$i];
+                $saveRespList->save();
+            }
+        } else {
+        }
+
+
+        if ($request->qualification_list) {
+            foreach ($request->qualification_list as $key => $addQual) {
+
+                $saveQualList = new JobQualificationList();
+                $saveQualList->job_id                 = $job_id;
+                $saveQualList->job_qualification_list = $request->qualification_list[$key];
+                $saveQualList->save();
+            }
+        } else {
+        }
+        return back();
     }
 
 

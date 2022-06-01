@@ -59,11 +59,13 @@
 
                             <div>
                                 @foreach ($getJobDetail->getResp as $getRespList)
+                                <input type="hidden" name="resp_id[]" value="{{$getRespList->id}}">
+                                        <input type="hidden" name="hidden_resp[]" value="Resp">
                                     <div class="row mt-2">
                                         <div class="col-md-11">
                                             <input type="text" value="{{ $getRespList->job_responsibilty_list }}"
                                                 class="form-control" placeholder="Add Responsibilty List"
-                                                name="resp_list[]" value="">
+                                                name="resp_list_update[]" >
                                         </div>
                                         <div class="col-md-1  zoom"><span class="removeBtn"><i
                                                     class="fa fa-trash"></i></span>
@@ -88,6 +90,24 @@
                                     name="qualification_desc">{{ $getJobDetail->job_qualification }}</textarea>
                             </div>
 
+
+                            <div>
+                                @foreach ($getJobDetail->getQualification as $getQuali)
+                                       <input type="hidden" name="qual_id[]" value="{{$getQuali->id}}">
+                                        <input type="hidden" name="hidden_qual[]" value="Qualification">
+                                    <div class="row mt-2">
+                                        <div class="col-md-11">
+                                            <input type="text" value="{{ $getQuali->job_qualification_list }}"
+                                                class="form-control" placeholder="Add Qualification List"
+                                                name="qualification_list_update[]" value="">
+                                        </div>
+                                        <div class="col-md-1  zoom"><span class="removeBtn"><i
+                                                    class="fa fa-trash"></i></span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
                             <div id="addMoreQualification"></div>
 
 
@@ -101,6 +121,23 @@
                             <div class="col-md-12"><label class="labels">Benefits</label>
                                 <textarea type="text" class="form-control" placeholder="Benefits"
                                     name="benefit_desc">{{ $getJobDetail->job_benefit }}</textarea>
+                            </div>
+
+                            <div>
+                                @foreach ($getJobDetail->getJobBenefits as $getBenefits)
+                                    <div class="row mt-2">
+                                        <input type="hidden" name="benefit_id[]" value="{{$getBenefits->id}}">
+                                        <input type="hidden" name="hidden_benefit[]" value="benefits">
+                                        <div class="col-md-11">
+                                            <input type="text" value="{{ $getBenefits->job_benefit_name }}"
+                                                class="form-control" placeholder="Add Benefits List"
+                                                name="benefits_list_update[]" >
+                                        </div>
+                                        <div class="col-md-1  zoom"><span class="removeBtn"><i
+                                                    class="fa fa-trash"></i></span>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
 
                             <div id="addMoreBenefit"></div>

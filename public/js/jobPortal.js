@@ -32,9 +32,15 @@ $('#addMoreResp').append('<div class="row mt-2" id="clearResp'+x+'"> <div class=
 
 function removeResp(x){
 
+
+
 let removeRes = document.getElementById('clearResp'+x)
 
+
+
 removeRes.remove();
+
+
 
 }
 

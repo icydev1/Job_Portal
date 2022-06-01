@@ -17,18 +17,26 @@
                                     alt="" style="width: 80px; height: 80px;">
                             @endif
                             <div class="text-start ps-4">
-                                <h3 class="mb-3">{{ $getJobDetail->job_name }}  <span class="dropdown">
-                                    <span class="dropbtn"><i class="fas fa-edit"></i></span>
-                                    <span class="dropdown-content">
-                                      <a href="{{route('JobPortal.EditJobPost',['job_id'=>$getJobDetail->id])}}"><span><i class="fas fa-edit span-edit"></i></span></a>
 
-                                      <a href="{{route('JobPortal.DeleteJob',['delete_job_id'=>$getJobDetail->id])}}"><span><i class="fas fa-trash span-delete"></i></span></a>
-                                    </span>
-                                  </span>
-                                </h3>
+                                @if(DB::table('jobs')->where(['id'=>$getJobDetail->id,'user_id'=> Auth::id()])->exists())
 
 
 
+                                    <h3 class="mb-3">{{ $getJobDetail->job_name }}  <span class="dropdown">
+                                        <span class="dropbtn"><i class="fas fa-edit"></i></span>
+                                        <span class="dropdown-content">
+                                          <a href="{{route('JobPortal.EditJobPost',['job_id'=>$getJobDetail->id])}}"><span><i class="fas fa-edit span-edit"></i></span></a>
+
+                                          <a href="{{route('JobPortal.DeleteJob',['delete_job_id'=>$getJobDetail->id])}}"><span><i class="fas fa-trash span-delete"></i></span></a>
+                                        </span>
+                                      </span>
+                                    </h3>
+
+                                @else
+                                <h3 class="mb-3">{{ $getJobDetail->job_name }} </h3>
+
+
+                                @endif
 
                                 <span class="text-truncate me-3"><i
                                         class="fa fa-map-marker-alt text-primary me-2"></i>{{ $getJobDetail->job_location }}</span>
