@@ -64,6 +64,10 @@ Route::prefix('JobPortal')
         Route::get('/GetJobList', 'getJobList')->name('GetJobList');
         Route::get('/GetJobUserList/{job_id}', 'getJobUserList')->name('GetJobUserList');
         Route::get('/DeleteJob/{delete_job_id}', 'deleteJob')->name('DeleteJob');
+
+        Route::post('/DeleteResp', 'deleteResp')->name('DeleteResp');
+        Route::post('/DeleteQual', 'deleteQual')->name('DeleteQual');
+        Route::post('/DeleteBenefit', 'deleteBenefit')->name('DeleteBenefit');
     });
 Route::prefix('JobPortal')
     ->as('JobPortal.')
@@ -91,6 +95,8 @@ Route::prefix('JobPortal')
         Route::get('MyProfile/{profile_id}', 'myProfile')->name('MyProfile');
         Route::post('UpdateProfile/{user_id}', 'updateProfile')->name('UpdateProfile');
         Route::post('AddExp', 'addExp')->name('AddExp');
+        Route::post('UpdateExp', 'updateExp')->name('UpdateExp');
+        Route::post('DeleteExp', 'deleteExp')->name('DeleteExp');
     });
 //  Route::get('/auth/google/callback',[RegisterController::class,'loginWithGoogle']);
 Route::prefix('JobPortal')

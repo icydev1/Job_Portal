@@ -121,7 +121,23 @@ function downloadResume($id){
 // end  add logo image
 
 
+// add toggle in modal
 
+    function switchToggle (x) {
+      x.classList.toggle("fa-toggle-on");
+      let y = document.getElementById('hideDate')
+      let z = document.getElementById('showTillDate')
+      if(y.style.display == "block"){
+        z.style.display = "block"
+        y.style.display = "none"
+      }else{
+        y.style.display = "block"
+        z.style.display = "none"
+      }
+
+    }
+
+    // end toggle in modal
 
 
 

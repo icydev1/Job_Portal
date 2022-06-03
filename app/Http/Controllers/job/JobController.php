@@ -250,7 +250,7 @@ class JobController extends Controller
             }
         } else {
         }
-        return back();
+        return redirect()->route('JobPortal.GetJobDetail',['job_id'=>$job_id]);
     }
 
 
@@ -293,8 +293,6 @@ class JobController extends Controller
 
     public function storeFavJob(Request $request)
     {
-
-
 
         $jobID   = $request->get('jobID');
         $cat     = $request->get('cat');
@@ -422,8 +420,6 @@ class JobController extends Controller
             ->orderBy('apply_job_posts.id', 'DESC')
             ->get();
 
-
-
         return view('job.jobUserList', ['jobusers' => $jobusers]);
     }
 
@@ -437,4 +433,31 @@ class JobController extends Controller
 
         return redirect()->route('JobPortal.Index');
     }
+
+    public function deleteResp(Request $request)
+
+    {
+        $id = $request->get('removeRespId');
+           JobResponsibiltyList::where('id',$id)->delete();
+
+           return response()->json(['message' => 'delete'], 200);
+
+    }
+
+    public function deleteQual(Request $request)
+    {
+        $id = $request->get('removeQualId');
+        JobQualificationList::where('id',$id)->delete();
+
+        return response()->json(['message' => 'delete'], 200);
+    }
+
+    public function deleteBenefit(Request $request)
+    {
+        $id = $request->get('removeBenefitId');
+        JobBenefit::where('id',$id)->delete();
+
+        return response()->json(['message' => 'delete'], 200);
+    }
+
 }

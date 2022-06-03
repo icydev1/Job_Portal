@@ -59,15 +59,16 @@
 
                             <div>
                                 @foreach ($getJobDetail->getResp as $getRespList)
-                                <input type="hidden" name="resp_id[]" value="{{$getRespList->id}}">
+
+                                    <div class="row mt-2" id="clearResp{{$getRespList->id}}" >
+                                        <input type="hidden" name="resp_id[]" value="{{$getRespList->id}}">
                                         <input type="hidden" name="hidden_resp[]" value="Resp">
-                                    <div class="row mt-2">
                                         <div class="col-md-11">
                                             <input type="text" value="{{ $getRespList->job_responsibilty_list }}"
                                                 class="form-control" placeholder="Add Responsibilty List"
                                                 name="resp_list_update[]" >
                                         </div>
-                                        <div class="col-md-1  zoom"><span class="removeBtn"><i
+                                        <div class="col-md-1  zoom"><span onclick="deleteResp({{$getRespList->id}})" class="removeBtn"><i
                                                     class="fa fa-trash"></i></span>
                                         </div>
                                     </div>
@@ -93,15 +94,15 @@
 
                             <div>
                                 @foreach ($getJobDetail->getQualification as $getQuali)
-                                       <input type="hidden" name="qual_id[]" value="{{$getQuali->id}}">
-                                        <input type="hidden" name="hidden_qual[]" value="Qualification">
-                                    <div class="row mt-2">
+                                <div class="row mt-2" id="clearQual{{$getQuali->id}}">
+                                        <input type="hidden" name="qual_id[]" value="{{$getQuali->id}}">
+                                         <input type="hidden" name="hidden_qual[]" value="Qualification">
                                         <div class="col-md-11">
                                             <input type="text" value="{{ $getQuali->job_qualification_list }}"
                                                 class="form-control" placeholder="Add Qualification List"
                                                 name="qualification_list_update[]" value="">
                                         </div>
-                                        <div class="col-md-1  zoom"><span class="removeBtn"><i
+                                        <div class="col-md-1  zoom"><span onclick="deleteQual({{$getQuali->id}})" class="removeBtn"><i
                                                     class="fa fa-trash"></i></span>
                                         </div>
                                     </div>
@@ -125,7 +126,7 @@
 
                             <div>
                                 @foreach ($getJobDetail->getJobBenefits as $getBenefits)
-                                    <div class="row mt-2">
+                                    <div class="row mt-2" id="clearBenefit{{$getBenefits->id}}">
                                         <input type="hidden" name="benefit_id[]" value="{{$getBenefits->id}}">
                                         <input type="hidden" name="hidden_benefit[]" value="benefits">
                                         <div class="col-md-11">
@@ -133,7 +134,7 @@
                                                 class="form-control" placeholder="Add Benefits List"
                                                 name="benefits_list_update[]" >
                                         </div>
-                                        <div class="col-md-1  zoom"><span class="removeBtn"><i
+                                        <div class="col-md-1  zoom"><span onclick="deleteBenefit({{$getBenefits->id}})" class="removeBtn"><i
                                                     class="fa fa-trash"></i></span>
                                         </div>
                                     </div>

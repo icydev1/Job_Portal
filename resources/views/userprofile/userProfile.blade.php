@@ -184,7 +184,8 @@
                     @foreach ($exps as $exp)
                         @php $crypt = Crypt::encrypt($editProfiles->id);
                         @endphp
-                        <a href="{{ route('JobPortal.MyProfile', ['profile_id' => $crypt]) }}">
+                        {{-- <a href="{{ route('JobPortal.MyProfile', ['profile_id' => $crypt]) }}"> --}}
+                        <a id="clearExp{{$exp->id}}" href="javascript:void(0)">
                             <div class="d-flex flex-row mt-3 exp-container">
                                 @if (!empty($exp->company_image))
                                     <img class="p-0"
@@ -195,13 +196,18 @@
                                 @endif
 
                                 <div class="work-experience ml-1"><span
-                                        class="font-weight-bold d-block">{{ $exp->company_position }}</span><span
+                                        class="font-weight-bold d-block">{{ $exp->company_position }}<span style="position: absolute; right: 175px;"><span data-toggle="modal" data-target="#editExpModal{{$exp->id}}"><i class="fas fa-edit span-edit"></i></span>&nbsp;&nbsp;<span onclick="deleteExp({{$exp->id}});"><i class="fas fa-trash span-delete"></i></span>
+
+                                    </span>
+                                        <span
                                         class="d-block text-black-50 labels">{{ $exp->company_name }}</span><span
                                         class="d-block text-black-50 labels">{{ $exp->company_from }} -
-                                        {{ $exp->company_to ?? 'Till Date' }}</span></div>
+                                        {{ $exp->company_to ?? 'Till Date' }}</span>
+                                    </div>
                             </div>
+                            <hr>
                         </a>
-                        <hr>
+
                     @endforeach
                 </div>
 
@@ -252,8 +258,10 @@
                                         <input type="date" id="startDate" name="start_date" class="form-control">
                                     </div>
                                     <div class="col-md-6">
-                                        <label>Last date of Leaving</label>
-                                        <input type="date" id="endDate" name="end_date" class="form-control">
+                                        <label>Last date of Leaving <span><i onclick="switchToggle(this)" class="fas fa-toggle-off"></i></span></label>
+                                       <span id="hideDate" style="display: block"><input type="date" id="endDate" name="end_date" class="form-control"></span>
+
+                                       <span id="showTillDate" style="display: none"><input type="text" id="endTillDate" name="end_till_date" value="Till Date" placeholder="Till Date" class="form-control"></span>
 
                                     </div>
                                 </div>
@@ -292,6 +300,108 @@
 
     {{-- end modal for add Experience --}}
 
+    {{-- for update experience --}}
+    <div id="refreshExpModal">
+    @foreach ($exps as $exp)
+    <div class="modal fade" id="editExpModal{{$exp->id}}" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content login-modal">
+                <div class="modal-header login-modal-header">
+
+                    <h4 class="modal-title text-center" id="loginModalLabel">Edit Experience</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form id="updateForm{{$exp->id}}">
+                        <div class="container">
+                            <div class="text-center">
+
+                                <div class="row">
+                                    <div id="lastCompanyName" class="col-md-6">
+                                        <label>Company Name</label>
+                                        <input id="profileId" type="hidden" name="exp_id"
+                                            value="{{ $exp->id }}">
+                                        <input type="text" value="{{$exp->company_name}}" id="companyName" name="company_name" class="form form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Designation</label>
+                                        <input type="text" id="companyDesignation" value="{{$exp->company_position}}" name="company_designation"
+                                            class="form-control">
+
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div id="lastCompanyName" class="col-md-6">
+                                        <label>Date of Joining</label>
+                                        <input type="text" id="startDate" value="{{$exp->company_from}}" name="start_date" class="form-control">
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <label>Last date of Leaving</label>
+
+                                        <input type="text" id="endDate" value="{{$exp->company_to}}" name="end_date" class="form-control">
+
+                                    </div>
+
+                                </div>
+                                <input type="hidden" name="hidden_company_logo" value="{{$exp->company_image}}">
+                              @if(!empty($exp->company_image))
+                                <div class="row mt-3">
+                                    <div id="lastCompanyName" class="col-md-6">
+                                        <label >Choose File</label>
+                                        <input onclick="changeImage({{$exp->id}})" id="inputCompLogo{{$exp->id}}" type="file" name="company_logo" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 mt-3">
+
+                                        <img width="45" height="45" id="outputCompLogo{{$exp->id}}"
+                                            src="{{asset('uploads/company_logo/'.$exp->company_image)}}">
+
+                                    </div>
+                                </div>
+
+                                @else
+
+                                <div class="row mt-3">
+                                    <div id="lastCompanyName" class="col-md-6">
+                                        <label>Choose File</label>
+                                        <input onclick="changeImage({{$exp->id}})" id="inputCompLogo{{$exp->id}}" type="file" name="company_logo" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 mt-3">
+
+                                        <img width="45" height="45" id="outputCompLogo{{$exp->id}}"
+                                            src="https://img.icons8.com/color/50/000000/google-logo.png">
+
+                                    </div>
+                                </div>
+
+                                @endif
+
+                                <div class="row mt-3">
+                                    <div class="col-md-6"><button onclick="updateExp({{$exp->id}})" class="btn btn-success"
+                                            type="button">Update</button></div>
+                                    <div class="col-md-6"><button type="button" class="btn btn-danger close"
+                                            data-dismiss="modal" aria-label="Close">Cancel</button></div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    @endforeach
+    </div>
+
+    {{-- end modal for update Experience --}}
+
 
     <script>
         // add user image
@@ -320,4 +430,26 @@
 
         // end  comp image
     </script>
+
+    <script>
+
+
+function changeImage($id){
+
+    let id = $id;
+
+    document.getElementById('inputCompLogo'+id).onchange = function() {
+            var file = this.files[0]
+            var src = URL.createObjectURL(this.files[0])
+            document.getElementById('outputCompLogo'+id).src = src
+
+        }
+
+}
+
+    </script>
+
+
+
+
 @endsection

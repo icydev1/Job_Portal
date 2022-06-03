@@ -17,6 +17,7 @@ class Job extends Model
 
         return $this->hasMany(JobBenefit::class,'job_id');
 
+
     }
 
     public function getQualification(){

@@ -210,9 +210,7 @@ function addWishList($id) {
     let path = $("#namePath").data("path");
     let url = `${base_url}${path}/StoreFavJob`;
 
-    // console.log(jobID,cat,shiftId);
 
-    // return false;
     $.ajax({
         type: "POST",
         url: url,
@@ -246,7 +244,7 @@ function addWishList($id) {
 
 function removeList($id) {
     let removeId = $id;
-    // let removeId = $('#removeList'+id).val();
+
 
     let path = $("#namePath").data("path");
     let url = `${base_url}${path}/RemoveFavList`;
@@ -309,9 +307,7 @@ function addExp() {
                 $("body").removeClass("modal-open");
                 $(".modal-backdrop").remove();
                 $('#refreshExp').load(' #refreshExp > *')
-
-
-
+                $('#refreshExpModal').load(' #refreshExpModal > *')
 
 
             }else{
@@ -325,3 +321,189 @@ function addExp() {
 }
 
 // end experience in profile
+// update experience in profile
+
+function updateExp($id) {
+
+    let updateID = $id;
+
+    let formData=new FormData($('#updateForm'+updateID)[0]);
+
+    let path = $("#namePath").data("path");
+    let url = `${base_url}${path}/UpdateExp`;
+
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: formData,
+
+        contentType:false,
+        processData:false,
+        dataType:'json',
+
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (response) {
+
+
+
+            if(response.messge = "Saved"){
+
+                // $("#storeForm")[0].reset();
+                $("#expModal").hide();
+                $("body").removeClass("modal-open");
+                $(".modal-backdrop").remove();
+                $('#refreshExp').load(' #refreshExp > *')
+                $('#refreshExpModal').load(' #refreshExpModal > *')
+
+
+            }else{
+                alert('Not saved')
+            }
+
+
+
+        },
+    });
+}
+
+// end update experience in profile
+
+
+//remove resp
+
+function deleteResp($id) {
+    let removeRespId = $id;
+
+    let path = $("#namePath").data("path");
+    let url = `${base_url}${path}/DeleteResp`;
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+            removeRespId: removeRespId,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (response) {
+
+            if(response.message == "delete"){
+
+                $('#clearResp'+removeRespId).remove();
+
+            }else{
+                alert('not deleted');
+            }
+
+        },
+    });
+}
+
+//end remove resp
+
+
+//remove Qual
+
+function deleteQual($id) {
+    let removeQualId = $id;
+
+    let path = $("#namePath").data("path");
+    let url = `${base_url}${path}/DeleteQual`;
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+            removeQualId: removeQualId,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (response) {
+
+            if(response.message == "delete"){
+
+                $('#clearQual'+removeQualId).remove();
+
+            }else{
+                alert('not deleted');
+            }
+
+        },
+    });
+}
+
+//end remove Qual
+
+//remove benefit
+
+function deleteBenefit($id) {
+    let removeBenefitId = $id;
+
+    let path = $("#namePath").data("path");
+    let url = `${base_url}${path}/DeleteBenefit`;
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+            removeBenefitId: removeBenefitId,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (response) {
+
+            if(response.message == "delete"){
+
+                $('#clearBenefit'+removeBenefitId).remove();
+
+            }else{
+                alert('not deleted');
+            }
+
+        },
+    });
+}
+
+//end remove benefit
+
+
+//remove benefit
+
+function deleteExp($id) {
+    let removeExpId = $id;
+
+    let path = $("#namePath").data("path");
+    let url = `${base_url}${path}/DeleteExp`;
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+            removeExpId: removeExpId,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (response) {
+
+            if(response.message == "delete"){
+
+                $('#clearExp'+removeExpId).remove();
+
+            }else{
+                alert('not deleted');
+            }
+
+        },
+    });
+}
+
+//end remove benefit
+
+

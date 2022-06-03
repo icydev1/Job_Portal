@@ -60,7 +60,7 @@
                         <a class="dropdown-item" href="{{route('JobPortal.MyProfile',['profile_id'=>$dcrypt])}}">My Profile</a>
 
                         <a class="dropdown-item" href="{{route('JobPortal.EditProfile',['user_id'=>$dcrypt])}}">Edit Profile</a>
-                        <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal" href="#">Log Out</a>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal" href="javascript:void(0)">Log Out</a>
                     </div>
 
                 @endif
@@ -74,7 +74,7 @@
                 <a href="{{route('JobPortal.PostJob')}}" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block loginAjax">Post A Job<i
                         class="fa fa-arrow-right ms-3"></i></a>
             @else
-                <a href="#" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block loginAjax"
+                <a href="javascript:void(0)" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block loginAjax"
                     data-toggle="modal" data-target="#loginModal">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
             @endif
         </div>
@@ -312,3 +312,6 @@
 
 
 <!-- - Login Model Ends Here -->
+
+
+

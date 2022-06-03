@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Register;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserExp;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -114,12 +113,12 @@ class RegisterController extends Controller
     public function editProfile($user_id)
     {
 
-        $decrypted = Crypt::decrypt($user_id);
+        $decrypted     = Crypt::decrypt($user_id);
 
         $editProfiles  = User::where('users.id', $decrypted)->first();
 
-        $exps =  User::join('user_exps as exp', 'exp.profile_id', '=', 'users.id')
-            ->where('users.id', $decrypted)->get();
+        $exps          = User::join('user_exps as exp', 'exp.profile_id', '=', 'users.id')
+                         ->where('users.id', $decrypted)->get();
 
         return view('userprofile.userProfile', ['editProfiles' => $editProfiles, 'exps' => $exps]);
     }
@@ -127,11 +126,6 @@ class RegisterController extends Controller
 
     public function updateProfile(Request $request, $user_id)
     {
-
-
-
-
-
 
 
         if (!empty($request->hasfile('user_avatar'))) {
@@ -186,7 +180,6 @@ class RegisterController extends Controller
     public function addExp(Request $request)
     {
 
-        // dd($request->all());
 
 
         if ($request->hasFile('company_logo')) {
@@ -198,13 +191,20 @@ class RegisterController extends Controller
             $company_logo = "";
         }
 
+        if (!empty($request->end_date)) {
+
+            $date = $request->get('end_date');
+        } else {
+            $date = $request->get('end_till_date');
+        }
+
         $storeExp = new UserExp([
 
             'company_image'    => $company_logo,
             'company_name'     => $request->get('company_name'),
             'company_position' => $request->get('company_designation'),
             'company_from'     => $request->get('start_date'),
-            'company_to'       => $request->get('end_date'),
+            'company_to'       => $date,
             'profile_id'       => $request->get('profile_id'),
             'user_id'          => Auth::id(),
 
@@ -213,6 +213,35 @@ class RegisterController extends Controller
         $storeExp->save();
 
         return response()->json(['storeExp' => $storeExp, 'message' => 'Saved'], 200);
+    }
+
+    public function updateExp(Request $request)
+    {
+
+
+        if (!empty($request->hasFile('company_logo'))) {
+            $image    = request()->file('company_logo');
+            $new_name =  $request->file('company_logo')->getClientOriginalName();
+            $image->move(public_path('/uploads/company_logo'), $new_name);
+            $company_logo = $new_name;
+        } else {
+            $company_logo = $request->get('hidden_company_logo');
+        }
+
+
+        $updateExp = [
+
+            'company_image'    => $company_logo,
+            'company_name'     => $request->get('company_name'),
+            'company_position' => $request->get('company_designation'),
+            'company_from'     => $request->get('start_date'),
+            'company_to'       => $request->get('end_date'),
+
+        ];
+
+        UserExp::where('id', $request->get('exp_id'))->update($updateExp);
+
+        return response()->json(['message' => 'Saved'], 200);
     }
 
     public function myProfile($profile_id)
@@ -238,5 +267,15 @@ class RegisterController extends Controller
 
 
         return view('userprofile.myProfile', ['editProfile' => $editProfile, 'exps' => $exps, 'portfolios' => $portfolios]);
+    }
+
+    public function deleteExp(Request $request)
+    {
+
+        $id = $request->get('removeExpId');
+
+        UserExp::where('id', $id)->delete();
+
+        return response()->json(['message' => 'delete'], 200);
     }
 }
