@@ -196,7 +196,7 @@
                                 @endif
 
                                 <div class="work-experience ml-1"><span
-                                        class="font-weight-bold d-block">{{ $exp->company_position }}<span style="position: absolute; right: 175px;"><span data-toggle="modal" data-target="#editExpModal{{$exp->id}}"><i class="fas fa-edit span-edit"></i></span>&nbsp;&nbsp;<span onclick="deleteExp({{$exp->id}});"><i class="fas fa-trash span-delete"></i></span>
+                                        class="font-weight-bold d-block">{{ $exp->company_position }}<span style="position: absolute; right: 175px;"><span data-toggle="modal" data-target="#editExpModal{{$exp->id}}"><i class="fas fa-edit span-edit"></i></span>&nbsp;&nbsp;<span data-toggle="modal" data-target="#deleteExpModal{{$exp->id}}" ><i class="fas fa-trash span-delete"></i></span>
 
                                     </span>
                                         <span
@@ -397,6 +397,35 @@
 
         </div>
     </div>
+
+
+    <div class="modal fade" id="deleteExpModal{{$exp->id}}" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content login-modal">
+            <div class="modal-header login-modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-center" id="loginModalLabel">Are You Sure To Delete.?</h4>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+
+                    <div class="row">
+                        <div onclick="deleteExp({{$exp->id}});" class="col-md-6"><button class="btn btn-danger"
+                                type="button">Yes</button></div>
+                        <div class="col-md-6"><button type="button" class="btn btn-success close"
+                                data-dismiss="modal" aria-label="Close">NO</button></div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
     @endforeach
     </div>
 

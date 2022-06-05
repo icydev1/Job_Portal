@@ -27,12 +27,6 @@ class JobController extends Controller
 
         $jobShifts = JobShift::get();
 
-        $value = [];
-        foreach ($jobShifts as $val) {
-            $value[] = $val->id;
-        }
-
-
         $getJobsLists = Job::orderBy('id', 'DESC')
             ->where('status', 0)
             ->get();
@@ -458,6 +452,19 @@ class JobController extends Controller
         JobBenefit::where('id',$id)->delete();
 
         return response()->json(['message' => 'delete'], 200);
+    }
+
+
+    public function rejectApp(Request $request){
+
+        dd($request->all());
+
+    }
+
+    public function acceptApp(Request $request){
+
+        dd($request->all());
+
     }
 
 }

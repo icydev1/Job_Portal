@@ -51,10 +51,13 @@
                 <div  onclick="downloadResume({{$jobuser->id}})"  class="col-md-12 btn-primary resume tag tag-teal">Download Resume</div>
             </div>
 
+            <div class="row mt-2 px-4">
+                <div class="col-md-12"><b>Accept Request For Interview</b></div>
+            </div>
 
             <div class="row mt-2">
-                <div class="col-md-6 btn-danger reject">Reject</div>
-                <div class="col-md-6 btn-primary hired">Hired</div>
+                <div class="col-md-6 btn-danger reject"><span onclick="rejectApp('{{$jobuser->id}}')">Reject</span></div>
+                <div class="col-md-6 btn-primary hired"><span onclick="acceptApp('{{$jobuser->id}}')">Accept</span></div>
             </div>
 
         </div>

@@ -1,4 +1,7 @@
 
+
+
+
 $(document).ready(function(){
 	$(document).on('click','.signup-tab',function(e){
 		e.preventDefault();
@@ -138,6 +141,7 @@ function downloadResume($id){
     }
 
     // end toggle in modal
+
 
 
 

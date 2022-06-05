@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Auth::routes();
+// Auth::routes();
 
 Route::prefix('JobPortal')
     ->as('JobPortal.')
@@ -68,6 +68,8 @@ Route::prefix('JobPortal')
         Route::post('/DeleteResp', 'deleteResp')->name('DeleteResp');
         Route::post('/DeleteQual', 'deleteQual')->name('DeleteQual');
         Route::post('/DeleteBenefit', 'deleteBenefit')->name('DeleteBenefit');
+        Route::post('/RejectApp', 'rejectApp')->name('RejectApp');
+        Route::post('/AcceptApp', 'acceptApp')->name('AcceptApp');
     });
 Route::prefix('JobPortal')
     ->as('JobPortal.')
@@ -90,6 +92,8 @@ Route::prefix('JobPortal')
 
         Route::get('/facebook', 'redirectToFacebook')->name('Facebook');
         Route::get('/fbcallback', 'loginWithFacebook');
+
+
 
         Route::get('EditProfile/{user_id}', 'editProfile')->name('EditProfile');
         Route::get('MyProfile/{profile_id}', 'myProfile')->name('MyProfile');

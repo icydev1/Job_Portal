@@ -352,7 +352,7 @@ function updateExp($id) {
             if(response.messge = "Saved"){
 
                 // $("#storeForm")[0].reset();
-                $("#expModal").hide();
+                $("#editExpModal"+updateID).hide();
                 $("body").removeClass("modal-open");
                 $(".modal-backdrop").remove();
                 $('#refreshExp').load(' #refreshExp > *')
@@ -494,6 +494,9 @@ function deleteExp($id) {
 
             if(response.message == "delete"){
 
+                $("#deleteExpModal"+removeExpId).hide();
+                $("body").removeClass("modal-open");
+                $(".modal-backdrop").remove();
                 $('#clearExp'+removeExpId).remove();
 
             }else{
@@ -506,4 +509,70 @@ function deleteExp($id) {
 
 //end remove benefit
 
+//reject application
+
+function rejectApp($id) {
+
+    let reject = $id;
+
+    let path = $("#namePath").data("path");
+    let url = `${base_url}${path}/RejectApp`;
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+            reject: reject,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+
+
+        success: function (response) {
+
+
+
+        },
+    });
+
+
+
+
+}
+
+//end reject application
+//accept application
+
+function accept($id) {
+
+    let accept = $id;
+
+    let path = $("#namePath").data("path");
+    let url = `${base_url}${path}/AcceptApp`;
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+            accept: accept,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+
+
+        success: function (response) {
+
+
+
+        },
+    });
+
+
+
+
+}
+
+//end accept application
 

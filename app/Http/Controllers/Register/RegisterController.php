@@ -278,4 +278,5 @@ class RegisterController extends Controller
 
         return response()->json(['message' => 'delete'], 200);
     }
+
 }

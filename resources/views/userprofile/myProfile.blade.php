@@ -23,16 +23,22 @@
                     @endif
 
                     <div class="mt-3">
-                        @if (DB::table('apply_job_posts')->where('user_id',$editProfile->id)->exists())
-                        <h4>{{$editProfile->name}}</h4>
-                        @else
+                        @if (DB::table('users')->where(['id'=>$editProfile->id,'name'=>Auth::user()->name])->exists())
                         <h4>{{$editProfile->name}}  <a href="{{route('JobPortal.EditProfile',['user_id'=>$dcrypt])}}"><span><i class="fas fa-edit"></i></span></a> </h4>
+                        @else
+                        <h4>{{$editProfile->name}}</h4>
                         @endif
 
                       <p class="text-secondary mb-1">{{$editProfile->position ?? 'No Position Added Yet'}}</p>
                       <p class="text-muted font-size-sm">{{$editProfile->country ?? 'No Address Added Yet'}} {{$editProfile->state}} {{$editProfile->address}}</p>
+                      @if (DB::table('users')->where(['id'=>$editProfile->id,'name'=>Auth::user()->name])->exists())
+                      <button class="btn btn-primary">Friends</button>
+                      <button class="btn btn-outline-primary">Inbox</button>
+                      <button data-toggle="modal" data-target="#postModal" class="btn btn-primary">Post</button>
+                      @else
                       <button class="btn btn-primary">Follow</button>
                       <button class="btn btn-outline-primary">Message</button>
+                      @endif
                     </div>
                   </div>
                 </div>
@@ -160,10 +166,10 @@
                 @empty
 
                 <center>
-                    @if (DB::table('apply_job_posts')->where('user_id',$editProfile->id)->exists())
-                    <span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span>
-                    @else
+                    @if (DB::table('users')->where(['id'=>$editProfile->id,'name'=>Auth::user()->name])->exists())
                     <a href="{{route('JobPortal.EditProfile',['user_id'=>$dcrypt])}}"><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></a>
+                    @else
+                    <span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span>
                     @endif
                 </center>
 
@@ -179,8 +185,154 @@
     </div>
 
 
+    <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content login-modal">
+
+                <div class="container-post">
+
+                    <div class="wrapper">
+                      <section class="post">
+                        <header><span class="modal-close-btn"  data-dismiss="modal" aria-label="Close" >X</span>Create Post</header>
+                        <form action="#">
+                          <div class="content">
+                            @if (!empty(Auth::user()->image))
+                            <img src="{{ asset('uploads/user_profile/'.Auth::user()->image) }}" alt="Admin" class="rounded-circle" width="150">
+                            @elseif (!empty(Auth::user()->avatar))
+                            <img src="{{Auth::user()->avatar}}" alt="Admin" class="rounded-circle" width="150">
+                            @else
+                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                            @endif
+
+                            <div class="details">
+                              <p>{{Auth::user()->name}}</p>
+                              <div class="privacy">
+                                <i class="fas fa-user-friends"></i>
+                                <span>Friends</span>
+                                <i class="fas fa-caret-down"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <textarea placeholder="What's on your mind, {{Auth::user()->name}}?" spellcheck="false" required></textarea>
+                          <div class="theme-emoji">
+                            <img src="{{asset('icons/theme.svg')}}" alt="theme">
+                            <img src="{{asset('icons/smile.svg')}}" alt="smile">
+                          </div>
+                          <div class="options">
+                            <p>Add to Your Post</p>
+                            <ul class="list">
+                              <li><img src="{{asset('icons/gallery.svg')}}" alt="gallery"></li>
+                              <li><img src="{{asset('icons/tag.svg')}}" alt="gallery"></li>
+                              <li><img src="{{asset('icons/emoji.svg')}}" alt="gallery"></li>
+                              <li><img src="{{asset('icons/mic.svg')}}" alt="gallery"></li>
+                              <li><img src="{{asset('icons/more.svg')}}" alt="gallery"></li>
+                            </ul>
+                          </div>
+                          <button>Post</button>
+
+                      </section>
+                      <section class="audience">
+                        <header>
+                          <div class="arrow-back"><i class="fas fa-arrow-left"></i></div>
+                          <p>Select Audience</p>
+                        </header>
+                        <div class="content">
+                          <p>Who can see your post?</p>
+                          <span>Your post will show up in News Feed, on your profile and in search results.</span>
+                        </div>
+                        <ul id="addActive" class="list">
+                          <li>
+                            <div class="column">
+                              <div class="icon"><i class="fas fa-globe-asia"></i></div>
+                              <div class="details">
+                                <p>Public</p>
+                                <span>Anyone on or off Facebook</span>
+                              </div>
+                            </div>
+                            <div>
+                                <input id="radioOne" value="public" name="privacy" class="radio" type="radio">
+                            </div>
+                          </li>
+                          <li>
+                            <div class="column">
+                              <div class="icon"><i class="fas fa-user-friends"></i></div>
+                              <div class="details">
+                                <p>Friends</p>
+                                <span>Your friends only</span>
+                              </div>
+                            </div>
+                            <div>
+                                <input id="radioTwo" value="friends" name="privacy" class="radio" type="radio">
+                            </div>
+                          </li>
+                          <li>
+                            <div class="column">
+                              <div class="icon"></i></div>
+                              {{-- <div class="icon"><i class="fas fa-user"></i></div> --}}
+                              <div class="details">
+                                <p>Specific</p>
+                                <span>Only show to some friends</span>
+                              </div>
+                            </div>
+                            <div>
+                                <input id="radioThree" value="somefriends" name="privacy" class="radio" type="radio">
+                            </div>
+                          </li>
+                          <li>
+                            <div class="column">
+                              <div class="icon"></i></div>
+                              {{-- <div class="icon"><i class="fas fa-lock"></i></div> --}}
+                              <div class="details">
+                                <p>Only me</p>
+                                <span>Only you can see your post</span>
+                              </div>
+                            </div>
+                            <div>
+                                <input d="radioFour" value="onlyme" name="privacy" class="radio" type="radio">
+                            </div>
+                          </li>
+                          <li>
+                            <div class="column">
+                              <div class="icon"><i class="fas fa-cog"></i></div>
+                              <div class="details">
+                                <p>Custom</p>
+                                <span>Include and exclude friends</span>
+                              </div>
+                            </div>
+                            <div>
+                                <input d="radioFive" value="selectedfriends" name="privacy" class="radio" type="radio">
+                            </div>
+                          </li>
+                        </ul>
+                      </section>
+                    </div>
+                  </div>
+            </div>
+        </form>
+        </div>
+    </div>
 
 
+    <script>
+
+
+
+const container = document.querySelector(".container-post"),
+privacy = container.querySelector(".post .privacy"),
+arrowBack = container.querySelector(".audience .arrow-back");
+
+privacy.addEventListener("click", () => {
+  container.classList.add("active");
+});
+
+arrowBack.addEventListener("click", () => {
+  container.classList.remove("active");
+});
+
+
+
+    </script>
 
 
 

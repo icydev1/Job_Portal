@@ -59,7 +59,9 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{{route('JobPortal.MyProfile',['profile_id'=>$dcrypt])}}">My Profile</a>
 
-                        <a class="dropdown-item" href="{{route('JobPortal.EditProfile',['user_id'=>$dcrypt])}}">Edit Profile</a>
+
+                        <a class="dropdown-item" href="Javascript:void(0)">My Messages</a>
+                        <a class="dropdown-item" href="{{route('JobPortal.EditProfile',['user_id'=>$dcrypt])}}">Setting</a>
                         <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal" href="javascript:void(0)">Log Out</a>
                     </div>
 
