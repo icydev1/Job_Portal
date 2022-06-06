@@ -9,7 +9,7 @@
 
     @php $dcrypt  = Crypt::encrypt($jobuser->user_id);
 @endphp
-    <div class="card-job">
+    <div class="card-job" id="removeUser{{$jobuser->id}}">
         @if (!empty($jobuser->image))
         <div class="card-header-job">
             <a href="{{route('JobPortal.MyProfile',['profile_id'=>$dcrypt])}}">
@@ -38,6 +38,18 @@
             <h6>
                 {{$jobuser->education ?? 'No education added Yet'}}
             </h6>
+
+            <h6>
+                {{$jobuser->contact_number ?? 'No contact added Yet'}}
+            </h6>
+            <h6>
+                {{$jobuser->currently_working ?? 'Self Employed yet'}}
+            </h6>
+
+            <h6>
+                {{$jobuser->portfolio_website_link ?? 'No website added yet'}}
+            </h6>
+
             <p  style="height: 60px; overflow: hidden">
                 {{$jobuser->short_bio ?? 'No bio Added Yet'}}
             </p>
@@ -57,7 +69,11 @@
 
             <div class="row mt-2">
                 <div class="col-md-6 btn-danger reject"><span onclick="rejectApp('{{$jobuser->id}}')">Reject</span></div>
-                <div class="col-md-6 btn-primary hired"><span onclick="acceptApp('{{$jobuser->id}}')">Accept</span></div>
+                @if($jobuser->status == '2')
+                <div class="col-md-6 btn-primary hired"><span >Accepted</span></div>
+                @else
+                <div class="col-md-6 btn-primary hired"><span id="userStatus{{$jobuser->id}}" onclick="acceptApp('{{$jobuser->id}}')">Accept</span></div>
+                @endif
             </div>
 
         </div>

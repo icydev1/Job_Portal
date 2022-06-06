@@ -142,8 +142,13 @@
                                     value="{{ $editProfiles->name ?? '' }}">
                             </div>
 
+                            <div class="col-md-12"><label class="labels">Contact</label>
+                                <input type="text" name="contact_number" class="form-control" placeholder="Contact Number"
+                                    value="{{ $editProfiles->contact_number ?? '' }}">
+                            </div>
+
                         </div>
-                        <div class="row mt-3">
+                        <div class="row mt-2">
                             <div class="col-md-12"><label class="labels">Short Bio</label>
                                 <textarea class="form-control" name="short_bio"
                                     placeholder="Short Bio">{{ $editProfiles->short_bio ?? '' }}</textarea>
@@ -152,6 +157,10 @@
                             <div class="col-md-12"><label class="labels">Current Position</label><input
                                     type="text" class="form-control" name="position" placeholder="Current Position"
                                     value="{{ $editProfiles->position ?? '' }}"></div>
+
+                            <div class="col-md-12"><label class="labels">Currently Working</label><input
+                                    type="text" class="form-control" name="currently_working" placeholder="Currently Working"
+                                    value="{{ $editProfiles->currently_working ?? '' }}"></div>
 
                             <div class="col-md-12"><label class="labels">Education</label><input type="text"
                                     class="form-control" name="education" placeholder="Education"

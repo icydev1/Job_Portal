@@ -529,9 +529,13 @@ function rejectApp($id) {
         },
 
 
-        success: function (response) {
+        success: function (resp) {
 
+            if(resp.message == 'reject'){
 
+                $('#removeUser'+reject).remove();
+
+            }
 
         },
     });
@@ -544,7 +548,7 @@ function rejectApp($id) {
 //end reject application
 //accept application
 
-function accept($id) {
+function acceptApp($id) {
 
     let accept = $id;
 
@@ -562,9 +566,13 @@ function accept($id) {
         },
 
 
-        success: function (response) {
+        success: function (resp) {
 
+            if(resp.message == 'accept'){
 
+              $('#userStatus'+accept).html('Accepted')
+
+            }
 
         },
     });

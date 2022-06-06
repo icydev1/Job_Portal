@@ -93,8 +93,7 @@
     <div class="modal-dialog">
         <div class="modal-content login-modal">
             <div class="modal-header login-modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
+                <span data-dismiss="modal" aria-label="Close">X</span>
                 <h4 class="modal-title text-center" id="loginModalLabel">USER AUTHENTICATION</h4>
             </div>
             <div class="modal-body">

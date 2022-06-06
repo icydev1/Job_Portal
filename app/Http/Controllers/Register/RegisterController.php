@@ -152,6 +152,8 @@ class RegisterController extends Controller
         $insta      = $request->insta_link;
         $github     = $request->github_link;
         $twitter    = $request->twitter_link;
+        $phone_num  = $request->contact_number;
+        $working    = $request->currently_working;
 
         $updateUser = [
 
@@ -169,6 +171,8 @@ class RegisterController extends Controller
             'twitter_link'  => $twitter,
             'image'         => $user_image ?? '',
             'avatar'        => $avatar ?? '',
+            'contact_number' => $phone_num,
+            'currently_working' => $working,
 
         ];
 

@@ -1204,7 +1204,7 @@ span.count {
   border-radius: 10px;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  width: 300px;
+  width: 500px;
 }
 .card-header-job img {
   width: 100%;
@@ -1709,4 +1709,17 @@ form textarea:valid ~ button:hover{
     float: left;
     left: 25px;
     cursor: pointer;
+}
+
+
+.modal-header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+    border-top-left-radius: calc(.3rem - 1px);
+    border-top-right-radius: calc(.3rem - 1px);
+    margin-left: -1px;
 }

@@ -411,6 +411,7 @@ class JobController extends Controller
 
         $jobusers = User::join('apply_job_posts', 'apply_job_posts.user_id', '=', 'users.id')
             ->where('apply_job_id', $job_id)
+            ->where('apply_job_posts.status','!=', 1)
             ->orderBy('apply_job_posts.id', 'DESC')
             ->get();
 
@@ -457,13 +458,21 @@ class JobController extends Controller
 
     public function rejectApp(Request $request){
 
-        dd($request->all());
+        ApplyJobPost::where('id',$request->reject)->update(['status' => 1]);
+
+        return response()->json(['message' => 'reject'],200);
 
     }
 
     public function acceptApp(Request $request){
 
-        dd($request->all());
+        ApplyJobPost::where('id',$request->accept)->update(['status' => 2]);
+
+       $getDetail =  ApplyJobPost::where('id',$request->accept)->first();
+
+    //    dd($getDetail);
+
+       return response()->json(['message' => 'accept'],200);
 
     }
 
