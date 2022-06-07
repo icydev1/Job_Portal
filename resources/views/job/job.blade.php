@@ -93,7 +93,7 @@
                                                             <a class="btn btn-primary"
                                                                 href="{{ route('JobPortal.GetJobDetail', ['job_id' => $getJobsList->id]) }}">Already
                                                                 Applied</a>
-                                                        @elseif(DB::table('jobs')->where(['id'=>$getJobsList->id,'user_id'=>Auth::id()])->exists())
+                                                        @elseif(DB::table('jobss')->where(['id'=>$getJobsList->id,'user_id'=>Auth::id()])->exists())
                                                             <a class="btn btn-primary"
                                                                 href="{{ route('JobPortal.GetJobDetail', ['job_id' => $getJobsList->id]) }}">It's Your Job</a>
                                                         @else

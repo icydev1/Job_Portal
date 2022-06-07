@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Register;
 
 use App\Http\Controllers\Controller;
+use App\Mail\HiringMail;
+use App\Mail\RegisterMail;
 use App\Models\User;
 use App\Models\UserExp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
 
 class RegisterController extends Controller
@@ -37,7 +40,11 @@ class RegisterController extends Controller
 
         $saveData->save();
 
+        Mail::to($email)->send(new RegisterMail());
+
         if (Auth::attempt(array('email' => $email, 'password' => $password))) {
+
+
 
             return "login";
         } else {

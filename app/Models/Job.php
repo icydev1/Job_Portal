@@ -9,7 +9,7 @@ class Job extends Model
 {
     use HasFactory;
 
-    protected $table = "jobs";
+    protected $table = "jobss";
     protected $gaurded = [];
     protected $guarded = [];
 

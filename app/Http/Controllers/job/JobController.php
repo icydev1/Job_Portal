@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\job;
 
+use App\Events\UserPostJob;
 use App\Http\Controllers\Controller;
+use App\Mail\HiringMail;
+use App\Mail\PostJob;
 use App\Models\AddToWishList;
 use App\Models\ApplyJobPost;
 use App\Models\Job;
@@ -15,6 +18,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 // use Illuminate\Support\Facades\Session;
 
@@ -22,7 +26,6 @@ class JobController extends Controller
 {
     public function job()
     {
-        $jobID =  Session::get('job_id');
 
 
         $jobShifts = JobShift::get();
@@ -41,6 +44,8 @@ class JobController extends Controller
 
     public function postJob()
     {
+
+
 
         $jobCategory = JobCategory::get();
         $jobShifts   = JobShift::get();
@@ -121,7 +126,9 @@ class JobController extends Controller
             }
         } else {
         }
+        // Mail::to($request->company_email)->send(new PostJob($storeJobs));
 
+        event(new UserPostJob($storeJobs));
 
         return redirect()->route('JobPortal.Job');
     }
@@ -466,11 +473,12 @@ class JobController extends Controller
 
     public function acceptApp(Request $request){
 
-        ApplyJobPost::where('id',$request->accept)->update(['status' => 2]);
+       ApplyJobPost::where('id',$request->accept)->update(['status' => 2]);
 
-       $getDetail =  ApplyJobPost::where('id',$request->accept)->first();
+       $getDetail =  ApplyJobPost::where('id',$request->accept)->first()->toArray();
 
-    //    dd($getDetail);
+       Mail::to($getDetail['user_email'])->send(new HiringMail($getDetail));
+
 
        return response()->json(['message' => 'accept'],200);
 
