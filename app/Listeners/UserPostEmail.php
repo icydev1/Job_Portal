@@ -17,7 +17,7 @@ class UserPostEmail implements ShouldQueue
      */
     public $storeJobs;
 
-    public function __construct($storeJobs){
+    public function __construct($storeJobs = ''){
       $this->storeJobs = $storeJobs;
     }
 

@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\HireUserEvent;
+use App\Events\RegisterUserEvent;
 use App\Events\UserPostJob;
+use App\Listeners\HireUserListener;
+use App\Listeners\RegisterUserListener;
 use App\Listeners\UserPostEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -23,7 +27,17 @@ class EventServiceProvider extends ServiceProvider
 
         UserPostJob::class => [
             UserPostEmail::class,
+        ],
+
+        RegisterUserEvent::class => [
+            RegisterUserListener::class,
+        ],
+
+        HireUserEvent::class => [
+            HireUserListener::class,
         ]
+
+
 
     ];
 

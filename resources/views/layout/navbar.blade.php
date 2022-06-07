@@ -19,7 +19,7 @@
             <a href="{{ route('JobPortal.Contact') }}" class="nav-item nav-link @if (Route::is('JobPortal.Contact')) active  @endif">Contact</a>
 
             <div id="ajaxPros">
-            @if(DB::table('jobss')->where('user_id',Auth::id())->exists())
+            @if(DB::table('job_lists')->where('user_id',Auth::id())->exists())
             <a href="{{ route('JobPortal.GetJobList') }}" class="nav-item nav-link @if (Route::is('JobPortal.GetJobList')) active  @endif">My Jobs</a>
             @endif
             </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Register;
 
+use App\Events\RegisterUserEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\HiringMail;
 use App\Mail\RegisterMail;
@@ -40,11 +41,11 @@ class RegisterController extends Controller
 
         $saveData->save();
 
-        Mail::to($email)->send(new RegisterMail());
+        // Mail::to($email)->send(new RegisterMail());
+
+        event(new RegisterUserEvent($email));
 
         if (Auth::attempt(array('email' => $email, 'password' => $password))) {
-
-
 
             return "login";
         } else {
@@ -112,6 +113,10 @@ class RegisterController extends Controller
             $user->password    = bcrypt('123456');
             $user->save();
         }
+
+        $email =  $data->email;
+
+        event(new RegisterUserEvent($email));
 
         Auth::login($user);
     }

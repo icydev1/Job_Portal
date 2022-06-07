@@ -18,7 +18,7 @@
                             @endif
                             <div class="text-start ps-4">
 
-                                @if(DB::table('jobs')->where(['id'=>$getJobDetail->id,'user_id'=> Auth::id()])->exists())
+                                @if(DB::table('job_lists')->where(['id'=>$getJobDetail->id,'user_id'=> Auth::id()])->exists())
 
 
 
@@ -139,7 +139,7 @@
                                             <button class="btn btn-primary w-100" type="button">Already Applied</button>
                                         </div>
 
-                                        @elseif(DB::table('jobs')->where(['id'=>$getJobDetail->id,'user_id'=>Auth::id()])->exists())
+                                        @elseif(DB::table('job_lists')->where(['id'=>$getJobDetail->id,'user_id'=>Auth::id()])->exists())
 
                                         <div class="col-12">
                                             <button class="btn btn-primary w-100" type="button">It's Your Job</button>

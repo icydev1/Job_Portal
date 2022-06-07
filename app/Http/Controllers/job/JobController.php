@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\job;
 
+use App\Events\HireUserEvent;
 use App\Events\UserPostJob;
 use App\Http\Controllers\Controller;
 use App\Mail\HiringMail;
@@ -11,6 +12,7 @@ use App\Models\ApplyJobPost;
 use App\Models\Job;
 use App\Models\JobBenefit;
 use App\Models\JobCategory;
+use App\Models\JobList;
 use App\Models\JobQualificationList;
 use App\Models\JobResponsibiltyList;
 use App\Models\JobShift;
@@ -30,7 +32,7 @@ class JobController extends Controller
 
         $jobShifts = JobShift::get();
 
-        $getJobsLists = Job::orderBy('id', 'DESC')
+        $getJobsLists = JobList::orderBy('id', 'DESC')
             ->where('status', 0)
             ->get();
 
@@ -70,7 +72,7 @@ class JobController extends Controller
         }
 
 
-        $storeJobs = new Job();
+        $storeJobs = new JobList();
 
         $storeJobs->company_name       = $request->company_name;
         $storeJobs->company_email      = $request->company_email;
@@ -143,7 +145,7 @@ class JobController extends Controller
         $jobCategory = JobCategory::get();
         $jobShifts   = JobShift::get();
 
-        $getJobDetails = Job::with(['getJobBenefits', 'getQualification', 'getResp'])
+        $getJobDetails = JobList::with(['getJobBenefits', 'getQualification', 'getResp'])
             ->where('id', $job_id)
             ->where('status', 0)
             ->get();
@@ -188,7 +190,7 @@ class JobController extends Controller
 
         ];
 
-        Job::where('id', $job_id)->update($updateData);
+        JobList::where('id', $job_id)->update($updateData);
 
         if ($request->hidden_benefit) {
 
@@ -261,7 +263,7 @@ class JobController extends Controller
 
         // Session::put(['jobID'=>$job_id]);
 
-        $getJobDetails = Job::with(['getJobBenefits', 'getQualification', 'getResp'])
+        $getJobDetails = JobList::with(['getJobBenefits', 'getQualification', 'getResp'])
             ->where('id', $job_id)
             ->where('status', 0)
             ->get();
@@ -406,7 +408,7 @@ class JobController extends Controller
     public function getJobList()
     {
 
-        $myjobs = Job::where(['user_id' => Auth::id(), 'status' => 0])->get();
+        $myjobs = JobList::where(['user_id' => Auth::id(), 'status' => 0])->get();
 
         $jobShifts = JobShift::get();
 
@@ -428,7 +430,7 @@ class JobController extends Controller
     public function deleteJob($delete_job_id)
     {
 
-        Job::where('id', $delete_job_id)->update(['status' => 1]);
+        JobList::where('id', $delete_job_id)->update(['status' => 1]);
 
         AddToWishList::where('fav_job_id', $delete_job_id)
             ->update(['status' => 1]);
@@ -477,7 +479,9 @@ class JobController extends Controller
 
        $getDetail =  ApplyJobPost::where('id',$request->accept)->first()->toArray();
 
-       Mail::to($getDetail['user_email'])->send(new HiringMail($getDetail));
+    //    Mail::to($getDetail['user_email'])->send(new HiringMail($getDetail));
+
+       event(new HireUserEvent($getDetail));
 
 
        return response()->json(['message' => 'accept'],200);

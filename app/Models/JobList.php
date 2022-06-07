@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Job extends Model
+class JobList extends Model
 {
+
     use HasFactory;
 
-    protected $table = "jobss";
+    protected $table = "job_lists";
     protected $gaurded = [];
     protected $guarded = [];
 
     public function getJobBenefits(){
 
         return $this->hasMany(JobBenefit::class,'job_id');
-
 
     }
 
@@ -31,7 +31,5 @@ class Job extends Model
         return $this->hasMany(JobResponsibiltyList::class,'job_id');
 
     }
-
-
 
 }
