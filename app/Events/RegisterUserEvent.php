@@ -19,10 +19,12 @@ class RegisterUserEvent
      *
      * @return void
      */
-    public $email;
 
-    public function __construct($email){
-      $this->email = $email;
+    public $user;
+
+    public function __construct($user){
+
+      $this->user = $user;
     }
 
     /**

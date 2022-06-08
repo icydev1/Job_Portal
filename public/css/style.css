@@ -1723,3 +1723,9 @@ form textarea:valid ~ button:hover{
     border-top-right-radius: calc(.3rem - 1px);
     margin-left: -1px;
 }
+
+span.tag.tag-teal.position {
+    position: relative;
+    left: 150%;
+
+}

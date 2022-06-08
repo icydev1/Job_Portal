@@ -40,20 +40,23 @@ Route::prefix('JobPortal')
 
 Route::prefix('JobPortal')
     ->as('JobPortal.')
+
     ->controller(AboutController::class)
     ->group(function () {
 
         Route::get('/about', 'about')->name('About');
     });
 
-Route::prefix('JobPortal')
+
+    Route::prefix('JobPortal')
     ->as('JobPortal.')
+    ->middleware('is_user')
     ->controller(JobController::class)
     ->group(function () {
 
-        Route::get('/Job', 'job')->name('Job');
+        Route::get('/Job', 'job')->name('Job')->withoutMiddleware('is_user');
         Route::get('/PostJob', 'postJob')->name('PostJob');
-        Route::get('/GetJobDetail/{job_id}', 'getJobDetail')->name('GetJobDetail');
+        Route::get('/GetJobDetail/{job_id}', 'getJobDetail')->name('GetJobDetail')->withoutMiddleware('is_user');
         Route::post('/StoreJobPost', 'storeJobPost')->name('StoreJobPost');
         Route::get('/EditJobPost/{job_id}', 'editJobPost')->name('EditJobPost');
         Route::post('/UpdateJobPost/{job_id}', 'updateJobPost')->name('UpdateJobPost');
@@ -85,16 +88,19 @@ Route::prefix('JobPortal')
     ->group(function () {
 
         Route::post('/RegisterUser', 'registerUser')->name('RegisterUser');
-        Route::post('/Logout', 'logout')->name('Logout');
-
         Route::get('/google', 'redirectToGoogle')->name('Google');
         Route::get('/callback', 'loginWithGoogle');
-
         Route::get('/facebook', 'redirectToFacebook')->name('Facebook');
         Route::get('/fbcallback', 'loginWithFacebook');
 
+    });
 
-
+        Route::prefix('JobPortal')
+        ->as('JobPortal.')
+        ->middleware('is_user')
+        ->controller(RegisterController::class)
+        ->group(function () {
+            Route::post('/Logout', 'logout')->name('Logout');
         Route::get('EditProfile/{user_id}', 'editProfile')->name('EditProfile');
         Route::get('MyProfile/{profile_id}', 'myProfile')->name('MyProfile');
         Route::post('UpdateProfile/{user_id}', 'updateProfile')->name('UpdateProfile');

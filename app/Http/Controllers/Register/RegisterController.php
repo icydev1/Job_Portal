@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 
 class RegisterController extends Controller
@@ -41,9 +42,9 @@ class RegisterController extends Controller
 
         $saveData->save();
 
-        // Mail::to($email)->send(new RegisterMail());
+        $user = $saveData;
 
-        event(new RegisterUserEvent($email));
+        event(new RegisterUserEvent($user));
 
         if (Auth::attempt(array('email' => $email, 'password' => $password))) {
 
@@ -114,9 +115,9 @@ class RegisterController extends Controller
             $user->save();
         }
 
-        $email =  $data->email;
+        // $email =  $data->email;
 
-        event(new RegisterUserEvent($email));
+        event(new RegisterUserEvent($user));
 
         Auth::login($user);
     }

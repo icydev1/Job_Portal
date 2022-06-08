@@ -15,7 +15,7 @@ class AddToWishList extends Model
 
 
     public function getFavList(){
-        return $this->hasMany(Job::class,'id','fav_job_id');
+        return $this->hasMany(JobList::class,'id','fav_job_id');
     }
 
 

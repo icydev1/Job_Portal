@@ -20,9 +20,7 @@ class HireUserListener implements ShouldQueue
     public function __construct($getDetail = '')
 
     {
-
         $this->getDetail = $getDetail;
-
     }
 
     /**

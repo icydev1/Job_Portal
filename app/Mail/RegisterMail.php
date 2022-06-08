@@ -16,11 +16,11 @@ class RegisterMail extends Mailable
      *
      * @return void
      */
-    public $email;
+    public $user;
 
-    public function __construct($email)
-    {
-       $this->email = $email;
+    public function __construct($user){
+
+      $this->user = $user;
     }
 
     /**

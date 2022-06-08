@@ -31,48 +31,76 @@
         @endif
 
         <div class="card-body">
-            <span class="tag tag-teal">{{$jobuser->position ?? 'No Position Yet'}}</span>
-            <h4>
-                {{$jobuser->user_name ?? $jobuser->name}}
-            </h4>
-            <h6>
-                {{$jobuser->education ?? 'No education added Yet'}}
-            </h6>
 
-            <h6>
-                {{$jobuser->contact_number ?? 'No contact added Yet'}}
-            </h6>
-            <h6>
-                {{$jobuser->currently_working ?? 'Self Employed yet'}}
-            </h6>
+                <div class="col-md-12 text-center" >
+                  <span class="tag tag-teal ">{{$jobuser->position ?? 'No Position Yet'}}</span>
+                </div>
 
+
+                <div class="d-flex col-12 justify-content-around mt-3 ">
+                    <div>
+                        <span>
+                            <strong class="text-center font-weight-bold">{{$jobuser->user_name ?? $jobuser->name}}</strong>
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            <strong class="text-center font-weight-bold">{{$jobuser->education ?? 'No education added Yet'}}</strong>
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class="d-flex col-12 justify-content-around mt-2" >
+
+            <span class="text-center">
+                <strong class="font-weight-bold">{{$jobuser->contact_number ?? 'No contact added Yet'}}</strong>
+            </span>
+            <span class="text-center">
+                <strong class=" font-weight-bold"> {{$jobuser->currently_working ?? 'Self Employed yet'}}</strong>
+            </span>
+
+        </div>
+
+        <div class="col-md-12 text-center mt-2">
             <h6>
                 {{$jobuser->portfolio_website_link ?? 'No website added yet'}}
             </h6>
+        </div>
 
-            <p  style="height: 60px; overflow: hidden">
+        <div class="col-md-12 text-center mt-2" style="height: 40px; overflow: hidden">
+            <span>
                 {{$jobuser->short_bio ?? 'No bio Added Yet'}}
-            </p>
+            </span>
+        </div>
+
+        <div class="d-flex col-12 justify-content-around mt-2" >
+
             <div class="user">
                 <div class="user-info">
-                    <h5>Applied For Job</h5><span>{{$jobuser->created_at->diffForHumans();}}</span>
+                    <span><h5>Applied For Job</h5></span>
                 </div>
             </div>
-            <div class="row mt-2">
+
+            <span><strong>{{$jobuser->created_at->diffForHumans();}}</strong></span>
+
+        </div>
+
+            <div class="col-md-12 text-center mt-2">
                 <img style="display:none" id="outputResume{{$jobuser->id}}" src="{{asset('uploads/user_resume/'.$jobuser->user_resume)}}" >
-                <div  onclick="downloadResume({{$jobuser->id}})"  class="col-md-12 btn-primary resume tag tag-teal">Download Resume</div>
+                <div  onclick="downloadResume({{$jobuser->id}})"  class=" btn-primary resume tag tag-teal">Download Resume</div>
             </div>
 
-            <div class="row mt-2 px-4">
-                <div class="col-md-12"><b>Accept Request For Interview</b></div>
+            <div class="col-md-12 text-center mt-2 px-4">
+                <span><b>Accept Request For Interview</b></span>
             </div>
 
-            <div class="row mt-2">
-                <div class="col-md-6 btn-danger reject"><span onclick="rejectApp('{{$jobuser->id}}')">Reject</span></div>
+            <div class="d-flex col-12 justify-content-around mt-2 ">
+                <span class="btn btn-danger btn-rounded" onclick="rejectApp('{{$jobuser->id}}')">Reject</span>
                 @if($jobuser->status == '2')
-                <div class="col-md-6 btn-primary hired"><span >Accepted</span></div>
+               <span class="btn btn-primary btn-rounded" >Accepted</span>
                 @else
-                <div class="col-md-6 btn-primary hired"><span id="userStatus{{$jobuser->id}}" onclick="acceptApp('{{$jobuser->id}}')">Accept</span></div>
+                <span class="btn btn-primary btn-rounded" id="userStatus{{$jobuser->id}}" onclick="acceptApp('{{$jobuser->id}}')">Accept</span>
                 @endif
             </div>
 

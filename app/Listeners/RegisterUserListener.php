@@ -16,11 +16,12 @@ class RegisterUserListener implements ShouldQueue
      * @return void
      */
 
-     public $email;
 
-    public function __construct($email  = '')
-    {
-       $this->email = $email;
+    public $user;
+
+    public function __construct($user=""){
+
+      $this->user = $user;
     }
 
     /**
@@ -29,10 +30,11 @@ class RegisterUserListener implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($email)
+    public function handle($user)
     {
-        $em = $email;
 
-        Mail::to($em)->send(new RegisterMail($em));
+        $email = $user->user->email;
+
+        Mail::to($email)->send(new RegisterMail($user));
     }
 }

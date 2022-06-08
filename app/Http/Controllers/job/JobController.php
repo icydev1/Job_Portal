@@ -26,6 +26,11 @@ use Illuminate\Support\Facades\Session;
 
 class JobController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('user')->except('logout');
+    // }
+
     public function job()
     {
 
