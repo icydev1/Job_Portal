@@ -7,8 +7,9 @@
 
     @forelse ($jobusers as $jobuser)
 
-    @php $dcrypt  = Crypt::encrypt($jobuser->user_id);
-@endphp
+    @php
+    $dcrypt  = Crypt::encrypt($jobuser->user_id);
+    @endphp
     <div class="card-job" id="removeUser{{$jobuser->id}}">
         @if (!empty($jobuser->image))
         <div class="card-header-job">
@@ -88,7 +89,7 @@
 
             <div class="col-md-12 text-center mt-2">
                 <img style="display:none" id="outputResume{{$jobuser->id}}" src="{{asset('uploads/user_resume/'.$jobuser->user_resume)}}" >
-                <div  onclick="downloadResume({{$jobuser->id}})"  class=" btn-primary resume tag tag-teal">Download Resume</div>
+                <span  onclick="downloadResume({{$jobuser->id}})"  class=" btn-primary  tag tag-teal">Download Resume</span>
             </div>
 
             <div class="col-md-12 text-center mt-2 px-4">
@@ -96,11 +97,11 @@
             </div>
 
             <div class="d-flex col-12 justify-content-around mt-2 ">
-                <span class="btn btn-danger btn-rounded" onclick="rejectApp('{{$jobuser->id}}')">Reject</span>
+                <span style="border-radius: 30px;" class="btn btn-danger btn-rounded" onclick="rejectApp('{{$jobuser->id}}')">Reject</span>
                 @if($jobuser->status == '2')
-               <span class="btn btn-primary btn-rounded" >Accepted</span>
+               <span style="border-radius: 30px;" class="btn btn-primary btn-rounded" >Accepted</span>
                 @else
-                <span class="btn btn-primary btn-rounded" id="userStatus{{$jobuser->id}}" onclick="acceptApp('{{$jobuser->id}}')">Accept</span>
+                <span style="border-radius: 30px;" class="btn btn-primary btn-rounded" id="userStatus{{$jobuser->id}}" onclick="acceptApp('{{$jobuser->id}}')">Accept</span>
                 @endif
             </div>
 
