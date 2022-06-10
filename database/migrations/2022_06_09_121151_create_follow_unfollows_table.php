@@ -17,6 +17,8 @@ class CreateFollowUnfollowsTable extends Migration
             $table->id();
             $table->tinyInteger('follow_id')->nullable();
             $table->tinyInteger('user_id')->nullable();
+            $table->tinyInteger('is_block')->default(0)->comment('0 => default, 1 => block');
+            $table->tinyInteger('is_accept')->default(0)->comment('0 => pending, 1 => accept, 2 => reject');
             $table->tinyInteger('status')->default(0)->comment('0 => follow,1 => unfollow');
             $table->timestamps();
         });

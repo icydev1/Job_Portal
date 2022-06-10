@@ -107,6 +107,7 @@ Route::prefix('JobPortal')
         Route::post('AddExp', 'addExp')->name('AddExp');
         Route::post('UpdateExp', 'updateExp')->name('UpdateExp');
         Route::post('DeleteExp', 'deleteExp')->name('DeleteExp');
+        Route::post('FollowUser', 'followUser')->name('FollowUser');
     });
 //  Route::get('/auth/google/callback',[RegisterController::class,'loginWithGoogle']);
 Route::prefix('JobPortal')

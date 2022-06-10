@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class FollowUnfollow extends Model
 {
     use HasFactory;
+
+    protected $table = 'follow_unfollows';
+    protected $guarded = [];
+
 }

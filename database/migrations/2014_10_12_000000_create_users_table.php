@@ -34,6 +34,9 @@ class CreateUsersTable extends Migration
             $table->string('twitter_link')->nullable();
             $table->string('github_link')->nullable();
             $table->string('provider_id')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->string('currently_working')->nullable();
+            $table->tinyInteger('user_type')->default(0)->comment('0 => user , 1 => admin');
             $table->tinyInteger('is_subscribe')->nullable();
             $table->tinyInteger('status')->default('0')->nullable();
             $table->rememberToken();

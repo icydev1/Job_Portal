@@ -1,13 +1,12 @@
 @extends('layout.master')
 @section('content')
+
     @php $dcrypt = Crypt::encrypt(Auth::id());
     @endphp
 
 
     <div class="container">
         <div class="main-body">
-
-
 
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3">
@@ -43,9 +42,24 @@
                                         <button data-toggle="modal" data-target="#postModal"
                                             class="btn btn-primary">Post</button>
                                     @else
-                                        <button class="btn btn-primary">Follow</button>
+
+
+
+                                    @if(DB::table('follow_unfollows')->where(['follow_id'=>$editProfile->id,'is_block'=>1,'user_id'=>Auth::id()])->exists())
+                                    <button class="btn btn-outline-primary">Blocked</button>
+                                    @else
+                                    @if(DB::table('follow_unfollows')->where(['follow_id'=>$editProfile->id,'is_accept'=>0,'user_id'=>Auth::id()])->exists())
+                                    <button  class="btn btn-primary">Requested</button>
+                                    @elseif(DB::table('follow_unfollows')->where(['follow_id'=>$editProfile->id,'is_accept'=>1,'status'=>0,'user_id'=>Auth::id()])->exists())
+                                    <button  class="btn btn-primary">Unfollow</button>
+                                    @else
+                                    <button onclick="followUser({{$editProfile->id}})" id="userFollow{{$editProfile->id}}" class="btn btn-primary">Follow</button>
+
+                                    @endif
                                         <button class="btn btn-outline-primary">Message</button>
                                     @endif
+                                    @endif
+
                                 </div>
                             </div>
                         </div>
@@ -122,7 +136,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-5">
                     <div class="card-user mb-3">
                         <div class="card-body-user">
                             <div class="row">
@@ -255,6 +269,124 @@
 
 
                 </div>
+
+                <div class="col-md-3">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Follower<span>({{$following_sum}})</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Following<span>({{$follow_sum}})</span></a>
+                    </li>
+
+                </ul><!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                        <div class="card-follow">
+                            <h3 class="card-title-follow"></h3>
+                            <div class="card-follow">
+                            @foreach ($following_lists as $following_list)
+                            @php
+
+                                $decrypt = Crypt::encrypt($following_list->id);
+
+                            @endphp
+
+                                <div class="row py-1">
+
+                                    <div class="col-md-6">
+
+                                        <a href="{{route('JobPortal.MyProfile',['profile_id'=>$decrypt])}}">
+                                            @if(!empty($following_list->image))
+                                            <img src="{{ asset('uploads/user_profile/'.$following_list->image) }}" width="40" height="40" class="rounded-circle">
+                                            @elseif (!empty($following_list->avatar))
+                                            <img src="{{ $following_list->avatar }}" width="40" height="40" class="rounded-circle">
+                                            @else
+                                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                                            width="40" height="40" class="rounded-circle">
+                                            @endif
+                                            @php
+
+                                            $expName = [];
+
+                                                $expName = explode(' ',$following_list->name)
+                                            @endphp
+                                            <span>{{$expName[0]}}</span>
+                                        </a>
+
+                                    </div>
+
+                                    @if(DB::table('follow_unfollows')->where(['follow_id'=>$following_list->user_id,'user_id'=>Auth::id()])->exists())
+                                    <div class="col-md-6">
+                                        <button class="btn btn-primary">Unfollow</button>
+                                    </div>
+                                    @else
+
+                                    @endif
+
+                            </div>
+                            @endforeach
+                        </div>
+
+                        </div>
+                        </div>
+
+                    <div class="tab-pane" id="tabs-2" role="tabpanel">
+                        <div class="card-follow">
+                            <h3 class="card-title-follow"></h3>
+
+                            <div class="card-follow">
+
+                            @foreach ($follow_lists as $follow_list)
+                            @php
+
+                                $decrypt = Crypt::encrypt($follow_list->id);
+
+                            @endphp
+                            <div class="row py-1">
+                                    <div class="col-md-6">
+
+                                        <a href="{{route('JobPortal.MyProfile',['profile_id'=>$decrypt])}}">
+                                            @if(!empty($follow_list->image))
+                                            <img src="{{ asset('uploads/user_profile/'.$follow_list->image) }}" width="40" height="40" class="rounded-circle">
+                                            @elseif (!empty($follow_list->avatar))
+                                            <img src="{{ $follow_list->avatar }}" width="40" height="40" class="rounded-circle">
+                                            @else
+                                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                                            width="40" height="40" class="rounded-circle">
+                                            @endif
+
+                                            @php
+
+                                            $expName = [];
+
+                                                $expName = explode(' ',$follow_list->name)
+                                            @endphp
+                                            <span>{{$expName[0]}}</span>
+                                        </a>
+
+                                    </div>
+                                    @if(DB::table('follow_unfollows')->where(['follow_id'=>$follow_list->follow_id,'user_id'=>Auth::id()])->exists())
+                                    <div class="col-md-6">
+                                        <button class="btn btn-primary">Unfollow</button>
+                                    </div>
+                                    @else
+
+                                    @endif
+
+                                </div>
+
+                            @endforeach
+
+                        </div>
+
+                            </div>
+                    </div>
+
+                </div>
+
+
             </div>
 
         </div>

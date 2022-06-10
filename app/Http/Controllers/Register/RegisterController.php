@@ -6,6 +6,7 @@ use App\Events\RegisterUserEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\HiringMail;
 use App\Mail\RegisterMail;
+use App\Models\FollowUnfollow;
 use App\Models\User;
 use App\Models\UserExp;
 use Illuminate\Http\Request;
@@ -280,10 +281,38 @@ class RegisterController extends Controller
             ->distinct()
             ->get();
 
+        $follow_lists = User::join('follow_unfollows','follow_unfollows.follow_id','=','users.id')
+        ->where('user_id',$decrypted)
+        ->orderBy('follow_unfollows.id','DESC')
+        ->select('users.image','users.avatar','users.name','users.id','follow_unfollows.follow_id','follow_unfollows.user_id')
+        ->get();
+
+        $follow_sum = User::join('follow_unfollows','follow_unfollows.follow_id','=','users.id')
+        ->where('user_id',$decrypted)
+        ->orderBy('follow_unfollows.id','DESC')
+        ->select('users.image','users.avatar','users.name','users.id','follow_unfollows.follow_id','follow_unfollows.user_id')
+        ->count();
+
+        $following_lists = User::join('follow_unfollows','follow_unfollows.user_id','=','users.id')
+        ->where('follow_id',$decrypted)
+        ->orderBy('follow_unfollows.id','DESC')
+        ->select('users.image','users.avatar','users.name','users.id','follow_unfollows.follow_id','follow_unfollows.user_id')
+        ->get();
+
+        $following_sum = User::join('follow_unfollows','follow_unfollows.user_id','=','users.id')
+        ->where('follow_id',$decrypted)
+        ->orderBy('follow_unfollows.id','DESC')
+        ->select('users.image','users.avatar','users.name','users.id','follow_unfollows.follow_id','follow_unfollows.user_id')
+        ->count();
 
 
 
-        return view('userprofile.myProfile', ['editProfile' => $editProfile, 'exps' => $exps, 'portfolios' => $portfolios]);
+
+
+
+
+
+        return view('userprofile.myProfile', ['follow_sum'=>$follow_sum,'following_sum'=>$following_sum,'following_lists' => $following_lists ,'editProfile' => $editProfile, 'exps' => $exps, 'portfolios' => $portfolios,'follow_lists' =>$follow_lists]);
     }
 
     public function deleteExp(Request $request)
@@ -295,5 +324,25 @@ class RegisterController extends Controller
 
         return response()->json(['message' => 'delete'], 200);
     }
+
+
+    public function followUser(Request $request){
+
+        $follow_id = $request->get('follow_id');
+
+        $follow = new FollowUnfollow([
+
+            'follow_id' => $follow_id,
+            'user_id' => Auth::id(),
+
+
+        ]);
+
+        $follow->save();
+
+        return response()->json(['message' => 'follow'], 200);
+
+    }
+
 
 }

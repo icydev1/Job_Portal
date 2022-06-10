@@ -584,3 +584,41 @@ function acceptApp($id) {
 
 //end accept application
 
+//follow user
+
+function followUser($id) {
+
+    let follow_id = $id;
+
+    let path = $("#namePath").data("path");
+    let url = `${base_url}${path}/FollowUser`;
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+            follow_id: follow_id,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+
+
+        success: function (resp) {
+
+            if(resp.message == 'follow'){
+
+              $('#userFollow'+follow_id).html('Requested')
+
+            }
+
+        },
+    });
+
+
+
+
+}
+
+//end follow user
+
