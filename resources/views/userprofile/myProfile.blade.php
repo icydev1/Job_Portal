@@ -34,30 +34,31 @@
 
                                     <p class="text-secondary mb-1">{{ $editProfile->position ?? 'No Position Added Yet' }}
                                     </p>
-                                    <p class="text-muted font-size-sm">{{ $editProfile->country ?? 'No Address Added Yet' }}
+                                    <p class="text-muted font-size-sm">
+                                        {{ $editProfile->country ?? 'No Address Added Yet' }}
                                         {{ $editProfile->state }} {{ $editProfile->address }}</p>
                                     @if (DB::table('users')->where(['id' => $editProfile->id, 'name' => Auth::user()->name])->exists())
-                                        <button class="btn btn-primary">Friends</button>
                                         <button class="btn btn-outline-primary">Inbox</button>
                                         <button data-toggle="modal" data-target="#postModal"
                                             class="btn btn-primary">Post</button>
+                                        <button data-toggle="modal" data-target="#PendingReqModal"
+                                            class="btn btn-danger">Requests(0)</button>
                                     @else
+                                        @if (DB::table('follow_unfollows')->where(['follow_id' => $editProfile->id, 'is_block' => 1, 'user_id' => Auth::id()])->exists())
+                                            <button class="btn btn-outline-primary">Blocked</button>
+                                        @else
+                                            @if (DB::table('follow_unfollows')->where(['follow_id' => $editProfile->id, 'is_accept' => 0, 'user_id' => Auth::id()])->exists())
+                                                <button class="btn btn-primary">Requested</button>
+                                            @elseif(DB::table('follow_unfollows')->where(['follow_id' => $editProfile->id, 'is_accept' => 1, 'status' => 0, 'user_id' => Auth::id()])->exists())
+                                                <button class="btn btn-primary">Unfollow</button>
+                                            @else
+                                                <button onclick="followUser({{ $editProfile->id }})"
+                                                    id="userFollow{{ $editProfile->id }}"
+                                                    class="btn btn-primary">Follow</button>
 
-
-
-                                    @if(DB::table('follow_unfollows')->where(['follow_id'=>$editProfile->id,'is_block'=>1,'user_id'=>Auth::id()])->exists())
-                                    <button class="btn btn-outline-primary">Blocked</button>
-                                    @else
-                                    @if(DB::table('follow_unfollows')->where(['follow_id'=>$editProfile->id,'is_accept'=>0,'user_id'=>Auth::id()])->exists())
-                                    <button  class="btn btn-primary">Requested</button>
-                                    @elseif(DB::table('follow_unfollows')->where(['follow_id'=>$editProfile->id,'is_accept'=>1,'status'=>0,'user_id'=>Auth::id()])->exists())
-                                    <button  class="btn btn-primary">Unfollow</button>
-                                    @else
-                                    <button onclick="followUser({{$editProfile->id}})" id="userFollow{{$editProfile->id}}" class="btn btn-primary">Follow</button>
-
-                                    @endif
-                                        <button class="btn btn-outline-primary">Message</button>
-                                    @endif
+                                            @endif
+                                            <button class="btn btn-outline-primary">Message</button>
+                                        @endif
                                     @endif
 
                                 </div>
@@ -272,291 +273,344 @@
 
                 <div class="col-md-3">
 
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Follower<span>({{$following_sum}})</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Following<span>({{$follow_sum}})</span></a>
-                    </li>
+                    <ul class="nav nav-tabs" role="tablist">
 
-                </ul><!-- Tab panes -->
-                <div class="tab-content">
-                    <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                        <div class="card-follow">
-                            <h3 class="card-title-follow"></h3>
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1"
+                                role="tab">Follower<span>({{ $following_sum }})</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2"
+                                role="tab">Following<span>({{ $follow_sum }})</span></a>
+                        </li>
+
+
+                    </ul><!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
                             <div class="card-follow">
-                            @foreach ($following_lists as $following_list)
-                            @php
+                                <h3 class="card-title-follow"></h3>
+                                <div class="card-follow">
+                                    @foreach ($following_lists as $following_list)
+                                        @php
 
-                                $decrypt = Crypt::encrypt($following_list->id);
+                                            $decrypt = Crypt::encrypt($following_list->id);
 
-                            @endphp
+                                        @endphp
 
-                                <div class="row py-1">
+                                        <div class="row py-1">
 
-                                    <div class="col-md-6">
+                                            <div class="col-md-6">
 
-                                        <a href="{{route('JobPortal.MyProfile',['profile_id'=>$decrypt])}}">
-                                            @if(!empty($following_list->image))
-                                            <img src="{{ asset('uploads/user_profile/'.$following_list->image) }}" width="40" height="40" class="rounded-circle">
-                                            @elseif (!empty($following_list->avatar))
-                                            <img src="{{ $following_list->avatar }}" width="40" height="40" class="rounded-circle">
+                                                <a href="{{ route('JobPortal.MyProfile', ['profile_id' => $decrypt]) }}">
+                                                    @if (!empty($following_list->image))
+                                                        <img src="{{ asset('uploads/user_profile/' . $following_list->image) }}"
+                                                            width="40" height="40" class="rounded-circle">
+                                                    @elseif (!empty($following_list->avatar))
+                                                        <img src="{{ $following_list->avatar }}" width="40" height="40"
+                                                            class="rounded-circle">
+                                                    @else
+                                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                                                            width="40" height="40" class="rounded-circle">
+                                                    @endif
+                                                    @php
+
+                                                        $expName = [];
+
+                                                        $expName = explode(' ', $following_list->name);
+                                                    @endphp
+                                                    <span>{{ $expName[0] }}</span>
+                                                </a>
+
+                                            </div>
+
+                                            @if (DB::table('follow_unfollows')->where(['follow_id' => $following_list->user_id, 'user_id' => Auth::id()])->exists())
+                                                <div class="col-md-6">
+                                                    <button class="btn btn-primary">Unfollow</button>
+                                                </div>
                                             @else
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                                            width="40" height="40" class="rounded-circle">
                                             @endif
-                                            @php
 
-                                            $expName = [];
-
-                                                $expName = explode(' ',$following_list->name)
-                                            @endphp
-                                            <span>{{$expName[0]}}</span>
-                                        </a>
-
-                                    </div>
-
-                                    @if(DB::table('follow_unfollows')->where(['follow_id'=>$following_list->user_id,'user_id'=>Auth::id()])->exists())
-                                    <div class="col-md-6">
-                                        <button class="btn btn-primary">Unfollow</button>
-                                    </div>
-                                    @else
-
-                                    @endif
+                                        </div>
+                                    @endforeach
+                                </div>
 
                             </div>
-                            @endforeach
                         </div>
 
-                        </div>
-                        </div>
-
-                    <div class="tab-pane" id="tabs-2" role="tabpanel">
-                        <div class="card-follow">
-                            <h3 class="card-title-follow"></h3>
-
+                        <div class="tab-pane" id="tabs-2" role="tabpanel">
                             <div class="card-follow">
+                                <h3 class="card-title-follow"></h3>
 
-                            @foreach ($follow_lists as $follow_list)
-                            @php
+                                <div class="card-follow">
 
-                                $decrypt = Crypt::encrypt($follow_list->id);
+                                    @foreach ($follow_lists as $follow_list)
+                                        @php
 
-                            @endphp
-                            <div class="row py-1">
-                                    <div class="col-md-6">
+                                            $decrypt = Crypt::encrypt($follow_list->id);
 
-                                        <a href="{{route('JobPortal.MyProfile',['profile_id'=>$decrypt])}}">
-                                            @if(!empty($follow_list->image))
-                                            <img src="{{ asset('uploads/user_profile/'.$follow_list->image) }}" width="40" height="40" class="rounded-circle">
-                                            @elseif (!empty($follow_list->avatar))
-                                            <img src="{{ $follow_list->avatar }}" width="40" height="40" class="rounded-circle">
+                                        @endphp
+                                        <div class="row py-1">
+                                            <div class="col-md-6">
+
+                                                <a href="{{ route('JobPortal.MyProfile', ['profile_id' => $decrypt]) }}">
+                                                    @if (!empty($follow_list->image))
+                                                        <img src="{{ asset('uploads/user_profile/' . $follow_list->image) }}"
+                                                            width="40" height="40" class="rounded-circle">
+                                                    @elseif (!empty($follow_list->avatar))
+                                                        <img src="{{ $follow_list->avatar }}" width="40" height="40"
+                                                            class="rounded-circle">
+                                                    @else
+                                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                                                            width="40" height="40" class="rounded-circle">
+                                                    @endif
+
+                                                    @php
+
+                                                        $expName = [];
+
+                                                        $expName = explode(' ', $follow_list->name);
+                                                    @endphp
+                                                    <span>{{ $expName[0] }}</span>
+                                                </a>
+
+                                            </div>
+                                            @if (DB::table('follow_unfollows')->where(['follow_id' => $follow_list->follow_id, 'user_id' => Auth::id()])->exists())
+                                                <div class="col-md-6">
+                                                    <button class="btn btn-primary">Unfollow</button>
+                                                </div>
                                             @else
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                                            width="40" height="40" class="rounded-circle">
                                             @endif
 
-                                            @php
-
-                                            $expName = [];
-
-                                                $expName = explode(' ',$follow_list->name)
-                                            @endphp
-                                            <span>{{$expName[0]}}</span>
-                                        </a>
-
-                                    </div>
-                                    @if(DB::table('follow_unfollows')->where(['follow_id'=>$follow_list->follow_id,'user_id'=>Auth::id()])->exists())
-                                    <div class="col-md-6">
-                                        <button class="btn btn-primary">Unfollow</button>
-                                    </div>
-                                    @else
-
-                                    @endif
+                                        </div>
+                                    @endforeach
 
                                 </div>
 
-                            @endforeach
-
+                            </div>
                         </div>
 
-                            </div>
                     </div>
+
 
                 </div>
 
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <h6 class="text-center"> My Post </h6>
+
+                </div>
+
+                <div class="col-md-6">
+                    <h6 class="text-center"> My Friend Lists</h6>
+                </div>
 
             </div>
 
         </div>
 
 
-        <div class="row">
 
-            <div class="col-md-6">
-               <h6 class="text-center"> My Post </h6>
+        <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content login-modal">
 
-            </div>
+                    <div class="container-post">
 
-            <div class="col-md-6"><h6 class="text-center"> My Friend Lists</h6> </div>
+                        <div class="wrapper">
+                            <section class="post">
+                                <header><span class="modal-close-btn" data-dismiss="modal"
+                                        aria-label="Close">X</span>Create
+                                    Post</header>
+                                <form action="#">
+                                    <div class="content">
+                                        @if (!empty(Auth::user()->image))
+                                            <img src="{{ asset('uploads/user_profile/' . Auth::user()->image) }}"
+                                                alt="Admin" class="rounded-circle" width="150">
+                                        @elseif (!empty(Auth::user()->avatar))
+                                            <img src="{{ Auth::user()->avatar }}" alt="Admin" class="rounded-circle"
+                                                width="150">
+                                        @else
+                                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
+                                                class="rounded-circle" width="150">
+                                        @endif
 
-        </div>
+                                        <div class="details">
+                                            <p>{{ Auth::user()->name }}</p>
+                                            <div class="privacy">
+                                                <i class="fas fa-user-friends"></i>
+                                                <span>Friends</span>
+                                                <i class="fas fa-caret-down"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <textarea placeholder="What's on your mind, {{ Auth::user()->name }}?" spellcheck="false" required></textarea>
+                                    <div class="theme-emoji">
+                                        <img src="{{ asset('icons/theme.svg') }}" alt="theme">
+                                        <img src="{{ asset('icons/smile.svg') }}" alt="smile">
+                                    </div>
+                                    <div class="options">
+                                        <p>Add to Your Post</p>
+                                        <ul class="list">
+                                            <li><img src="{{ asset('icons/gallery.svg') }}" alt="gallery"></li>
+                                            <li><img src="{{ asset('icons/tag.svg') }}" alt="gallery"></li>
+                                            <li><img src="{{ asset('icons/emoji.svg') }}" alt="gallery"></li>
+                                            <li><img src="{{ asset('icons/mic.svg') }}" alt="gallery"></li>
+                                            <li><img src="{{ asset('icons/more.svg') }}" alt="gallery"></li>
+                                        </ul>
+                                    </div>
+                                    <button>Post</button>
 
-    </div>
-
-
-
-    <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content login-modal">
-
-                <div class="container-post">
-
-                    <div class="wrapper">
-                        <section class="post">
-                            <header><span class="modal-close-btn" data-dismiss="modal" aria-label="Close">X</span>Create
-                                Post</header>
-                            <form action="#">
+                            </section>
+                            <section class="audience">
+                                <header>
+                                    <div class="arrow-back"><i class="fas fa-arrow-left"></i></div>
+                                    <p>Select Audience</p>
+                                </header>
                                 <div class="content">
-                                    @if (!empty(Auth::user()->image))
-                                        <img src="{{ asset('uploads/user_profile/' . Auth::user()->image) }}" alt="Admin"
-                                            class="rounded-circle" width="150">
-                                    @elseif (!empty(Auth::user()->avatar))
-                                        <img src="{{ Auth::user()->avatar }}" alt="Admin" class="rounded-circle"
-                                            width="150">
-                                    @else
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
-                                            class="rounded-circle" width="150">
-                                    @endif
-
-                                    <div class="details">
-                                        <p>{{ Auth::user()->name }}</p>
-                                        <div class="privacy">
-                                            <i class="fas fa-user-friends"></i>
-                                            <span>Friends</span>
-                                            <i class="fas fa-caret-down"></i>
-                                        </div>
-                                    </div>
+                                    <p>Who can see your post?</p>
+                                    <span>Your post will show up in News Feed, on your profile and in search results.</span>
                                 </div>
-                                <textarea placeholder="What's on your mind, {{ Auth::user()->name }}?" spellcheck="false" required></textarea>
-                                <div class="theme-emoji">
-                                    <img src="{{ asset('icons/theme.svg') }}" alt="theme">
-                                    <img src="{{ asset('icons/smile.svg') }}" alt="smile">
-                                </div>
-                                <div class="options">
-                                    <p>Add to Your Post</p>
-                                    <ul class="list">
-                                        <li><img src="{{ asset('icons/gallery.svg') }}" alt="gallery"></li>
-                                        <li><img src="{{ asset('icons/tag.svg') }}" alt="gallery"></li>
-                                        <li><img src="{{ asset('icons/emoji.svg') }}" alt="gallery"></li>
-                                        <li><img src="{{ asset('icons/mic.svg') }}" alt="gallery"></li>
-                                        <li><img src="{{ asset('icons/more.svg') }}" alt="gallery"></li>
-                                    </ul>
-                                </div>
-                                <button>Post</button>
-
-                        </section>
-                        <section class="audience">
-                            <header>
-                                <div class="arrow-back"><i class="fas fa-arrow-left"></i></div>
-                                <p>Select Audience</p>
-                            </header>
-                            <div class="content">
-                                <p>Who can see your post?</p>
-                                <span>Your post will show up in News Feed, on your profile and in search results.</span>
-                            </div>
-                            <ul id="addActive" class="list">
-                                <li>
-                                    <div class="column">
-                                        <div class="icon"><i class="fas fa-globe-asia"></i></div>
-                                        <div class="details">
-                                            <p>Public</p>
-                                            <span>Anyone on or off Facebook</span>
+                                <ul id="addActive" class="list">
+                                    <li>
+                                        <div class="column">
+                                            <div class="icon"><i class="fas fa-globe-asia"></i></div>
+                                            <div class="details">
+                                                <p>Public</p>
+                                                <span>Anyone on or off Facebook</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <input id="radioOne" value="public" name="privacy" class="radio"
-                                            type="radio">
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="column">
-                                        <div class="icon"><i class="fas fa-user-friends"></i></div>
-                                        <div class="details">
-                                            <p>Friends</p>
-                                            <span>Your friends only</span>
+                                        <div>
+                                            <input id="radioOne" value="public" name="privacy" class="radio"
+                                                type="radio">
                                         </div>
-                                    </div>
-                                    <div>
-                                        <input id="radioTwo" value="friends" name="privacy" class="radio"
-                                            type="radio">
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="column">
-                                        <div class="icon"></i></div>
-                                        {{-- <div class="icon"><i class="fas fa-user"></i></div> --}}
-                                        <div class="details">
-                                            <p>Specific</p>
-                                            <span>Only show to some friends</span>
+                                    </li>
+                                    <li>
+                                        <div class="column">
+                                            <div class="icon"><i class="fas fa-user-friends"></i></div>
+                                            <div class="details">
+                                                <p>Friends</p>
+                                                <span>Your friends only</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <input id="radioThree" value="somefriends" name="privacy" class="radio"
-                                            type="radio">
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="column">
-                                        <div class="icon"></i></div>
-                                        {{-- <div class="icon"><i class="fas fa-lock"></i></div> --}}
-                                        <div class="details">
-                                            <p>Only me</p>
-                                            <span>Only you can see your post</span>
+                                        <div>
+                                            <input id="radioTwo" value="friends" name="privacy" class="radio"
+                                                type="radio">
                                         </div>
-                                    </div>
-                                    <div>
-                                        <input d="radioFour" value="onlyme" name="privacy" class="radio"
-                                            type="radio">
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="column">
-                                        <div class="icon"><i class="fas fa-cog"></i></div>
-                                        <div class="details">
-                                            <p>Custom</p>
-                                            <span>Include and exclude friends</span>
+                                    </li>
+                                    <li>
+                                        <div class="column">
+                                            <div class="icon"></i></div>
+                                            {{-- <div class="icon"><i class="fas fa-user"></i></div> --}}
+                                            <div class="details">
+                                                <p>Specific</p>
+                                                <span>Only show to some friends</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <input d="radioFive" value="selectedfriends" name="privacy" class="radio"
-                                            type="radio">
-                                    </div>
-                                </li>
-                            </ul>
-                        </section>
+                                        <div>
+                                            <input id="radioThree" value="somefriends" name="privacy"
+                                                class="radio" type="radio">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="column">
+                                            <div class="icon"></i></div>
+                                            {{-- <div class="icon"><i class="fas fa-lock"></i></div> --}}
+                                            <div class="details">
+                                                <p>Only me</p>
+                                                <span>Only you can see your post</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <input d="radioFour" value="onlyme" name="privacy" class="radio"
+                                                type="radio">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="column">
+                                            <div class="icon"><i class="fas fa-cog"></i></div>
+                                            <div class="details">
+                                                <p>Custom</p>
+                                                <span>Include and exclude friends</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <input d="radioFive" value="selectedfriends" name="privacy"
+                                                class="radio" type="radio">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </section>
+                        </div>
                     </div>
                 </div>
+                </form>
             </div>
-            </form>
         </div>
-    </div>
+
+        {{-- Request Modal --}}
+
+        <div class="modal fade" id="PendingReqModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content login-modal">
+                    <div class="modal-header login-modal-header">
+                        <span style="cursor: pointer" data-dismiss="modal" aria-label="Close">X</span>
+                        <h4 class="modal-title text-center" id="loginModalLabel">Pending Requests</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center">
+
+                            <div class="fb mt-2">
+
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="40" height="40"
+                                    class="rounded-circle">
+                                <p class="info"><b>Natalie G.</b> <br> </p>
+                                <div class="button-block">
+                                    <button class="btn btn-info confirm">Confirm</button>
+                                    <div class="delete">Delete Request</div>
+                                </div>
+                            </div>
+
+                            <div class="fb mt-2">
+
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="40" height="40"
+                                    class="rounded-circle">
+                                <p class="info"><b>Natalie G.</b> <br> </p>
+                                <div class="button-block">
+                                    <button class="btn btn-info confirm">Confirm</button>
+                                    <div class="delete">Delete Request</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {{-- End Request Modal --}}
 
 
-    <script>
-        const container = document.querySelector(".container-post"),
-            privacy = container.querySelector(".post .privacy"),
-            arrowBack = container.querySelector(".audience .arrow-back");
 
-        privacy.addEventListener("click", () => {
-            container.classList.add("active");
-        });
+        <script>
+            const container = document.querySelector(".container-post"),
+                privacy = container.querySelector(".post .privacy"),
+                arrowBack = container.querySelector(".audience .arrow-back");
 
-        arrowBack.addEventListener("click", () => {
-            container.classList.remove("active");
-        });
-    </script>
+            privacy.addEventListener("click", () => {
+                container.classList.add("active");
+            });
 
-@endsection
+            arrowBack.addEventListener("click", () => {
+                container.classList.remove("active");
+            });
+        </script>
+
+    @endsection

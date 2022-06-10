@@ -23,20 +23,20 @@ class RegisterController extends Controller
 
         $request->validate([
 
-            'name' => 'required',
-            'email' => 'required|unique:users',
+            'name'     => 'required',
+            'email'    => 'required|unique:users',
             'password' => 'required',
 
         ]);
 
-        $name = $request->input('name');
-        $email = $request->input('email');
+        $name     = $request->input('name');
+        $email    = $request->input('email');
         $password = $request->input('password');
 
         $saveData = new User([
 
-            'name' => $name,
-            'email' => $email,
+            'name'     => $name,
+            'email'    => $email,
             'password' => bcrypt($password),
 
         ]);
@@ -132,7 +132,7 @@ class RegisterController extends Controller
         $editProfiles  = User::where('users.id', $decrypted)->first();
 
         $exps          = User::join('user_exps as exp', 'exp.profile_id', '=', 'users.id')
-                         ->where('users.id', $decrypted)->get();
+            ->where('users.id', $decrypted)->get();
 
         return view('userprofile.userProfile', ['editProfiles' => $editProfiles, 'exps' => $exps]);
     }
@@ -171,21 +171,21 @@ class RegisterController extends Controller
 
         $updateUser = [
 
-            'name'          => $name,
-            'education'     => $education,
-            'position'      => $position,
-            'short_bio'     => $bio,
-            'country'       => $country,
-            'state'         => $state,
-            'address'       => $address,
-            'website_link'  => $website,
-            'fb_link'       => $fb,
-            'insta_link'    => $insta,
-            'github_link'   => $github,
-            'twitter_link'  => $twitter,
-            'image'         => $user_image ?? '',
-            'avatar'        => $avatar ?? '',
-            'contact_number' => $phone_num,
+            'name'              => $name,
+            'education'         => $education,
+            'position'          => $position,
+            'short_bio'         => $bio,
+            'country'           => $country,
+            'state'             => $state,
+            'address'           => $address,
+            'website_link'      => $website,
+            'fb_link'           => $fb,
+            'insta_link'        => $insta,
+            'github_link'       => $github,
+            'twitter_link'      => $twitter,
+            'image'             => $user_image ?? '',
+            'avatar'            => $avatar ?? '',
+            'contact_number'    => $phone_num,
             'currently_working' => $working,
 
         ];
@@ -281,38 +281,33 @@ class RegisterController extends Controller
             ->distinct()
             ->get();
 
-        $follow_lists = User::join('follow_unfollows','follow_unfollows.follow_id','=','users.id')
-        ->where('user_id',$decrypted)
-        ->orderBy('follow_unfollows.id','DESC')
-        ->select('users.image','users.avatar','users.name','users.id','follow_unfollows.follow_id','follow_unfollows.user_id')
-        ->get();
+        $follow_lists = User::
+          join('follow_unfollows', 'follow_unfollows.follow_id', '=', 'users.id')
+            ->where('user_id', $decrypted)
+            ->orderBy('follow_unfollows.id', 'DESC')
+            ->select('users.image', 'users.avatar', 'users.name', 'users.id', 'follow_unfollows.follow_id', 'follow_unfollows.user_id')
+            ->get();
 
-        $follow_sum = User::join('follow_unfollows','follow_unfollows.follow_id','=','users.id')
-        ->where('user_id',$decrypted)
-        ->orderBy('follow_unfollows.id','DESC')
-        ->select('users.image','users.avatar','users.name','users.id','follow_unfollows.follow_id','follow_unfollows.user_id')
-        ->count();
+        $follow_sum = User::
+          join('follow_unfollows', 'follow_unfollows.follow_id', '=', 'users.id')
+            ->where('user_id', $decrypted)
+            ->count();
 
-        $following_lists = User::join('follow_unfollows','follow_unfollows.user_id','=','users.id')
-        ->where('follow_id',$decrypted)
-        ->orderBy('follow_unfollows.id','DESC')
-        ->select('users.image','users.avatar','users.name','users.id','follow_unfollows.follow_id','follow_unfollows.user_id')
-        ->get();
+        $following_lists = User::
+         join('follow_unfollows', 'follow_unfollows.user_id', '=', 'users.id')
+            ->where('follow_id', $decrypted)
+            ->orderBy('follow_unfollows.id', 'DESC')
+            ->select('users.image', 'users.avatar', 'users.name', 'users.id', 'follow_unfollows.follow_id', 'follow_unfollows.user_id')
+            ->get();
 
-        $following_sum = User::join('follow_unfollows','follow_unfollows.user_id','=','users.id')
-        ->where('follow_id',$decrypted)
-        ->orderBy('follow_unfollows.id','DESC')
-        ->select('users.image','users.avatar','users.name','users.id','follow_unfollows.follow_id','follow_unfollows.user_id')
-        ->count();
-
-
+        $following_sum = User::
+         join('follow_unfollows', 'follow_unfollows.user_id', '=', 'users.id')
+            ->where('follow_id', $decrypted)
+            ->count();
 
 
 
-
-
-
-        return view('userprofile.myProfile', ['follow_sum'=>$follow_sum,'following_sum'=>$following_sum,'following_lists' => $following_lists ,'editProfile' => $editProfile, 'exps' => $exps, 'portfolios' => $portfolios,'follow_lists' =>$follow_lists]);
+        return view('userprofile.myProfile', ['follow_sum' => $follow_sum, 'following_sum' => $following_sum, 'following_lists' => $following_lists, 'editProfile' => $editProfile, 'exps' => $exps, 'portfolios' => $portfolios, 'follow_lists' => $follow_lists]);
     }
 
     public function deleteExp(Request $request)
@@ -326,7 +321,8 @@ class RegisterController extends Controller
     }
 
 
-    public function followUser(Request $request){
+    public function followUser(Request $request)
+    {
 
         $follow_id = $request->get('follow_id');
 
@@ -341,8 +337,5 @@ class RegisterController extends Controller
         $follow->save();
 
         return response()->json(['message' => 'follow'], 200);
-
     }
-
-
 }
