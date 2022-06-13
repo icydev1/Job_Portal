@@ -318,6 +318,8 @@ class RegisterController extends Controller
             ->select('users.image', 'users.avatar', 'users.name', 'users.id', 'follow_unfollows.*')
             ->get();
 
+            Session::put(['decrypt'=>$decrypted]);
+
 
         return view('userprofile.myProfile', ['request_sum' => $request_sum,'requests' => $requests,'follow_sum' => $follow_sum, 'following_sum' => $following_sum, 'following_lists' => $following_lists, 'editProfile' => $editProfile, 'exps' => $exps, 'portfolios' => $portfolios, 'follow_lists' => $follow_lists]);
     }
@@ -356,7 +358,14 @@ class RegisterController extends Controller
 
         FollowUnfollow::where('id',$confrimRequest)->update(['is_accept' => 1]);
 
-        return response()->json(['message' => 'confirm'], 200);
+        $decrypted =  Session::get('decrypt');
+
+        $request_sum = User::
+        join('follow_unfollows', 'follow_unfollows.user_id', '=', 'users.id')
+        ->where(['follow_id'=> $decrypted,'is_accept' => 0])
+        ->count();
+
+        return response()->json(['message' => 'confirm','data'=>$request_sum], 200);
 
     }
 
@@ -367,9 +376,17 @@ class RegisterController extends Controller
         FollowUnfollow::where('id',$deleteRequest)->update(['is_accept' => 2]);
 
 
+        $decrypted =  Session::get('decrypt');
 
-        return response()->json(['message' => 'delete'], 200);
+        $request_sum = User::
+        join('follow_unfollows', 'follow_unfollows.user_id', '=', 'users.id')
+        ->where(['follow_id'=> $decrypted,'is_accept' => 0])
+        ->count();
+
+
+        return response()->json(['message' => 'delete','data' => $request_sum ], 200);
 
     }
+
 
 }

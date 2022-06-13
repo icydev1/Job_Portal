@@ -575,12 +575,19 @@ function confirmRequest($id) {
                 $("#acceptReq" + conRequest).html(
                     '<span><i class="fa fa-check" aria-hidden="true"></i></span>'
                 );
-                $("#requestDiv" + conRequest).fadeOut(3000);
+                $("#requestDiv" + conRequest).fadeOut(2000);
                 $("#deleteReq" + conRequest).attr("disabled", true);
                 $('#refreshReq').load(" #refreshReq > *")
                 $('#refreshFollowSum').load(" #refreshFollowSum > *")
                 $('#refreshFollower').load(" #refreshFollower > *")
             }
+
+            if(resp.data === 0){
+                $("#PendingReqModal").fadeOut(3000);
+                    $("body").removeClass("modal-open");
+                    $(".modal-backdrop").fadeOut(3000);
+            }
+
         },
     });
 }
@@ -616,6 +623,14 @@ function deleteRequest($id) {
 
 
             }
+
+             if(resp.data === 0){
+                $("#PendingReqModal").fadeOut(3000);
+                    $("body").removeClass("modal-open");
+                    $(".modal-backdrop").fadeOut(3000);
+            }
+
+
 
         },
     });

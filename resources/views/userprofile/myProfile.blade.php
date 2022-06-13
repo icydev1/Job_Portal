@@ -259,8 +259,9 @@
                     </div>
 
                     <div class="row gutters-sm">
+                        <h5 class="text-center">Experience</h5>
                         @forelse ($exps as $exp)
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-12 mb-3">
                                 <div class="card-user h-100">
                                     <div class="card-body-user">
 
