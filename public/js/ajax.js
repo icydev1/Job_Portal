@@ -117,7 +117,6 @@ $(document).on("click", "#login_btn", function (e) {
 
     if ($("#login_email").val() == "") {
         $("#emailError").text("Email field is required");
-
     } else if ($("#login_password").val() == "") {
         $("#passwordError").text("Password field is required");
     } else {
@@ -210,7 +209,6 @@ function addWishList($id) {
     let path = $("#namePath").data("path");
     let url = `${base_url}${path}/StoreFavJob`;
 
-
     $.ajax({
         type: "POST",
         url: url,
@@ -245,7 +243,6 @@ function addWishList($id) {
 function removeList($id) {
     let removeId = $id;
 
-
     let path = $("#namePath").data("path");
     let url = `${base_url}${path}/RemoveFavList`;
 
@@ -273,49 +270,37 @@ function removeList($id) {
 
 //remove to wishlist function
 
-
 // add experience in profile
 
 function addExp() {
-
-    let formData=new FormData($('#storeForm')[0]);
+    let formData = new FormData($("#storeForm")[0]);
 
     let path = $("#namePath").data("path");
     let url = `${base_url}${path}/AddExp`;
-
 
     $.ajax({
         type: "POST",
         url: url,
         data: formData,
 
-        contentType:false,
-        processData:false,
-        dataType:'json',
+        contentType: false,
+        processData: false,
+        dataType: "json",
 
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (response) {
-
-
-
-            if(response.messge = "Saved"){
-
+            if ((response.messge = "Saved")) {
                 $("#storeForm")[0].reset();
                 $("#expModal").hide();
                 $("body").removeClass("modal-open");
                 $(".modal-backdrop").remove();
-                $('#refreshExp').load(' #refreshExp > *')
-                $('#refreshExpModal').load(' #refreshExpModal > *')
-
-
-            }else{
-                alert('Not saved')
+                $("#refreshExp").load(" #refreshExp > *");
+                $("#refreshExpModal").load(" #refreshExpModal > *");
+            } else {
+                alert("Not saved");
             }
-
-
-
         },
     });
 }
@@ -324,53 +309,41 @@ function addExp() {
 // update experience in profile
 
 function updateExp($id) {
-
     let updateID = $id;
 
-    let formData=new FormData($('#updateForm'+updateID)[0]);
+    let formData = new FormData($("#updateForm" + updateID)[0]);
 
     let path = $("#namePath").data("path");
     let url = `${base_url}${path}/UpdateExp`;
-
 
     $.ajax({
         type: "POST",
         url: url,
         data: formData,
 
-        contentType:false,
-        processData:false,
-        dataType:'json',
+        contentType: false,
+        processData: false,
+        dataType: "json",
 
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (response) {
-
-
-
-            if(response.messge = "Saved"){
-
+            if ((response.messge = "Saved")) {
                 // $("#storeForm")[0].reset();
-                $("#editExpModal"+updateID).hide();
+                $("#editExpModal" + updateID).hide();
                 $("body").removeClass("modal-open");
                 $(".modal-backdrop").remove();
-                $('#refreshExp').load(' #refreshExp > *')
-                $('#refreshExpModal').load(' #refreshExpModal > *')
-
-
-            }else{
-                alert('Not saved')
+                $("#refreshExp").load(" #refreshExp > *");
+                $("#refreshExpModal").load(" #refreshExpModal > *");
+            } else {
+                alert("Not saved");
             }
-
-
-
         },
     });
 }
 
 // end update experience in profile
-
 
 //remove resp
 
@@ -390,21 +363,16 @@ function deleteResp($id) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (response) {
-
-            if(response.message == "delete"){
-
-                $('#clearResp'+removeRespId).remove();
-
-            }else{
-                alert('not deleted');
+            if (response.message == "delete") {
+                $("#clearResp" + removeRespId).remove();
+            } else {
+                alert("not deleted");
             }
-
         },
     });
 }
 
 //end remove resp
-
 
 //remove Qual
 
@@ -424,15 +392,11 @@ function deleteQual($id) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (response) {
-
-            if(response.message == "delete"){
-
-                $('#clearQual'+removeQualId).remove();
-
-            }else{
-                alert('not deleted');
+            if (response.message == "delete") {
+                $("#clearQual" + removeQualId).remove();
+            } else {
+                alert("not deleted");
             }
-
         },
     });
 }
@@ -457,21 +421,16 @@ function deleteBenefit($id) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (response) {
-
-            if(response.message == "delete"){
-
-                $('#clearBenefit'+removeBenefitId).remove();
-
-            }else{
-                alert('not deleted');
+            if (response.message == "delete") {
+                $("#clearBenefit" + removeBenefitId).remove();
+            } else {
+                alert("not deleted");
             }
-
         },
     });
 }
 
 //end remove benefit
-
 
 //remove benefit
 
@@ -491,18 +450,15 @@ function deleteExp($id) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (response) {
-
-            if(response.message == "delete"){
-
-                $("#deleteExpModal"+removeExpId).hide();
+            if (response.message == "delete") {
+                $("#deleteExpModal" + removeExpId).hide();
                 $("body").removeClass("modal-open");
                 $(".modal-backdrop").remove();
-                $('#clearExp'+removeExpId).remove();
+                $("#clearExp" + removeExpId).fadeOut(2000);
 
-            }else{
-                alert('not deleted');
+            } else {
+                alert("not deleted");
             }
-
         },
     });
 }
@@ -512,7 +468,6 @@ function deleteExp($id) {
 //reject application
 
 function rejectApp($id) {
-
     let reject = $id;
 
     let path = $("#namePath").data("path");
@@ -528,28 +483,18 @@ function rejectApp($id) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
 
-
         success: function (resp) {
-
-            if(resp.message == 'reject'){
-
-                $('#removeUser'+reject).remove();
-
+            if (resp.message == "reject") {
+                $("#removeUser" + reject).fadeOut(1000);
             }
-
         },
     });
-
-
-
-
 }
 
 //end reject application
 //accept application
 
 function acceptApp($id) {
-
     let accept = $id;
 
     let path = $("#namePath").data("path");
@@ -565,21 +510,13 @@ function acceptApp($id) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
 
-
         success: function (resp) {
-
-            if(resp.message == 'accept'){
-
-              $('#userStatus'+accept).html('Accepted')
-
+            if (resp.message == "accept") {
+                $("#userStatus" + accept).html("Accepted");
+                $("#userStatus" + accept).attr('disabled',true);
             }
-
         },
     });
-
-
-
-
 }
 
 //end accept application
@@ -587,7 +524,6 @@ function acceptApp($id) {
 //follow user
 
 function followUser($id) {
-
     let follow_id = $id;
 
     let path = $("#namePath").data("path");
@@ -603,22 +539,86 @@ function followUser($id) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
 
+        success: function (resp) {
+            if (resp.message == "follow") {
+                $("#userFollow" + follow_id).html("Requested");
+                ("#userFollow" + follow_id).attr("disabled", true);
+
+            }
+        },
+    });
+}
+
+//end follow user
+
+// for confirmRequest
+
+function confirmRequest($id) {
+    let conRequest = $id;
+
+    let path = $("#namePath").data("path");
+    let url = `${base_url}${path}/ConfirmRequest`;
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+            conRequest: conRequest,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+
+        success: function (resp) {
+            if (resp.message == "confirm") {
+                $("#acceptReq" + conRequest).attr("disabled", true);
+                $("#acceptReq" + conRequest).html(
+                    '<span><i class="fa fa-check" aria-hidden="true"></i></span>'
+                );
+                $("#requestDiv" + conRequest).fadeOut(3000);
+                $("#deleteReq" + conRequest).attr("disabled", true);
+                $('#refreshReq').load(" #refreshReq > *")
+                $('#refreshFollowSum').load(" #refreshFollowSum > *")
+                $('#refreshFollower').load(" #refreshFollower > *")
+            }
+        },
+    });
+}
+
+//end for confirmRequest
+
+// for deleteRequest
+
+function deleteRequest($id) {
+    let delRequest = $id;
+
+    let path = $("#namePath").data("path");
+    let url = `${base_url}${path}/DeleteRequest`;
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+            delRequest: delRequest,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
 
         success: function (resp) {
 
-            if(resp.message == 'follow'){
 
-              $('#userFollow'+follow_id).html('Requested')
+
+            if (resp.message == "delete") {
+                $("#acceptReq" + delRequest).attr("disabled", true);
+                $("#requestDiv" + delRequest).fadeOut(2000);
+                $('#refreshReq').load(" #refreshReq > *")
+
 
             }
 
         },
     });
-
-
-
-
 }
 
-//end follow user
-
+//end for deleteRequest

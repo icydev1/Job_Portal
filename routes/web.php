@@ -100,7 +100,7 @@ Route::prefix('JobPortal')
         ->middleware('is_user')
         ->controller(RegisterController::class)
         ->group(function () {
-            Route::post('/Logout', 'logout')->name('Logout');
+        Route::post('/Logout', 'logout')->name('Logout');
         Route::get('EditProfile/{user_id}', 'editProfile')->name('EditProfile');
         Route::get('MyProfile/{profile_id}', 'myProfile')->name('MyProfile');
         Route::post('UpdateProfile/{user_id}', 'updateProfile')->name('UpdateProfile');
@@ -108,6 +108,8 @@ Route::prefix('JobPortal')
         Route::post('UpdateExp', 'updateExp')->name('UpdateExp');
         Route::post('DeleteExp', 'deleteExp')->name('DeleteExp');
         Route::post('FollowUser', 'followUser')->name('FollowUser');
+        Route::post('ConfirmRequest', 'confirmRequest')->name('ConfirmRequest');
+        Route::post('DeleteRequest', 'deleteRequest')->name('DeleteRequest');
     });
 //  Route::get('/auth/google/callback',[RegisterController::class,'loginWithGoogle']);
 Route::prefix('JobPortal')

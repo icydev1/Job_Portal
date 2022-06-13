@@ -12,6 +12,35 @@
                 <div class="col-md-4 mb-3">
                     <div class="card-user">
                         <div class="card-body-user">
+                            @if (DB::table('users')->where(['id' => $editProfile->id, 'name' => Auth::user()->name])->exists())
+                            <div style="float: right; cursor: pointer;" class="dropdown">
+                                <span  class=" dropdown-toggle"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-cog " aria-hidden="true"></i>
+                                </span>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <a class="dropdown-item" href="javascript:void(0)">Block List</a>
+                                  <a class="dropdown-item" href="javascript:void(0)">Reports List</a>
+
+                                </div>
+                              </div>
+
+                            @else
+
+                            <div style="float: right; cursor: pointer;" class="dropdown">
+                                <span  class=" dropdown-toggle"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-cog " aria-hidden="true"></i>
+                                </span>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <a class="dropdown-item" href="javascript:void(0)">Block</a>
+                                  <a class="dropdown-item" href="javascript:void(0)">Report</a>
+
+                                </div>
+                              </div>
+
+                            {{-- <span class="" style="float: right; cursor: pointer;"><i class="fa fa-cog " aria-hidden="true"></i> --}}
+
+                            {{-- </span> --}}
+                            @endif
                             <div class="d-flex flex-column align-items-center text-center">
                                 @if (!empty($editProfile->image))
                                     <img src="{{ asset('uploads/user_profile/' . $editProfile->image) }}" alt="Admin"
@@ -41,8 +70,12 @@
                                         <button class="btn btn-outline-primary">Inbox</button>
                                         <button data-toggle="modal" data-target="#postModal"
                                             class="btn btn-primary">Post</button>
+                                            <span id="refreshReq">
+                                            @if($request_sum > 0)
                                         <button data-toggle="modal" data-target="#PendingReqModal"
-                                            class="btn btn-danger">Requests(0)</button>
+                                            class="btn btn-danger">Requests({{ $request_sum }})</button>
+                                            @endif
+                                            </span>
                                     @else
                                         @if (DB::table('follow_unfollows')->where(['follow_id' => $editProfile->id, 'is_block' => 1, 'user_id' => Auth::id()])->exists())
                                             <button class="btn btn-outline-primary">Blocked</button>
@@ -273,6 +306,7 @@
 
                 <div class="col-md-3">
 
+                    <div id="refreshFollowSum">
                     <ul class="nav nav-tabs" role="tablist">
 
                         <li class="nav-item">
@@ -285,12 +319,14 @@
                         </li>
 
 
-                    </ul><!-- Tab panes -->
+                    </ul>
+                    </div>
+
                     <div class="tab-content">
                         <div class="tab-pane active" id="tabs-1" role="tabpanel">
                             <div class="card-follow">
                                 <h3 class="card-title-follow"></h3>
-                                <div class="card-follow">
+                                <div id="refreshFollower" class="card-follow">
                                     @foreach ($following_lists as $following_list)
                                         @php
 
@@ -340,7 +376,7 @@
 
                         <div class="tab-pane" id="tabs-2" role="tabpanel">
                             <div class="card-follow">
-                                <h3 class="card-title-follow"></h3>
+                                <h3 id="refreshFollowing" class="card-title-follow"></h3>
 
                                 <div class="card-follow">
 
@@ -566,27 +602,38 @@
                     <div class="modal-body">
                         <div class="text-center">
 
-                            <div class="fb mt-2">
+                            @forelse ($requests as $req )
 
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="40" height="40"
-                                    class="rounded-circle">
-                                <p class="info"><b>Natalie G.</b> <br> </p>
-                                <div class="button-block">
-                                    <button class="btn btn-info confirm">Confirm</button>
-                                    <div class="delete">Delete Request</div>
+                                <div id="requestDiv{{ $req->id }}" class="fb mt-2">
+                                    @if (!empty($req->image))
+                                        <img src="{{ asset('uploads/user_profile/' . $req->image) }}" alt="Admin"
+                                            class="rounded-circle" width="40" height="40">
+                                    @elseif (!empty($req->avatar))
+                                        <img src="{{ $req->avatar }}" alt="Admin" class="rounded-circle" width="40"
+                                            height="40">
+                                    @else
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
+                                            class="rounded-circle" width="40" height="40">
+                                    @endif
+                                    {{-- <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="40" height="40"
+                                    class="rounded-circle"> --}}
+                                    <p class="info"><b>{{ $req->name }}</b> <br> </p>
+                                    <div class="button-block">
+                                        <button id="acceptReq{{ $req->id }}" class="btn btn-info confirm"
+                                            onclick="confirmRequest({{ $req->id }})">Confirm</button>
+                                        <button id="deleteReq{{ $req->id }}" class="delete"
+                                            onclick="deleteRequest({{ $req->id }})">Delete Request</button>
+                                    </div>
                                 </div>
-                            </div>
+                            @empty
 
-                            <div class="fb mt-2">
+                                <center>
+                                    <h4>No Requests</h4>
+                                </center>
 
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="40" height="40"
-                                    class="rounded-circle">
-                                <p class="info"><b>Natalie G.</b> <br> </p>
-                                <div class="button-block">
-                                    <button class="btn btn-info confirm">Confirm</button>
-                                    <div class="delete">Delete Request</div>
-                                </div>
-                            </div>
+                            @endif
+
+
 
                         </div>
 

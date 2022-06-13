@@ -99,9 +99,9 @@
             <div class="d-flex col-12 justify-content-around mt-2 ">
                 <span style="border-radius: 30px;" class="btn btn-danger btn-rounded" onclick="rejectApp('{{$jobuser->id}}')">Reject</span>
                 @if($jobuser->status == '2')
-               <span style="border-radius: 30px;" class="btn btn-primary btn-rounded" >Accepted</span>
+               <button style="border-radius: 30px;" class="btn btn-primary btn-rounded" >Accepted</button>
                 @else
-                <span style="border-radius: 30px;" class="btn btn-primary btn-rounded" id="userStatus{{$jobuser->id}}" onclick="acceptApp('{{$jobuser->id}}')">Accept</span>
+                <button style="border-radius: 30px;" class="btn btn-primary btn-rounded" id="userStatus{{$jobuser->id}}" onclick="acceptApp('{{$jobuser->id}}')">Accept</button>
                 @endif
             </div>
 

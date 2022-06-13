@@ -283,31 +283,43 @@ class RegisterController extends Controller
 
         $follow_lists = User::
           join('follow_unfollows', 'follow_unfollows.follow_id', '=', 'users.id')
-            ->where('user_id', $decrypted)
+            ->where(['user_id'=> $decrypted,'is_accept' => 1])
             ->orderBy('follow_unfollows.id', 'DESC')
             ->select('users.image', 'users.avatar', 'users.name', 'users.id', 'follow_unfollows.follow_id', 'follow_unfollows.user_id')
             ->get();
 
         $follow_sum = User::
           join('follow_unfollows', 'follow_unfollows.follow_id', '=', 'users.id')
-            ->where('user_id', $decrypted)
+          ->where(['user_id'=> $decrypted,'is_accept' => 1])
             ->count();
 
         $following_lists = User::
          join('follow_unfollows', 'follow_unfollows.user_id', '=', 'users.id')
-            ->where('follow_id', $decrypted)
+            ->where(['follow_id'=> $decrypted,'is_accept' => 1])
             ->orderBy('follow_unfollows.id', 'DESC')
             ->select('users.image', 'users.avatar', 'users.name', 'users.id', 'follow_unfollows.follow_id', 'follow_unfollows.user_id')
             ->get();
 
         $following_sum = User::
          join('follow_unfollows', 'follow_unfollows.user_id', '=', 'users.id')
-            ->where('follow_id', $decrypted)
+         ->where(['follow_id'=> $decrypted,'is_accept' => 1])
+            ->count();
+
+        $request_sum = User::
+         join('follow_unfollows', 'follow_unfollows.user_id', '=', 'users.id')
+         ->where(['follow_id'=> $decrypted,'is_accept' => 0])
             ->count();
 
 
+            $requests = User::
+         join('follow_unfollows', 'follow_unfollows.user_id', '=', 'users.id')
+            ->where(['follow_id'=> $decrypted,'is_accept' => 0])
+            ->orderBy('follow_unfollows.id', 'DESC')
+            ->select('users.image', 'users.avatar', 'users.name', 'users.id', 'follow_unfollows.*')
+            ->get();
 
-        return view('userprofile.myProfile', ['follow_sum' => $follow_sum, 'following_sum' => $following_sum, 'following_lists' => $following_lists, 'editProfile' => $editProfile, 'exps' => $exps, 'portfolios' => $portfolios, 'follow_lists' => $follow_lists]);
+
+        return view('userprofile.myProfile', ['request_sum' => $request_sum,'requests' => $requests,'follow_sum' => $follow_sum, 'following_sum' => $following_sum, 'following_lists' => $following_lists, 'editProfile' => $editProfile, 'exps' => $exps, 'portfolios' => $portfolios, 'follow_lists' => $follow_lists]);
     }
 
     public function deleteExp(Request $request)
@@ -331,11 +343,33 @@ class RegisterController extends Controller
             'follow_id' => $follow_id,
             'user_id' => Auth::id(),
 
-
         ]);
 
         $follow->save();
 
         return response()->json(['message' => 'follow'], 200);
     }
+
+    public function confirmRequest(Request $request){
+
+        $confrimRequest = $request->input('conRequest');
+
+        FollowUnfollow::where('id',$confrimRequest)->update(['is_accept' => 1]);
+
+        return response()->json(['message' => 'confirm'], 200);
+
+    }
+
+    public function deleteRequest(Request $request){
+
+        $deleteRequest = $request->input('delRequest');
+
+        FollowUnfollow::where('id',$deleteRequest)->update(['is_accept' => 2]);
+
+
+
+        return response()->json(['message' => 'delete'], 200);
+
+    }
+
 }
