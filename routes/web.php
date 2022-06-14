@@ -110,6 +110,7 @@ Route::prefix('JobPortal')
         Route::post('FollowUser', 'followUser')->name('FollowUser');
         Route::post('ConfirmRequest', 'confirmRequest')->name('ConfirmRequest');
         Route::post('DeleteRequest', 'deleteRequest')->name('DeleteRequest');
+        Route::post('UnBlockUser', 'unBlockUser')->name('UnBlockUser');
     });
 //  Route::get('/auth/google/callback',[RegisterController::class,'loginWithGoogle']);
 Route::prefix('JobPortal')

@@ -13,33 +13,37 @@
                     <div class="card-user">
                         <div class="card-body-user">
                             @if (DB::table('users')->where(['id' => $editProfile->id, 'name' => Auth::user()->name])->exists())
-                            <div style="float: right; cursor: pointer;" class="dropdown">
-                                <span  class=" dropdown-toggle"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-cog " aria-hidden="true"></i>
-                                </span>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <a class="dropdown-item" href="javascript:void(0)">Block List</a>
-                                  <a class="dropdown-item" href="javascript:void(0)">Reports List</a>
+                                <div style="float: right; cursor: pointer;" class="dropdown">
+                                    <span class=" dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-cog " aria-hidden="true"></i>
+                                    </span>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#BlockModal" href="javascript:void(0)">Block List</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Reports List</a>
 
+                                    </div>
                                 </div>
-                              </div>
-
                             @else
+                                <div style="float: right; cursor: pointer;" class="dropdown">
+                                    <span class=" dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-cog " aria-hidden="true"></i>
+                                    </span>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        @if (DB::table('follow_unfollows')->where(['follow_id' => $editProfile->id, 'is_block' => 1, 'user_id' => Auth::id()])->exists())
+                                            <a class="dropdown-item" href="javascript:void(0)">Unblock</a>
+                                        @else
+                                            <a class="dropdown-item" href="javascript:void(0)">Block</a>
 
-                            <div style="float: right; cursor: pointer;" class="dropdown">
-                                <span  class=" dropdown-toggle"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-cog " aria-hidden="true"></i>
-                                </span>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <a class="dropdown-item" href="javascript:void(0)">Block</a>
-                                  <a class="dropdown-item" href="javascript:void(0)">Report</a>
-
+                                        @endif
+                                        <a class="dropdown-item" href="javascript:void(0)">Report</a>
+                                    </div>
                                 </div>
-                              </div>
 
-                            {{-- <span class="" style="float: right; cursor: pointer;"><i class="fa fa-cog " aria-hidden="true"></i> --}}
+                                {{-- <span class="" style="float: right; cursor: pointer;"><i class="fa fa-cog " aria-hidden="true"></i> --}}
 
-                            {{-- </span> --}}
+                                {{-- </span> --}}
                             @endif
                             <div class="d-flex flex-column align-items-center text-center">
                                 @if (!empty($editProfile->image))
@@ -70,12 +74,12 @@
                                         <button class="btn btn-outline-primary">Inbox</button>
                                         <button data-toggle="modal" data-target="#postModal"
                                             class="btn btn-primary">Post</button>
-                                            <span id="refreshReq">
-                                            @if($request_sum > 0)
-                                        <button data-toggle="modal" data-target="#PendingReqModal"
-                                            class="btn btn-danger">Requests({{ $request_sum }})</button>
+                                        <span id="refreshReq">
+                                            @if ($request_sum > 0)
+                                                <button data-toggle="modal" data-target="#PendingReqModal"
+                                                    class="btn btn-danger">Requests({{ $request_sum }})</button>
                                             @endif
-                                            </span>
+                                        </span>
                                     @else
                                         @if (DB::table('follow_unfollows')->where(['follow_id' => $editProfile->id, 'is_block' => 1, 'user_id' => Auth::id()])->exists())
                                             <button class="btn btn-outline-primary">Blocked</button>
@@ -308,19 +312,19 @@
                 <div class="col-md-3">
 
                     <div id="refreshFollowSum">
-                    <ul class="nav nav-tabs" role="tablist">
+                        <ul class="nav nav-tabs" role="tablist">
 
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#tabs-1"
-                                role="tab">Follower<span>({{ $following_sum }})</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-2"
-                                role="tab">Following<span>({{ $follow_sum }})</span></a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-1"
+                                    role="tab">Follower<span>({{ $following_sum }})</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-2"
+                                    role="tab">Following<span>({{ $follow_sum }})</span></a>
+                            </li>
 
 
-                    </ul>
+                        </ul>
                     </div>
 
                     <div class="tab-content">
@@ -644,6 +648,60 @@
             </div>
         </div>
         {{-- End Request Modal --}}
+
+        {{-- Block Modal --}}
+
+        <div class="modal fade" id="BlockModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content login-modal">
+                    <div class="modal-header login-modal-header">
+                        <span style="cursor: pointer" data-dismiss="modal" aria-label="Close">X</span>
+                        <h4 class="modal-title text-center" id="loginModalLabel">Blocked User</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center">
+
+                            @forelse ($blocklists as $blocklist )
+
+                                <div id="blockList{{ $blocklist->id }}" class="fb mt-2">
+                                    @if (!empty($blocklist->image))
+                                        <img src="{{ asset('uploads/user_profile/' . $blocklist->image) }}" alt="Admin"
+                                            class="rounded-circle" width="40" height="40">
+                                    @elseif (!empty($blocklist->avatar))
+                                        <img src="{{ $blocklist->avatar }}" alt="Admin" class="rounded-circle" width="40"
+                                            height="40">
+                                    @else
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
+                                            class="rounded-circle" width="40" height="40">
+                                    @endif
+                                    {{-- <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="40" height="40"
+                                    class="rounded-circle"> --}}
+                                    <p class="info"><b>{{ $blocklist->name }}</b> <br> </p>
+                                    <div class="button-block">
+                                        <button id="unBlockUser{{ $blocklist->id }}" class="btn btn-warning confirm"
+                                            onclick="unBlockUser({{ $blocklist->id }})">Unblock</button>
+
+                                    </div>
+                                </div>
+                            @empty
+
+                                <center>
+                                    <h4>No Blocked Users</h4>
+                                </center>
+
+                            @endif
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {{-- End Block Modal --}}
 
 
 

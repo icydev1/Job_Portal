@@ -637,3 +637,48 @@ function deleteRequest($id) {
 }
 
 //end for deleteRequest
+
+// for unBlock Modal
+
+function unBlockUser($id) {
+    let unblock_id = $id;
+
+    let path = $("#namePath").data("path");
+    let url = `${base_url}${path}/UnBlockUser`;
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+            unblock_id: unblock_id,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+
+        success: function (resp) {
+
+
+
+            if (resp.message == "unblock") {
+                $("#unBlockUser" + unblock_id).attr("disabled", true);
+                $("#blockList" + unblock_id).fadeOut(2000);
+                // $('#refreshReq').load(" #refreshReq > *")
+
+
+            }
+
+             if(resp.data === 0){
+                $("#BlockModal").fadeOut(3000);
+                    $("body").removeClass("modal-open");
+                    $(".modal-backdrop").fadeOut(3000);
+            }
+
+
+
+        },
+    });
+}
+
+//end for unBlock Modal
+

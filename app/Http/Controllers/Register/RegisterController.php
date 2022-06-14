@@ -283,45 +283,55 @@ class RegisterController extends Controller
 
         $follow_lists = User::
           join('follow_unfollows', 'follow_unfollows.follow_id', '=', 'users.id')
-            ->where(['user_id'=> $decrypted,'is_accept' => 1])
+            ->where(['user_id'=> $decrypted,'is_accept' => 1,'is_block' => 0,'status' => 0])
             ->orderBy('follow_unfollows.id', 'DESC')
             ->select('users.image', 'users.avatar', 'users.name', 'users.id', 'follow_unfollows.follow_id', 'follow_unfollows.user_id')
             ->get();
 
         $follow_sum = User::
           join('follow_unfollows', 'follow_unfollows.follow_id', '=', 'users.id')
-          ->where(['user_id'=> $decrypted,'is_accept' => 1])
+          ->where(['user_id'=> $decrypted,'is_accept' => 1,'is_block' => 0,'status' => 0])
             ->count();
 
         $following_lists = User::
          join('follow_unfollows', 'follow_unfollows.user_id', '=', 'users.id')
-            ->where(['follow_id'=> $decrypted,'is_accept' => 1])
+            ->where(['follow_id'=> $decrypted,'is_accept' => 1,'is_block' => 0,'status' => 0])
             ->orderBy('follow_unfollows.id', 'DESC')
             ->select('users.image', 'users.avatar', 'users.name', 'users.id', 'follow_unfollows.follow_id', 'follow_unfollows.user_id')
             ->get();
 
         $following_sum = User::
          join('follow_unfollows', 'follow_unfollows.user_id', '=', 'users.id')
-         ->where(['follow_id'=> $decrypted,'is_accept' => 1])
+         ->where(['follow_id'=> $decrypted,'is_accept' => 1,'is_block' => 0,'status' => 0])
             ->count();
 
         $request_sum = User::
          join('follow_unfollows', 'follow_unfollows.user_id', '=', 'users.id')
-         ->where(['follow_id'=> $decrypted,'is_accept' => 0])
+         ->where(['follow_id'=> $decrypted,'is_accept' => 0,'is_block' => 0])
             ->count();
 
 
             $requests = User::
          join('follow_unfollows', 'follow_unfollows.user_id', '=', 'users.id')
-            ->where(['follow_id'=> $decrypted,'is_accept' => 0])
+            ->where(['follow_id'=> $decrypted,'is_accept' => 0,'is_block' => 0])
             ->orderBy('follow_unfollows.id', 'DESC')
             ->select('users.image', 'users.avatar', 'users.name', 'users.id', 'follow_unfollows.*')
             ->get();
 
+            $blocklists = User::
+         join('follow_unfollows', 'follow_unfollows.user_id', '=', 'users.id')
+            ->where(['follow_id'=> $decrypted,'is_block' => 1])
+            ->orderBy('follow_unfollows.id', 'DESC')
+            ->select('users.image', 'users.avatar', 'users.name', 'users.id', 'follow_unfollows.*')
+            ->get();
+
+
+
+
             Session::put(['decrypt'=>$decrypted]);
 
 
-        return view('userprofile.myProfile', ['request_sum' => $request_sum,'requests' => $requests,'follow_sum' => $follow_sum, 'following_sum' => $following_sum, 'following_lists' => $following_lists, 'editProfile' => $editProfile, 'exps' => $exps, 'portfolios' => $portfolios, 'follow_lists' => $follow_lists]);
+        return view('userprofile.myProfile', ['blocklists' => $blocklists,'request_sum' => $request_sum,'requests' => $requests,'follow_sum' => $follow_sum, 'following_sum' => $following_sum, 'following_lists' => $following_lists, 'editProfile' => $editProfile, 'exps' => $exps, 'portfolios' => $portfolios, 'follow_lists' => $follow_lists]);
     }
 
     public function deleteExp(Request $request)
@@ -389,4 +399,33 @@ class RegisterController extends Controller
     }
 
 
+    public function unBlockUser(Request $request){
+
+        $unBlockUser = $request->input('unblock_id');
+
+        FollowUnfollow::where('id',$unBlockUser)->update(['is_accept' => 2,'is_block' => 0,'status' => 1]);
+
+
+        $decrypted =  Session::get('decrypt');
+
+        $block_sum = User::
+        join('follow_unfollows', 'follow_unfollows.user_id', '=', 'users.id')
+        ->where(['follow_id'=> $decrypted,'is_block' => 1])
+        ->count();
+
+
+        return response()->json(['message' => 'unblock','data' => $block_sum ], 200);
+
+    }
+
+    public function unFollowUser(Request $request)
+    {
+
+        $unfollow_id = $request->get('unfollow_id');
+
+        FollowUnfollow::where('id',$unfollow_id)->update(['status' => 1]);
+
+        return response()->json(['message' => 'unfollow'], 200);
+
+    }
 }
