@@ -283,26 +283,26 @@ class RegisterController extends Controller
 
         $follow_lists = User::
           join('follow_unfollows', 'follow_unfollows.follow_id', '=', 'users.id')
-            ->where(['user_id'=> $decrypted,'is_accept' => 1,'is_block' => 0,'status' => 0])
+            ->where(['user_id'=> $decrypted,'is_accept' => 1,'is_block' => 0,'follow_unfollows.status' => 0])
             ->orderBy('follow_unfollows.id', 'DESC')
             ->select('users.image', 'users.avatar', 'users.name', 'users.id', 'follow_unfollows.follow_id', 'follow_unfollows.user_id')
             ->get();
 
         $follow_sum = User::
           join('follow_unfollows', 'follow_unfollows.follow_id', '=', 'users.id')
-          ->where(['user_id'=> $decrypted,'is_accept' => 1,'is_block' => 0,'status' => 0])
+          ->where(['user_id'=> $decrypted,'is_accept' => 1,'is_block' => 0,'follow_unfollows.status' => 0])
             ->count();
 
         $following_lists = User::
          join('follow_unfollows', 'follow_unfollows.user_id', '=', 'users.id')
-            ->where(['follow_id'=> $decrypted,'is_accept' => 1,'is_block' => 0,'status' => 0])
+            ->where(['follow_id'=> $decrypted,'is_accept' => 1,'is_block' => 0,'follow_unfollows.status' => 0])
             ->orderBy('follow_unfollows.id', 'DESC')
             ->select('users.image', 'users.avatar', 'users.name', 'users.id', 'follow_unfollows.follow_id', 'follow_unfollows.user_id')
             ->get();
 
         $following_sum = User::
          join('follow_unfollows', 'follow_unfollows.user_id', '=', 'users.id')
-         ->where(['follow_id'=> $decrypted,'is_accept' => 1,'is_block' => 0,'status' => 0])
+         ->where(['follow_id'=> $decrypted,'is_accept' => 1,'is_block' => 0,'follow_unfollows.status' => 0])
             ->count();
 
         $request_sum = User::

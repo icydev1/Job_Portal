@@ -5,6 +5,7 @@ use App\Http\Controllers\job\AboutController;
 use App\Http\Controllers\job\ContactController;
 use App\Http\Controllers\job\IndexController;
 use App\Http\Controllers\job\JobController;
+use App\Http\Controllers\payment\PaymentController;
 use App\Http\Controllers\register\RegisterController;
 use App\Http\Controllers\Register\SignUPController;
 use Illuminate\Support\Facades\Auth;
@@ -55,7 +56,7 @@ Route::prefix('JobPortal')
     ->group(function () {
 
         Route::get('/Job', 'job')->name('Job')->withoutMiddleware('is_user');
-        Route::get('/PostJob', 'postJob')->name('PostJob');
+        Route::get('/PostJob', 'postJob')->name('PostJob')->middleware('check_balance');
         Route::get('/GetJobDetail/{job_id}', 'getJobDetail')->name('GetJobDetail')->withoutMiddleware('is_user');
         Route::post('/StoreJobPost', 'storeJobPost')->name('StoreJobPost');
         Route::get('/EditJobPost/{job_id}', 'editJobPost')->name('EditJobPost');
@@ -119,4 +120,14 @@ Route::prefix('JobPortal')
     ->group(function () {
 
         Route::post('/LoginUser', 'loginUser')->name('LoginUser');
+    });
+
+Route::prefix('JobPortal')
+    ->as('JobPortal.')
+    ->middleware('is_user')
+    ->controller(PaymentController::class)
+    ->group(function () {
+
+        Route::get('PaymentPage', 'paymentPage')->name('PaymentPage');
+        Route::post('PaymentSuccess', 'paymentSuccess')->name('PaymentSuccess');
     });

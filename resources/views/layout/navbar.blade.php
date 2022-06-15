@@ -1,6 +1,7 @@
 @php
  $count = Session::get('count');
 @endphp
+
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
     <a href="{{ route('JobPortal.Index') }}"
         class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
@@ -60,6 +61,7 @@
                         <a class="dropdown-item" href="{{route('JobPortal.MyProfile',['profile_id'=>$dcrypt])}}">My Profile</a>
 
 
+                        <a class="dropdown-item" href="Javascript:void(0)">Wallet&nbsp;&nbsp;&nbsp;<span>&#8377;{{checkBalance()}}</span></a>
                         <a class="dropdown-item" href="Javascript:void(0)">My Messages</a>
                         <a class="dropdown-item" href="{{route('JobPortal.EditProfile',['user_id'=>$dcrypt])}}">Setting</a>
                         <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal" href="javascript:void(0)">Log Out</a>
@@ -71,10 +73,13 @@
         </div>
         {{-- <a href="#" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block loginAjax"  >Post A Job<i class="fa fa-arrow-right ms-3"></i></a> --}}
 
+
         <div id="ajaxRefresh">
             @if (Auth::user())
-                <a href="{{route('JobPortal.PostJob')}}" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block loginAjax">Post A Job<i
-                        class="fa fa-arrow-right ms-3"></i></a>
+
+            <a href="{{route('JobPortal.PostJob')}}" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block loginAjax">Post A Job<i
+                class="fa fa-arrow-right ms-3"></i></a>
+
             @else
                 <a href="javascript:void(0)" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block loginAjax"
                     data-toggle="modal" data-target="#loginModal">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>

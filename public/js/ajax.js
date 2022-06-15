@@ -89,9 +89,9 @@ $(document).on("click", ".userLogin", function (e) {
             },
             success: function (response) {
                 if (response == "login") {
-                    $("#loginModal").hide();
+                    $("#loginModal").fadeOut(2000);
                     $("body").removeClass("modal-open");
-                    $(".modal-backdrop").remove();
+                    $(".modal-backdrop").fadeOut(2000);
                     document.getElementById("registerForm").reset();
                     $("#ajaxRefresh").load(" #ajaxRefresh > *");
                     $("#ajaxRefreshLogout").load(" #ajaxRefreshLogout > *");
@@ -136,9 +136,9 @@ $(document).on("click", "#login_btn", function (e) {
             },
             success: function (response) {
                 if (response == 1) {
-                    $("#loginModal").hide();
+                    $("#loginModal").fadeOut(2000);
                     $("body").removeClass("modal-open");
-                    $(".modal-backdrop").remove();
+                    $(".modal-backdrop").fadeOut(2000);
 
                     document.getElementById("loginForm").reset();
                     $("#ajaxRefresh").load(" #ajaxRefresh > *");
@@ -180,9 +180,9 @@ $(document).on("click", "#logout", function (e) {
             let home = `${base_url}${path}`;
 
             if (response == "logout") {
-                $("#logoutModal").hide();
+                $("#logoutModal").fadeOut(2000);
                 $("body").removeClass("modal-open");
-                $(".modal-backdrop").remove();
+                $(".modal-backdrop").fadeOut(2000);
                 $("#ajaxRefresh").load(" #ajaxRefresh > *");
                 $("#ajaxRefreshLogout").load(" #ajaxRefreshLogout > *");
                 $("#ajaxRef").load(" #ajaxRef > *");
