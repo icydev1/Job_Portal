@@ -13,7 +13,7 @@
         <div class="row mt-3">
             @forelse ($favLists as $favList)
                 {{-- <input type="hidden" id="removeList{{$favList->id}}" value="{{$favList->id}}" > --}}
-                <div class="col-md-5 zoom fixed">
+                <div id="favList{{$favList->id}}" class="col-md-5 zoom fixed ">
                     <!-- Item-->
                     <div class="cart-item d-md-flex justify-content-between">
                         <div class="px-3 my-3">
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-1 zoom">
+                <div id="favListTwo{{$favList->id}}" class="col-md-1 zoom">
                     <span onclick="removeList({{ $favList->id }})" class="dynamic"><i
                             class="fa fa-trash"></i></span>
                 </div>

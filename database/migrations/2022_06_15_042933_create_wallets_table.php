@@ -15,9 +15,9 @@ class CreateWalletsTable extends Migration
     {
         Schema::create('wallets', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('user_id');
-            $table->string('wallet_amount');
-            $table->string('stripe_token_id');
+            $table->tinyInteger('user_id')->nullable();
+            $table->string('wallet_amount')->nullable();
+            $table->string('stripe_token_id')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });

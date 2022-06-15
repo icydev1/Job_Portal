@@ -1,5 +1,8 @@
 @php
  $count = Session::get('count');
+ $balance = checkBalance();
+ $freeCredit = freePostJob();
+
 @endphp
 
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
@@ -60,8 +63,12 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{{route('JobPortal.MyProfile',['profile_id'=>$dcrypt])}}">My Profile</a>
 
+                           @if ($freeCredit > 0)
+                           <a class="dropdown-item" href="Javascript:void(0)">Free Job<span>&nbsp;({{$freeCredit}})</span></a>
+                           @elseif ($balance >= 0)
+                           <a class="dropdown-item" href="Javascript:void(0)">Wallet&nbsp;&nbsp;&nbsp;<span>&#8377;{{$balance}}</span></a>
+                           @endif
 
-                        <a class="dropdown-item" href="Javascript:void(0)">Wallet&nbsp;&nbsp;&nbsp;<span>&#8377;{{checkBalance()}}</span></a>
                         <a class="dropdown-item" href="Javascript:void(0)">My Messages</a>
                         <a class="dropdown-item" href="{{route('JobPortal.EditProfile',['user_id'=>$dcrypt])}}">Setting</a>
                         <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal" href="javascript:void(0)">Log Out</a>

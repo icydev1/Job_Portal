@@ -22,9 +22,16 @@ class CheckBalance
 
         $balance = checkBalance(); // I will make helper function for Checkblance
 
-       if(Auth::check()  && $balance >= 100){
+        $freeCredits = freePostJob(); // I will make helper function for Checkblance
+
+        // dump($balance,$freeCredits);
+
+       if($freeCredits > 0 || $balance >= 100){
+
         return $next($request);
+
        }else{
+
         return redirect()->route('JobPortal.PaymentPage');
        }
 

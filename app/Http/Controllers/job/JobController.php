@@ -17,6 +17,7 @@ use App\Models\JobQualificationList;
 use App\Models\JobResponsibiltyList;
 use App\Models\JobShift;
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -51,8 +52,6 @@ class JobController extends Controller
 
     public function postJob()
     {
-
-
 
         $jobCategory = JobCategory::get();
         $jobShifts   = JobShift::get();
@@ -134,6 +133,33 @@ class JobController extends Controller
         } else {
         }
         // Mail::to($request->company_email)->send(new PostJob($storeJobs));
+
+
+        //helper function
+
+        // for updating balance in wallet
+
+        $balance = checkBalance();
+
+        $freeCredits = freePostJob();
+
+        if ($freeCredits > 0) {
+
+            User::where('id', Auth::id())->update(
+                [
+                    'quantity' => $freeCredits - 1,
+                ]
+            );
+        } else if ($balance >= 0) {
+
+            Wallet::where('user_id', Auth::id())->update(
+                [
+                    'wallet_amount' => $balance - 100,
+                ]
+            );
+        };
+
+
 
         event(new UserPostJob($storeJobs));
 
@@ -258,7 +284,7 @@ class JobController extends Controller
             }
         } else {
         }
-        return redirect()->route('JobPortal.GetJobDetail',['job_id'=>$job_id]);
+        return redirect()->route('JobPortal.GetJobDetail', ['job_id' => $job_id]);
     }
 
 
@@ -425,7 +451,7 @@ class JobController extends Controller
 
         $jobusers = User::join('apply_job_posts', 'apply_job_posts.user_id', '=', 'users.id')
             ->where('apply_job_id', $job_id)
-            ->where('apply_job_posts.status','!=', 1)
+            ->where('apply_job_posts.status', '!=', 1)
             ->orderBy('apply_job_posts.id', 'DESC')
             ->get();
 
@@ -447,16 +473,15 @@ class JobController extends Controller
 
     {
         $id = $request->get('removeRespId');
-           JobResponsibiltyList::where('id',$id)->delete();
+        JobResponsibiltyList::where('id', $id)->delete();
 
-           return response()->json(['message' => 'delete'], 200);
-
+        return response()->json(['message' => 'delete'], 200);
     }
 
     public function deleteQual(Request $request)
     {
         $id = $request->get('removeQualId');
-        JobQualificationList::where('id',$id)->delete();
+        JobQualificationList::where('id', $id)->delete();
 
         return response()->json(['message' => 'delete'], 200);
     }
@@ -464,33 +489,32 @@ class JobController extends Controller
     public function deleteBenefit(Request $request)
     {
         $id = $request->get('removeBenefitId');
-        JobBenefit::where('id',$id)->delete();
+        JobBenefit::where('id', $id)->delete();
 
         return response()->json(['message' => 'delete'], 200);
     }
 
 
-    public function rejectApp(Request $request){
+    public function rejectApp(Request $request)
+    {
 
-        ApplyJobPost::where('id',$request->reject)->update(['status' => 1]);
+        ApplyJobPost::where('id', $request->reject)->update(['status' => 1]);
 
-        return response()->json(['message' => 'reject'],200);
-
+        return response()->json(['message' => 'reject'], 200);
     }
 
-    public function acceptApp(Request $request){
+    public function acceptApp(Request $request)
+    {
 
-       ApplyJobPost::where('id',$request->accept)->update(['status' => 2]);
+        ApplyJobPost::where('id', $request->accept)->update(['status' => 2]);
 
-       $getDetail =  ApplyJobPost::where('id',$request->accept)->first()->toArray();
+        $getDetail =  ApplyJobPost::where('id', $request->accept)->first()->toArray();
 
-    //    Mail::to($getDetail['user_email'])->send(new HiringMail($getDetail));
+        //    Mail::to($getDetail['user_email'])->send(new HiringMail($getDetail));
 
-       event(new HireUserEvent($getDetail));
+        event(new HireUserEvent($getDetail));
 
 
-       return response()->json(['message' => 'accept'],200);
-
+        return response()->json(['message' => 'accept'], 200);
     }
-
 }

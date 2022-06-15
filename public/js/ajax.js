@@ -223,7 +223,7 @@ function addWishList($id) {
         success: function (response) {
             $("#ajaxFavList").load(" #ajaxFavList > *");
 
-            // alert(response.data);
+
             $("#countJob").html(response.data);
 
             if (response.message == "Saved") {
@@ -256,11 +256,14 @@ function removeList($id) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (response) {
-            $("#ajaxFavList").load(" #ajaxFavList > *");
+
 
             $("#countJob").html(response.data);
             if (response.message == "delete") {
-                // alert("Removed from list");
+
+                $('#favList'+removeId).fadeOut(2000)
+                $('#favListTwo'+removeId).fadeOut(2000)
+
             } else {
                 alert("not deleted");
             }
