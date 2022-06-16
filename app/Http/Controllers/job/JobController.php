@@ -161,7 +161,7 @@ class JobController extends Controller
 
 
 
-        event(new UserPostJob($storeJobs));
+        // event(new UserPostJob($storeJobs));
 
         return redirect()->route('JobPortal.Job');
     }
@@ -512,7 +512,7 @@ class JobController extends Controller
 
         //    Mail::to($getDetail['user_email'])->send(new HiringMail($getDetail));
 
-        event(new HireUserEvent($getDetail));
+        // event(new HireUserEvent($getDetail));
 
 
         return response()->json(['message' => 'accept'], 200);

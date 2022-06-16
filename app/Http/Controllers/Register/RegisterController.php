@@ -45,7 +45,7 @@ class RegisterController extends Controller
 
         $user = $saveData;
 
-        event(new RegisterUserEvent($user));
+        // event(new RegisterUserEvent($user));
 
         if (Auth::attempt(array('email' => $email, 'password' => $password))) {
 
@@ -118,7 +118,7 @@ class RegisterController extends Controller
 
         // $email =  $data->email;
 
-        event(new RegisterUserEvent($user));
+        // event(new RegisterUserEvent($user));
 
         Auth::login($user);
     }
