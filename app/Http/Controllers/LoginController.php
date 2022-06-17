@@ -12,6 +12,7 @@ use App\Models\UserExp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
@@ -457,14 +458,21 @@ class LoginController extends Controller
 
     }
 
+
+
     public function searchUser(Request $request){
 
-        $search = $request->input('search');
+    $search = $request->input('search');
 
-        $query = User::where('name', 'like', "%{$search}%")->get();
+    $products = DB::table('users')->where('name','LIKE','%'.$search."%")->get();
 
-        return view('userprofile.searchUser',compact('query'));
+      return view('userprofile.searchUser',compact('products'));
+
+
 
     }
+
+
+
 
 }

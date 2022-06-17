@@ -77,7 +77,8 @@ Route::prefix('JobPortal')
         Route::get('/callback', 'loginWithGoogle')->withoutMiddleware('is_user');
         Route::get('/facebook', 'redirectToFacebook')->name('Facebook')->withoutMiddleware('is_user');
         Route::get('/fbcallback', 'loginWithFacebook')->withoutMiddleware('is_user');
-        Route::get('SearchUser', 'searchUser')->name('SearchUser')->withoutMiddleware('is_user');
+        Route::any('SearchUser', 'searchUser')->name('SearchUser')->withoutMiddleware('is_user');
+        Route::any('ResultSearch', 'resultSearch')->name('ResultSearch')->withoutMiddleware('is_user');
         Route::post('/Logout', 'logout')->name('Logout');
         Route::get('EditProfile/{user_id}', 'editProfile')->name('EditProfile');
         Route::get('MyProfile/{profile_id}', 'myProfile')->name('MyProfile');

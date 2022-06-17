@@ -692,28 +692,37 @@ function searchUser() {
     let path = $("#namePath").data("path");
     let url = `${base_url}${path}/SearchUser`;
 
-    $.ajax({
-        // type: "POST",
-        url: url,
-        data: {
-            search: search,
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
+    if(search == ""){
 
-        success: function (resp) {
+        $('#search').html('<center><span><h5>No User Found</h5></span></center>');
 
-            let url = `${base_url}${path}/SearchUser`;
+    }else{
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {
+                search: search,
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            dataType:'html',
+
+            success: function (resp) {
 
 
-                window.location.href = url;
+
+                if(resp){
+
+                    $('#search').html(resp);
+                }
 
 
+            },
+        });
+    }
 
 
-        },
-    });
 }
 //end for search user
 
