@@ -18,42 +18,42 @@ use Laravel\Socialite\Facades\Socialite;
 
 class RegisterController extends Controller
 {
-    public function registerUser(Request $request)
-    {
+    // public function registerUser(Request $request)
+    // {
 
-        $request->validate([
+    //     $request->validate([
 
-            'name'     => 'required',
-            'email'    => 'required|unique:users',
-            'password' => 'required',
+    //         'name'     => 'required',
+    //         'email'    => 'required|unique:users',
+    //         'password' => 'required',
 
-        ]);
+    //     ]);
 
-        $name     = $request->input('name');
-        $email    = $request->input('email');
-        $password = $request->input('password');
+    //     $name     = $request->input('name');
+    //     $email    = $request->input('email');
+    //     $password = $request->input('password');
 
-        $saveData = new User([
+    //     $saveData = new User([
 
-            'name'     => $name,
-            'email'    => $email,
-            'password' => bcrypt($password),
+    //         'name'     => $name,
+    //         'email'    => $email,
+    //         'password' => bcrypt($password),
 
-        ]);
+    //     ]);
 
-        $saveData->save();
+    //     $saveData->save();
 
-        $user = $saveData;
+    //     $user = $saveData;
 
-        // event(new RegisterUserEvent($user));
+    //     // event(new RegisterUserEvent($user));
 
-        if (Auth::attempt(array('email' => $email, 'password' => $password))) {
+    //     if (Auth::attempt(array('email' => $email, 'password' => $password))) {
 
-            return "login";
-        } else {
-            return "fail";
-        }
-    }
+    //         return "login";
+    //     } else {
+    //         return "fail";
+    //     }
+    // }
 
 
 

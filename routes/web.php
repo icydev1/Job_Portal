@@ -36,7 +36,7 @@ Route::prefix('JobPortal')
     ->middleware('is_user')
     ->controller(JobController::class)
     ->group(function () {
-
+        Route::post('/RegisterUser', 'registerUser')->name('RegisterUser')->withoutMiddleware('is_user');
         Route::get('/Job', 'job')->name('Job')->withoutMiddleware('is_user');
         Route::get('/PostJob', 'postJob')->name('PostJob')->middleware('check_balance');
         Route::get('/GetJobDetail/{job_id}', 'getJobDetail')->name('GetJobDetail')->withoutMiddleware('is_user');
@@ -71,7 +71,7 @@ Route::prefix('JobPortal')
     ->controller(RegisterController::class)
     ->group(function () {
 
-        Route::post('/RegisterUser', 'registerUser')->name('RegisterUser');
+        // Route::post('/RegisterUser', 'registerUser')->name('RegisterUser');
         Route::get('/google', 'redirectToGoogle')->name('Google');
         Route::get('/callback', 'loginWithGoogle');
         Route::get('/facebook', 'redirectToFacebook')->name('Facebook');

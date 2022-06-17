@@ -32,6 +32,43 @@ class JobController extends Controller
     //     $this->middleware('user')->except('logout');
     // }
 
+    public function registerUser(Request $request)
+    {
+
+        $request->validate([
+
+            'name'     => 'required',
+            'email'    => 'required|unique:users',
+            'password' => 'required',
+
+        ]);
+
+        $name     = $request->input('name');
+        $email    = $request->input('email');
+        $password = $request->input('password');
+
+        $saveData = new User([
+
+            'name'     => $name,
+            'email'    => $email,
+            'password' => bcrypt($password),
+
+        ]);
+
+        $saveData->save();
+
+        $user = $saveData;
+
+        // event(new RegisterUserEvent($user));
+
+        if (Auth::attempt(array('email' => $email, 'password' => $password))) {
+
+            return "login";
+        } else {
+            return "fail";
+        }
+    }
+
     public function job()
     {
 
