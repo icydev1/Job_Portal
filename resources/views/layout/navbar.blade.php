@@ -12,8 +12,8 @@
     </a>
 
     @if (Route::is('JobPortal.Index'))
- <a href="{{route('JobPortal.SearchUser')}}">
-    <div class="search-box">
+ <a style="margin-right: -2px;" href="{{route('JobPortal.SearchUser')}}">
+    <div  class="search-box">
         <input type="text" name="search_user" class="search-input" placeholder="Search..">
 
         <button  class="search-button">
