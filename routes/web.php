@@ -1,13 +1,13 @@
 <?php
 
 
-use App\Http\Controllers\job\AboutController;
-use App\Http\Controllers\job\ContactController;
-use App\Http\Controllers\job\IndexController;
-use App\Http\Controllers\job\JobController;
-use App\Http\Controllers\payment\PaymentController;
-use App\Http\Controllers\register\RegisterController;
-use App\Http\Controllers\register\SignUPController;
+// use App\Http\Controllers\job\AboutController;
+// use App\Http\Controllers\job\ContactController;
+// use App\Http\Controllers\job\IndexController;
+// use App\Http\Controllers\job\JobController;
+// use App\Http\Controllers\payment\PaymentController;
+// use App\Http\Controllers\register\RegisterController;
+// use App\Http\Controllers\register\SignUPController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\Route;
 Route::
 prefix('JobPortal')
     ->as('JobPortal.')
+    ->namespace('Job')
     ->controller(IndexController::class)
     ->group(function () {
 
