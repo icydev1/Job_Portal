@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\register;
+// namespace App\Http\Controllers\register;
 
 use App\Events\RegisterUserEvent;
 use App\Http\Controllers\Controller;
