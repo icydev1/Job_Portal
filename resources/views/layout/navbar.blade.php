@@ -12,7 +12,7 @@
     </a>
 
     <div class="search-box">
-        <input type="text" id="searchUser" name="search_user" class="search-input" placeholder="Search..">
+        <input type="text" id="searchUserName" name="search_user" class="search-input" placeholder="Search..">
 
         <button onclick="searchUser()" class="search-button">
           <i class="fas fa-search"></i>

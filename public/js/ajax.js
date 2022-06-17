@@ -687,7 +687,7 @@ function unBlockUser($id) {
 
 function searchUser() {
 
-    let search = $('#searchUser').val();
+    let search = $('#searchUserName').val();
 
     let path = $("#namePath").data("path");
     let url = `${base_url}${path}/SearchUser`;
