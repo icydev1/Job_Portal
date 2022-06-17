@@ -2,7 +2,6 @@
 
     <div class="col-lg-12">
 
-
         <div id="showProduct" class="row">
 
             @foreach ($products as $product)

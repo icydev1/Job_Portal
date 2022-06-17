@@ -75,7 +75,7 @@
 
         <!-- Carousel End -->
 
-        @include('job.search')
+        {{-- @include('job.search') --}}
 
         <!-- Category Start -->
 
