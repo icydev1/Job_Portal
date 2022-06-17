@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Route;
 Route::
 prefix('JobPortal')
     ->as('JobPortal.')
-    ->controller(Job\IndexController::class)
+    ->controller(\Job\IndexController::class)
     ->group(function () {
 
         Route::get('/', 'index')->name('Index');
