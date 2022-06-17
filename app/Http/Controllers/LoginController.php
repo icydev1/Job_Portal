@@ -460,7 +460,8 @@ class LoginController extends Controller
 
 
 
-    public function searchUser(Request $request){
+    public function searchUser(Request $request)
+    {
 
 
     $products = DB::table('users')->limit(0)->get();

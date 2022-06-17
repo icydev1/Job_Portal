@@ -7,7 +7,7 @@ use App\Http\Controllers\job\IndexController;
 use App\Http\Controllers\job\JobController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\payment\PaymentController;
-
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -69,6 +69,7 @@ Route::prefix('JobPortal')
 
 Route::prefix('JobPortal')
     ->as('JobPortal.')
+    ->middleware('is_user')
     ->controller(LoginController::class)
     ->group(function () {
         Route::post('/LoginUser', 'loginUser')->name('LoginUser')->withoutMiddleware('is_user');
