@@ -81,7 +81,7 @@
                            @elseif ($balance >= 0)
                            <a class="dropdown-item" href="Javascript:void(0)">Wallet&nbsp;&nbsp;&nbsp;<span>&#8377;{{$balance}}</span></a>
                            @endif
-
+                        <a class="dropdown-item" href="{{route('JobPortal.SearchJobFilter')}}">Search For Job</a>
                         <a class="dropdown-item" href="Javascript:void(0)">My Messages</a>
                         <a class="dropdown-item" href="{{route('JobPortal.EditProfile',['user_id'=>$dcrypt])}}">Setting</a>
                         <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal" href="javascript:void(0)">Log Out</a>

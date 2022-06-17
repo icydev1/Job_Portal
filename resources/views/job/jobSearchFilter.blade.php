@@ -4,7 +4,7 @@
 
 
 
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-lg-3">
             <div class="sidebar">
                 <div class="widget border-0">
@@ -163,7 +163,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="widget">
+                {{-- <div class="widget">
                     <div class="widget-title widget-collapse">
                         <h6>Gender</h6>
                         <a class="ml-auto" data-toggle="collapse" href="#gender" role="button" aria-expanded="false" aria-controls="gender"><i class="fas fa-chevron-down"></i></a>
@@ -180,7 +180,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="widget">
                     <div class="widget-title widget-collapse">
                         <h6>Qualification</h6>
@@ -210,11 +210,11 @@
             </div>
         </div>
         <div class="col-lg-9">
-            <div class="row mb-4">
+            {{-- <div class="row mb-4">
                 <div class="col-12">
                     <h6 class="mb-0">Showing 1-10 of <span class="text-primary">28 Candidates</span></h6>
                 </div>
-            </div>
+            </div> --}}
             <div class="job-filter mb-4 d-sm-flex align-items-center">
                 <div class="job-alert-bt"> <a class="btn btn-md btn-dark" href="#"><i class="fa fa-envelope"></i>Get job alert </a> </div>
                 <div class="job-shortby ml-sm-auto d-flex align-items-center">
@@ -449,7 +449,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-12 text-center mt-4 mt-sm-5">
                     <ul class="pagination justify-content-center mb-0">
                         <li class="page-item disabled"> <span class="page-link">Prev</span> </li>
@@ -461,7 +461,7 @@
                         <li class="page-item"> <a class="page-link" href="#">Next</a> </li>
                     </ul>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection
