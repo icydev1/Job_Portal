@@ -1,15 +1,13 @@
 <?php
 
 
-// use App\Http\Controllers\job\AboutController;
-// use App\Http\Controllers\job\ContactController;
-// use App\Http\Controllers\job\IndexController;
-// use App\Http\Controllers\job\JobController;
-// use App\Http\Controllers\payment\PaymentController;
-// use App\Http\Controllers\register\RegisterController;
-// use App\Http\Controllers\register\SignUPController;
-
-
+use App\Http\Controllers\job\AboutController;
+use App\Http\Controllers\job\ContactController;
+use App\Http\Controllers\job\IndexController;
+use App\Http\Controllers\job\JobController;
+use App\Http\Controllers\payment\PaymentController;
+use App\Http\Controllers\register\RegisterController;
+use App\Http\Controllers\register\SignUPController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +33,7 @@ use Illuminate\Support\Facades\Route;
 Route::
 prefix('JobPortal')
     ->as('JobPortal.')
-    ->controller(\Job\IndexController::class)
+    ->controller(IndexController::class)
     ->group(function () {
 
         Route::get('/', 'index')->name('Index');
@@ -45,7 +43,7 @@ prefix('JobPortal')
 Route::prefix('JobPortal')
     ->as('JobPortal.')
 
-    ->controller(Job\AboutController::class)
+    ->controller(AboutController::class)
     ->group(function () {
 
         Route::get('/about', 'about')->name('About');
@@ -55,7 +53,7 @@ Route::prefix('JobPortal')
     Route::prefix('JobPortal')
     ->as('JobPortal.')
     ->middleware('is_user')
-    ->controller(Job\JobController::class)
+    ->controller(JobController::class)
     ->group(function () {
 
         Route::get('/Job', 'job')->name('Job')->withoutMiddleware('is_user');
@@ -80,7 +78,7 @@ Route::prefix('JobPortal')
     });
 Route::prefix('JobPortal')
     ->as('JobPortal.')
-    ->controller(Job\ContactController::class)
+    ->controller(ContactController::class)
     ->group(function () {
 
         Route::get('/contact', 'contact')->name('Contact');
@@ -88,7 +86,7 @@ Route::prefix('JobPortal')
 
 Route::prefix('JobPortal')
     ->as('JobPortal.')
-    ->controller(register\RegisterController::class)
+    ->controller(RegisterController::class)
     ->group(function () {
 
         Route::post('/RegisterUser', 'registerUser')->name('RegisterUser');
@@ -103,7 +101,7 @@ Route::prefix('JobPortal')
         Route::prefix('JobPortal')
         ->as('JobPortal.')
         ->middleware('is_user')
-        ->controller(register\RegisterController::class)
+        ->controller(RegisterController::class)
         ->group(function () {
         Route::post('/Logout', 'logout')->name('Logout');
         Route::get('EditProfile/{user_id}', 'editProfile')->name('EditProfile');
@@ -118,10 +116,10 @@ Route::prefix('JobPortal')
         Route::post('UnBlockUser', 'unBlockUser')->name('UnBlockUser');
         Route::post('UnFollowUser', 'unFollowUser')->name('UnFollowUser');
     });
-
+//  Route::get('/auth/google/callback',[RegisterController::class,'loginWithGoogle']);
 Route::prefix('JobPortal')
     ->as('JobPortal.')
-    ->controller(register\SignUPController::class)
+    ->controller(SignUPController::class)
     ->group(function () {
 
         Route::post('/LoginUser', 'loginUser')->name('LoginUser');
@@ -130,7 +128,7 @@ Route::prefix('JobPortal')
 Route::prefix('JobPortal')
     ->as('JobPortal.')
     ->middleware('is_user')
-    ->controller(payment\PaymentController::class)
+    ->controller(PaymentController::class)
     ->group(function () {
 
         Route::get('PaymentPage', 'paymentPage')->name('PaymentPage');
