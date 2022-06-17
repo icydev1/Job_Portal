@@ -5,15 +5,14 @@ use App\Http\Controllers\job\AboutController;
 use App\Http\Controllers\job\ContactController;
 use App\Http\Controllers\job\IndexController;
 use App\Http\Controllers\job\JobController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\payment\PaymentController;
-use App\Http\Controllers\register\RegisterController;
-use App\Http\Controllers\register\SignUPController;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-Route::
-prefix('JobPortal')
+Route::prefix('JobPortal')
     ->as('JobPortal.')
     ->controller(IndexController::class)
     ->group(function () {
@@ -31,7 +30,7 @@ Route::prefix('JobPortal')
     });
 
 
-    Route::prefix('JobPortal')
+Route::prefix('JobPortal')
     ->as('JobPortal.')
     ->middleware('is_user')
     ->controller(JobController::class)
@@ -68,16 +67,17 @@ Route::prefix('JobPortal')
 
 
 
-    Route::prefix('JobPortal')
+Route::prefix('JobPortal')
     ->as('JobPortal.')
-    ->controller(RegisterController::class)
+    ->controller(LoginController::class)
     ->group(function () {
- // Route::post('/RegisterUser', 'registerUser')->name('RegisterUser')->withoutMiddleware('is_user');
- Route::get('/google', 'redirectToGoogle')->name('Google')->withoutMiddleware('is_user');
- Route::get('/callback', 'loginWithGoogle')->withoutMiddleware('is_user');
- Route::get('/facebook', 'redirectToFacebook')->name('Facebook')->withoutMiddleware('is_user');
- Route::get('/fbcallback', 'loginWithFacebook')->withoutMiddleware('is_user');
- Route::get('SearchUser','searchUser')->name('SearchUser')->withoutMiddleware('is_user');
+        Route::post('/LoginUser', 'loginUser')->name('LoginUser')->withoutMiddleware('is_user');
+        Route::post('/RegisterUser', 'registerUser')->name('RegisterUser')->withoutMiddleware('is_user');
+        Route::get('/google', 'redirectToGoogle')->name('Google')->withoutMiddleware('is_user');
+        Route::get('/callback', 'loginWithGoogle')->withoutMiddleware('is_user');
+        Route::get('/facebook', 'redirectToFacebook')->name('Facebook')->withoutMiddleware('is_user');
+        Route::get('/fbcallback', 'loginWithFacebook')->withoutMiddleware('is_user');
+        Route::get('SearchUser', 'searchUser')->name('SearchUser')->withoutMiddleware('is_user');
         Route::post('/Logout', 'logout')->name('Logout');
         Route::get('EditProfile/{user_id}', 'editProfile')->name('EditProfile');
         Route::get('MyProfile/{profile_id}', 'myProfile')->name('MyProfile');
@@ -94,13 +94,7 @@ Route::prefix('JobPortal')
 
 
 //  Route::get('/auth/google/callback',[RegisterController::class,'loginWithGoogle']);
-Route::prefix('JobPortal')
-    ->as('JobPortal.')
-    ->controller(SignUPController::class)
-    ->group(function () {
 
-        Route::post('/LoginUser', 'loginUser')->name('LoginUser');
-    });
 
 
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\register;
+namespace App\Http\Controllers;
 
 use App\Events\RegisterUserEvent;
 use App\Http\Controllers\Controller;
@@ -16,44 +16,72 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 
-class RegisterController extends Controller
+
+class LoginController extends Controller
+
 {
-    // public function registerUser(Request $request)
-    // {
 
-    //     $request->validate([
+    public function loginUser(Request $request){
 
-    //         'name'     => 'required',
-    //         'email'    => 'required|unique:users',
-    //         'password' => 'required',
 
-    //     ]);
 
-    //     $name     = $request->input('name');
-    //     $email    = $request->input('email');
-    //     $password = $request->input('password');
+        $request->validate([
 
-    //     $saveData = new User([
+            'login_email' => 'required',
+            'login_password' => 'required',
 
-    //         'name'     => $name,
-    //         'email'    => $email,
-    //         'password' => bcrypt($password),
+        ]);
 
-    //     ]);
+        $email = $request->login_email;
+        $pass  = $request->login_password;
 
-    //     $saveData->save();
+        if (auth()->attempt(array('email' => $email, 'password' => $pass)))
+        {
+            return response()->json([ [1] ]);
+        }
+        else
+         {
+            return response()->json([ [2] ]);
+         }
+    }
 
-    //     $user = $saveData;
 
-    //     // event(new RegisterUserEvent($user));
+    public function registerUser(Request $request)
+    {
 
-    //     if (Auth::attempt(array('email' => $email, 'password' => $password))) {
+        $request->validate([
 
-    //         return "login";
-    //     } else {
-    //         return "fail";
-    //     }
-    // }
+            'name'     => 'required',
+            'email'    => 'required|unique:users',
+            'password' => 'required',
+
+        ]);
+
+        $name     = $request->input('name');
+        $email    = $request->input('email');
+        $password = $request->input('password');
+
+        $saveData = new User([
+
+            'name'     => $name,
+            'email'    => $email,
+            'password' => bcrypt($password),
+
+        ]);
+
+        $saveData->save();
+
+        $user = $saveData;
+
+        // event(new RegisterUserEvent($user));
+
+        if (Auth::attempt(array('email' => $email, 'password' => $password))) {
+
+            return "login";
+        } else {
+            return "fail";
+        }
+    }
 
 
 
