@@ -43,7 +43,7 @@ prefix('JobPortal')
 
 Route::prefix('JobPortal')
     ->as('JobPortal.')
-
+    ->namespace('job')
     ->controller(AboutController::class)
     ->group(function () {
 
@@ -53,6 +53,7 @@ Route::prefix('JobPortal')
 
     Route::prefix('JobPortal')
     ->as('JobPortal.')
+    ->namespace('job')
     ->middleware('is_user')
     ->controller(JobController::class)
     ->group(function () {
@@ -79,6 +80,7 @@ Route::prefix('JobPortal')
     });
 Route::prefix('JobPortal')
     ->as('JobPortal.')
+    ->namespace('job')
     ->controller(ContactController::class)
     ->group(function () {
 
@@ -87,6 +89,7 @@ Route::prefix('JobPortal')
 
 Route::prefix('JobPortal')
     ->as('JobPortal.')
+    ->namespace('register')
     ->controller(RegisterController::class)
     ->group(function () {
 
@@ -102,6 +105,7 @@ Route::prefix('JobPortal')
         Route::prefix('JobPortal')
         ->as('JobPortal.')
         ->middleware('is_user')
+        ->namespace('register')
         ->controller(RegisterController::class)
         ->group(function () {
         Route::post('/Logout', 'logout')->name('Logout');
@@ -120,6 +124,7 @@ Route::prefix('JobPortal')
 //  Route::get('/auth/google/callback',[RegisterController::class,'loginWithGoogle']);
 Route::prefix('JobPortal')
     ->as('JobPortal.')
+    ->namespace('register')
     ->controller(SignUPController::class)
     ->group(function () {
 
@@ -128,6 +133,7 @@ Route::prefix('JobPortal')
 
 Route::prefix('JobPortal')
     ->as('JobPortal.')
+    ->namespace('payment')
     ->middleware('is_user')
     ->controller(PaymentController::class)
     ->group(function () {
