@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Route;
 Route::
 prefix('JobPortal')
     ->as('JobPortal.')
-    ->namespace('Job')
+    ->namespace('job')
     ->controller(IndexController::class)
     ->group(function () {
 
