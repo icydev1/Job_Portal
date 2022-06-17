@@ -42,7 +42,6 @@ prefix('JobPortal')
 
 Route::prefix('JobPortal')
     ->as('JobPortal.')
-
     ->controller(AboutController::class)
     ->group(function () {
 
