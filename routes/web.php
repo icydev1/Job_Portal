@@ -67,6 +67,7 @@ Route::prefix('JobPortal')
 
 Route::prefix('JobPortal')
     ->as('JobPortal.')
+    ->middleware('')
     ->controller(RegisterController::class)
     ->group(function () {
 
