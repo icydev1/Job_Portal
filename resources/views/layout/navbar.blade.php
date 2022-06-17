@@ -11,14 +11,17 @@
         <h1 class="m-0 text-primary">Job Portal</h1>
     </a>
 
+    @if (Route::is('JobPortal.Index'))
+ <a href="{{route('JobPortal.SearchUser')}}">
     <div class="search-box">
-        <input type="text" id="searchUserName" name="search_user" class="search-input" placeholder="Search..">
+        <input type="text" name="search_user" class="search-input" placeholder="Search..">
 
-        <button onclick="searchUser()" class="search-button">
+        <button  class="search-button">
           <i class="fas fa-search"></i>
         </button>
      </div>
-
+    </a>
+    @endif
     <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -331,11 +334,9 @@
     </div>
 </div>
 
-<div id="search" class="">
 
 
 
-</div>
 
 
 <!-- - Login Model Ends Here -->

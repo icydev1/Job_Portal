@@ -462,15 +462,28 @@ class LoginController extends Controller
 
     public function searchUser(Request $request){
 
-    $search = $request->input('search');
 
-    $products = DB::table('users')->where('name','LIKE','%'.$search."%")->get();
 
-      return view('userprofile.searchUser',compact('products'));
+    $products = DB::table('users')->limit(0)->get();
+
+    return view('userprofile.searchUser',compact('products'));
 
 
 
     }
+    public function searchAllUser(Request $request){
+
+    $search = $request->input('search');
+
+    $products = DB::table('users')->where('name','LIKE','%'.$search."%")->get();
+
+
+      return view('userprofile.searchAllUser',compact('products'));
+
+
+
+    }
+
 
 
 

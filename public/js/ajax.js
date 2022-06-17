@@ -690,7 +690,7 @@ function searchUser() {
     let search = $('#searchUserName').val();
 
     let path = $("#namePath").data("path");
-    let url = `${base_url}${path}/SearchUser`;
+    let url = `${base_url}${path}/SearchAllUser`;
 
     if(search == ""){
 
@@ -714,7 +714,11 @@ function searchUser() {
 
                 if(resp){
 
+
+                    $('#showProduct').hide();
                     $('#search').html(resp);
+
+
                 }
 
 

@@ -35,7 +35,7 @@ Route::prefix('JobPortal')
     ->middleware('is_user')
     ->controller(JobController::class)
     ->group(function () {
-        Route::post('/RegisterUser', 'registerUser')->name('RegisterUser')->withoutMiddleware('is_user');
+        Route::get('/SearchJobFilter', 'searchJobFilter')->name('SearchJobFilter')->withoutMiddleware('is_user');
         Route::get('/Job', 'job')->name('Job')->withoutMiddleware('is_user');
         Route::get('/PostJob', 'postJob')->name('PostJob')->middleware('check_balance');
         Route::get('/GetJobDetail/{job_id}', 'getJobDetail')->name('GetJobDetail')->withoutMiddleware('is_user');
@@ -77,7 +77,8 @@ Route::prefix('JobPortal')
         Route::get('/callback', 'loginWithGoogle')->withoutMiddleware('is_user');
         Route::get('/facebook', 'redirectToFacebook')->name('Facebook')->withoutMiddleware('is_user');
         Route::get('/fbcallback', 'loginWithFacebook')->withoutMiddleware('is_user');
-        Route::any('SearchUser', 'searchUser')->name('SearchUser')->withoutMiddleware('is_user');
+        Route::get('SearchUser', 'searchUser')->name('SearchUser')->withoutMiddleware('is_user');
+        Route::post('SearchAllUser', 'searchAllUser')->name('SearchAllUser')->withoutMiddleware('is_user');
         Route::any('ResultSearch', 'resultSearch')->name('ResultSearch')->withoutMiddleware('is_user');
         Route::post('/Logout', 'logout')->name('Logout');
         Route::get('EditProfile/{user_id}', 'editProfile')->name('EditProfile');

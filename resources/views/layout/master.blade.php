@@ -30,7 +30,8 @@
         @include('layout.navbar')
 
 
-        @include('userprofile.searchUser')
+
+
 
 
         @yield('content')

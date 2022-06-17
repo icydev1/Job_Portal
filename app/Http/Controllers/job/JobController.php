@@ -519,4 +519,12 @@ class JobController extends Controller
 
         return response()->json(['message' => 'accept'], 200);
     }
+
+    public function searchJobFilter(){
+
+        return view('job.jobSearchFilter');
+
+    }
+
+
 }
