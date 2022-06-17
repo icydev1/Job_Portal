@@ -428,4 +428,15 @@ class RegisterController extends Controller
         return response()->json(['message' => 'unfollow'], 200);
 
     }
+
+    public function searchUser(Request $request){
+
+        $search = $request->input('search');
+
+        $query = User::where('name', 'like', "%{$search}%")->get();
+
+        return view('userprofile.searchUser',compact('query'));
+
+    }
+
 }

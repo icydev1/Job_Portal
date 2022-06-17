@@ -682,6 +682,39 @@ function unBlockUser($id) {
         },
     });
 }
-
 //end for unBlock Modal
+// search user
+
+function searchUser() {
+
+    let search = $('#searchUser').val();
+
+    let path = $("#namePath").data("path");
+    let url = `${base_url}${path}/SearchUser`;
+
+    $.ajax({
+        // type: "POST",
+        url: url,
+        data: {
+            search: search,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+
+        success: function (resp) {
+
+            let url = `${base_url}${path}/SearchUser`;
+
+
+                window.location.href = url;
+
+
+
+
+        },
+    });
+}
+//end for search user
+
 

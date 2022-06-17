@@ -10,9 +10,19 @@
         class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
         <h1 class="m-0 text-primary">Job Portal</h1>
     </a>
+
+    <div class="search-box">
+        <input type="text" id="searchUser" name="search_user" class="search-input" placeholder="Search..">
+
+        <button onclick="searchUser()" class="search-button">
+          <i class="fas fa-search"></i>
+        </button>
+     </div>
+
     <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
             <a href="{{ route('JobPortal.Index') }}" class="nav-item nav-link @if (Route::is('JobPortal.Index')) active  @endif">Home</a>

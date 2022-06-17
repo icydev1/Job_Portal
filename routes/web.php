@@ -94,6 +94,7 @@ Route::prefix('JobPortal')
         Route::get('/callback', 'loginWithGoogle');
         Route::get('/facebook', 'redirectToFacebook')->name('Facebook');
         Route::get('/fbcallback', 'loginWithFacebook');
+        Route::get('SearchUser','searchUser')->name('SearchUser');
 
     });
 
@@ -113,6 +114,7 @@ Route::prefix('JobPortal')
         Route::post('ConfirmRequest', 'confirmRequest')->name('ConfirmRequest');
         Route::post('DeleteRequest', 'deleteRequest')->name('DeleteRequest');
         Route::post('UnBlockUser', 'unBlockUser')->name('UnBlockUser');
+        Route::post('UnFollowUser', 'unFollowUser')->name('UnFollowUser');
     });
 //  Route::get('/auth/google/callback',[RegisterController::class,'loginWithGoogle']);
 Route::prefix('JobPortal')
