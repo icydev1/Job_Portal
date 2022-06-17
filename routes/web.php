@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Route;
 Route::
 prefix('JobPortal')
     ->as('JobPortal.')
-    ->controller(IndexController::class)
+    ->controller(Job\IndexController::class)
     ->group(function () {
 
         Route::get('/', 'index')->name('Index');
@@ -45,7 +45,7 @@ prefix('JobPortal')
 Route::prefix('JobPortal')
     ->as('JobPortal.')
 
-    ->controller(AboutController::class)
+    ->controller(Job\AboutController::class)
     ->group(function () {
 
         Route::get('/about', 'about')->name('About');
@@ -55,7 +55,7 @@ Route::prefix('JobPortal')
     Route::prefix('JobPortal')
     ->as('JobPortal.')
     ->middleware('is_user')
-    ->controller(JobController::class)
+    ->controller(Job\JobController::class)
     ->group(function () {
 
         Route::get('/Job', 'job')->name('Job')->withoutMiddleware('is_user');
@@ -80,7 +80,7 @@ Route::prefix('JobPortal')
     });
 Route::prefix('JobPortal')
     ->as('JobPortal.')
-    ->controller(ContactController::class)
+    ->controller(Job\ContactController::class)
     ->group(function () {
 
         Route::get('/contact', 'contact')->name('Contact');
@@ -88,7 +88,7 @@ Route::prefix('JobPortal')
 
 Route::prefix('JobPortal')
     ->as('JobPortal.')
-    ->controller(RegisterController::class)
+    ->controller(register\RegisterController::class)
     ->group(function () {
 
         Route::post('/RegisterUser', 'registerUser')->name('RegisterUser');
@@ -103,7 +103,7 @@ Route::prefix('JobPortal')
         Route::prefix('JobPortal')
         ->as('JobPortal.')
         ->middleware('is_user')
-        ->controller(RegisterController::class)
+        ->controller(register\RegisterController::class)
         ->group(function () {
         Route::post('/Logout', 'logout')->name('Logout');
         Route::get('EditProfile/{user_id}', 'editProfile')->name('EditProfile');
@@ -121,7 +121,7 @@ Route::prefix('JobPortal')
 
 Route::prefix('JobPortal')
     ->as('JobPortal.')
-    ->controller(SignUPController::class)
+    ->controller(register\SignUPController::class)
     ->group(function () {
 
         Route::post('/LoginUser', 'loginUser')->name('LoginUser');
@@ -130,7 +130,7 @@ Route::prefix('JobPortal')
 Route::prefix('JobPortal')
     ->as('JobPortal.')
     ->middleware('is_user')
-    ->controller(PaymentController::class)
+    ->controller(payment\PaymentController::class)
     ->group(function () {
 
         Route::get('PaymentPage', 'paymentPage')->name('PaymentPage');
