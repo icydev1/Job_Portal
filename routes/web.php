@@ -65,26 +65,19 @@ Route::prefix('JobPortal')
         Route::get('/contact', 'contact')->name('Contact');
     });
 
-Route::prefix('JobPortal')
+
+
+
+    Route::prefix('JobPortal')
     ->as('JobPortal.')
-    ->middleware('')
     ->controller(RegisterController::class)
     ->group(function () {
-
-        // Route::post('/RegisterUser', 'registerUser')->name('RegisterUser');
-        Route::get('/google', 'redirectToGoogle')->name('Google');
-        Route::get('/callback', 'loginWithGoogle');
-        Route::get('/facebook', 'redirectToFacebook')->name('Facebook');
-        Route::get('/fbcallback', 'loginWithFacebook');
-        Route::get('SearchUser','searchUser')->name('SearchUser');
-
-    });
-
-        Route::prefix('JobPortal')
-        ->as('JobPortal.')
-        ->middleware('is_user')
-        ->controller(RegisterController::class)
-        ->group(function () {
+ // Route::post('/RegisterUser', 'registerUser')->name('RegisterUser')->withoutMiddleware('is_user');
+ Route::get('/google', 'redirectToGoogle')->name('Google')->withoutMiddleware('is_user');
+ Route::get('/callback', 'loginWithGoogle')->withoutMiddleware('is_user');
+ Route::get('/facebook', 'redirectToFacebook')->name('Facebook')->withoutMiddleware('is_user');
+ Route::get('/fbcallback', 'loginWithFacebook')->withoutMiddleware('is_user');
+ Route::get('SearchUser','searchUser')->name('SearchUser')->withoutMiddleware('is_user');
         Route::post('/Logout', 'logout')->name('Logout');
         Route::get('EditProfile/{user_id}', 'editProfile')->name('EditProfile');
         Route::get('MyProfile/{profile_id}', 'myProfile')->name('MyProfile');
@@ -98,6 +91,8 @@ Route::prefix('JobPortal')
         Route::post('UnBlockUser', 'unBlockUser')->name('UnBlockUser');
         Route::post('UnFollowUser', 'unFollowUser')->name('UnFollowUser');
     });
+
+
 //  Route::get('/auth/google/callback',[RegisterController::class,'loginWithGoogle']);
 Route::prefix('JobPortal')
     ->as('JobPortal.')
@@ -106,6 +101,8 @@ Route::prefix('JobPortal')
 
         Route::post('/LoginUser', 'loginUser')->name('LoginUser');
     });
+
+
 
 Route::prefix('JobPortal')
     ->as('JobPortal.')
