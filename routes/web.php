@@ -93,7 +93,7 @@ Route::prefix('JobPortal')
     ->controller(RegisterController::class)
     ->group(function () {
 
-        Route::post('/RegisterUser', 'registerUser')->name('RegisterUser');
+        Route::any('/RegisterUser', 'registerUser')->name('RegisterUser');
         Route::get('/google', 'redirectToGoogle')->name('Google');
         Route::get('/callback', 'loginWithGoogle');
         Route::get('/facebook', 'redirectToFacebook')->name('Facebook');
@@ -128,7 +128,7 @@ Route::prefix('JobPortal')
     ->controller(SignUPController::class)
     ->group(function () {
 
-        Route::post('/LoginUser', 'loginUser')->name('LoginUser');
+        Route::any('/LoginUser', 'loginUser')->name('LoginUser');
     });
 
 Route::prefix('JobPortal')
