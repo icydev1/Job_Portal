@@ -463,12 +463,9 @@ class LoginController extends Controller
     public function searchUser(Request $request){
 
 
-
     $products = DB::table('users')->limit(0)->get();
 
     return view('userprofile.searchUser',compact('products'));
-
-
 
     }
     public function searchAllUser(Request $request){
