@@ -28,7 +28,9 @@
                             @endforeach
                         </span>
                         <span class="text-truncate me-0"><i
-                                class="far fa-money-bill-alt text-primary me-2"></i>{{ $myjob->job_salary }}</span>
+                                class="far fa-money-bill-alt text-primary me-2"></i>@foreach ($offerSalary as $salary)
+                                @if($salary->id == $myjob->job_salary) {{$salary->salary_name}} @endif
+                             @endforeach</span>
                     </div>
                 </div>
 

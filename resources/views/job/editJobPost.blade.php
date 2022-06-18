@@ -46,9 +46,38 @@
                             <div class="col-md-6"><label class="labels">Job Location</label><input type="text"
                                     class="form-control" value="{{ $getJobDetail->job_location }}" name="job_location"
                                     placeholder="Job Location"></div>
-                            <div class="col-md-6"><label class="labels">Salary (₹) </label><input type="text"
-                                    class="form-control" value="{{ $getJobDetail->job_salary }}" name="salary"
-                                    placeholder="Salary"></div>
+                            <div class="col-md-6"><label class="labels">Salary (₹) </label>
+                                <select  name="salary" class="form-control" placeholder="Salary">
+                                    <option selected disabled>Select Salary</option>
+                                    @foreach ($offerSalary as $salary)
+                                        <option value="{{ $salary->id }}" {{($salary->id == $getJobDetail->job_salary) ? 'selected' : '' }}>{{ $salary->salary_name }}</option>
+                                    @endforeach
+
+                                </select>
+                                </div>
+                        </div>
+
+
+                        <div class="row mt-2">
+                            <div class="col-md-6"><label class="labels">Experience</label>
+                                <select type="text" class="form-control" placeholder="Experience" name="experience">
+                                    <option selected disabled>Select Experience</option>
+                                    @foreach ($experience as $exp)
+                                        <option value="{{ $exp->id }}" {{($exp->id == $getJobDetail->experience_id) ? 'selected' : '' }}>{{ $exp->experience_name }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Qualification</label>
+                                <select type="text" name="qualification" class="form-control" placeholder="Qualification">
+                                    <option selected disabled>Select Qualification</option>
+                                    @foreach ($qualifications as $qualification)
+                                        <option value="{{ $qualification->id }}" {{($qualification->id == $getJobDetail->qualification_id) ? 'selected' : ''}}>{{ $qualification->qualification_name }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
                         </div>
 
                         <div class="row mt-2">

@@ -365,11 +365,15 @@
 
                                             </div>
 
-                                            @if (DB::table('follow_unfollows')->where(['follow_id' => $following_list->user_id, 'user_id' => Auth::id()])->exists())
-                                                <div class="col-md-6">
-                                                    <button class="btn btn-primary">Unfollow</button>
-                                                </div>
+                                            @if (DB::table('follow_unfollows')->where(['follow_id' => $following_list->user_id])->exists())
+                                            <div class="col-md-6">
+                                                <button class="btn btn-primary">follow</button>
+                                            </div>
+                                            @elseif (DB::table('follow_unfollows')->where(['follow_id' => $following_list->user_id,'user_id' => Auth::id()])->exists())
                                             @else
+                                            <div class="col-md-6">
+                                                <button class="btn btn-primary">Unfollow</button>
+                                            </div>
                                             @endif
 
                                         </div>
@@ -418,9 +422,14 @@
                                             </div>
                                             @if (DB::table('follow_unfollows')->where(['follow_id' => $follow_list->follow_id, 'user_id' => Auth::id()])->exists())
                                                 <div class="col-md-6">
+                                                    @if (DB::table('follow_unfollows')->where(['follow_id' => $follow_list->follow_id, 'user_id' => Auth::id(),'status'=>0])->exists())
                                                     <button class="btn btn-primary">Unfollow</button>
+                                                    @else
+                                                    <button class="btn btn-primary">follow</button>
+                                                    @endif
                                                 </div>
                                             @else
+
                                             @endif
 
                                         </div>

@@ -48,7 +48,11 @@
                                     @endforeach
                                 </span>
                                 <span class="text-truncate me-0"><i
-                                        class="far fa-money-bill-alt text-primary me-2"></i>{{ $getJobDetail->job_salary }}</span>
+                                        class="far fa-money-bill-alt text-primary me-2"></i>
+                                        @foreach ($offerSalary as $salary)
+                                        @if($salary->id == $getJobDetail->job_salary) {{$salary->salary_name}} @endif
+                                     @endforeach
+                                    </span>
                             </div>
                         </div>
 
@@ -184,7 +188,23 @@
                                     @endif
                                 @endforeach
                             </p>
-                            <p><i class="fa fa-angle-right text-primary me-2"></i>Salary: {{ $getJobDetail->job_salary }}
+                            <p><i class="fa fa-angle-right text-primary me-2"></i>Salary:
+
+                                @foreach ($offerSalary as $salary)
+                                @if($salary->id == $getJobDetail->job_salary) {{$salary->salary_name}} @endif
+                             @endforeach
+                            </p>
+                            <p><i class="fa fa-angle-right text-primary me-2"></i>Qualification:
+
+                                @foreach ($qualifications as $qualification)
+                                @if($qualification->id == $getJobDetail->qualification_id) {{$qualification->qualification_name}} @endif
+                             @endforeach
+                            </p>
+                            <p><i class="fa fa-angle-right text-primary me-2"></i>Experience:
+
+                                @foreach ($experience as $exp)
+                                @if($exp->id == $getJobDetail->experience_id) {{$salary->experience_name}} @endif
+                             @endforeach
                             </p>
                             <p><i class="fa fa-angle-right text-primary me-2"></i>Location:
                                 {{ $getJobDetail->job_location }}</p>

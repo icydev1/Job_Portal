@@ -9,6 +9,7 @@ use App\Mail\HiringMail;
 use App\Mail\PostJob;
 use App\Models\AddToWishList;
 use App\Models\ApplyJobPost;
+use App\Models\Experience;
 use App\Models\Job;
 use App\Models\JobBenefit;
 use App\Models\JobCategory;
@@ -16,6 +17,8 @@ use App\Models\JobList;
 use App\Models\JobQualificationList;
 use App\Models\JobResponsibiltyList;
 use App\Models\JobShift;
+use App\Models\OfferSalary;
+use App\Models\Qualification;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
@@ -40,6 +43,8 @@ class JobController extends Controller
 
         $jobShifts = JobShift::get();
 
+        $offerSalary   = OfferSalary::get();
+
         $getJobsLists = JobList::orderBy('id', 'DESC')
             ->where('status', 0)
             ->get();
@@ -49,7 +54,7 @@ class JobController extends Controller
             ->orderBy('id', 'DESC')
             ->get();
 
-        return view('job.job', ['getFavJob' => $getFavJob, 'jobShifts' => $jobShifts, 'getJobsLists' => $getJobsLists]);
+        return view('job.job', ['offerSalary'=>$offerSalary,'getFavJob' => $getFavJob, 'jobShifts' => $jobShifts, 'getJobsLists' => $getJobsLists]);
     }
 
     public function postJob()
@@ -57,8 +62,11 @@ class JobController extends Controller
 
         $jobCategory = JobCategory::get();
         $jobShifts   = JobShift::get();
+        $offerSalary   = OfferSalary::get();
+        $experience   = Experience::get();
+        $qualifications   = Qualification::get();
 
-        return view('job.postJob', ['jobShifts' => $jobShifts, 'jobCategory' => $jobCategory]);
+        return view('job.postJob', ['qualifications'=>$qualifications,'experience'=>$experience,'offerSalary'=>$offerSalary,'jobShifts' => $jobShifts, 'jobCategory' => $jobCategory]);
     }
 
     public function storeJobPost(Request $request)
@@ -93,6 +101,9 @@ class JobController extends Controller
         $storeJobs->job_vacancy        = $request->job_vacancy;
         $storeJobs->job_end_date       = $request->job_duration;
         $storeJobs->job_shift_id       = $request->job_shift;
+        $storeJobs->job_category_id    = $request->job_category;
+        $storeJobs->qualification_id   = $request->qualification;
+        $storeJobs->experience_id      = $request->experience;
         $storeJobs->job_category_id    = $request->job_category;
         $storeJobs->user_id            = Auth::id();
         $storeJobs->company_logo       = $company_logo;
@@ -177,13 +188,16 @@ class JobController extends Controller
 
         $jobCategory = JobCategory::get();
         $jobShifts   = JobShift::get();
+        $offerSalary   = OfferSalary::get();
+        $experience   = Experience::get();
+        $qualifications   = Qualification::get();
 
         $getJobDetails = JobList::with(['getJobBenefits', 'getQualification', 'getResp'])
             ->where('id', $job_id)
             ->where('status', 0)
             ->get();
 
-        return view('job.editJobPost', ['jobShifts' => $jobShifts, 'jobCategory' => $jobCategory, 'getJobDetails' => $getJobDetails]);
+        return view('job.editJobPost', ['qualifications'=>$qualifications,'experience'=>$experience,'offerSalary'=>$offerSalary,'jobShifts' => $jobShifts, 'jobCategory' => $jobCategory, 'getJobDetails' => $getJobDetails]);
     }
 
 
@@ -216,6 +230,8 @@ class JobController extends Controller
             'job_responsibility' => $request->resp_desc,
             'job_qualification'  => $request->qualification_desc,
             'job_benefit'        => $request->benefit_desc,
+            'qualification_id'   => $request->qualification,
+            'experience_id'      => $request->experience,
             'job_vacancy'        => $request->job_vacancy,
             'job_shift_id'       => $request->job_shift,
             'job_category_id'    => $request->job_category,
@@ -301,9 +317,12 @@ class JobController extends Controller
             ->where('status', 0)
             ->get();
 
-        $jobShifts   = JobShift::get();
+            $offerSalary   = OfferSalary::get();
+            $experience   = Experience::get();
+            $qualifications   = Qualification::get();
+            $jobShifts   = JobShift::get();
 
-        return view('job.jobDetail', ['getJobDetails' => $getJobDetails, 'jobShifts' => $jobShifts]);
+        return view('job.jobDetail', ['qualifications'=>$qualifications,'experience'=>$experience,'offerSalary'=>$offerSalary,'getJobDetails' => $getJobDetails, 'jobShifts' => $jobShifts]);
     }
 
     public function favJobList(Request $request)
@@ -445,7 +464,9 @@ class JobController extends Controller
 
         $jobShifts = JobShift::get();
 
-        return view('job.jobApplyList', ['myjobs' => $myjobs, 'jobShifts' => $jobShifts]);
+        $offerSalary   = OfferSalary::get();
+
+        return view('job.jobApplyList', ['offerSalary'=>$offerSalary,'myjobs' => $myjobs, 'jobShifts' => $jobShifts]);
     }
 
     public function getJobUserList($job_id)
@@ -522,7 +543,17 @@ class JobController extends Controller
 
     public function searchJobFilter(){
 
-        return view('job.jobSearchFilter');
+        $jobCategory = JobCategory::get();
+        $jobShifts   = JobShift::get();
+        $offerSalary   = OfferSalary::get();
+        $experience   = Experience::get();
+        $qualifications   = Qualification::get();
+
+        $searchJob = JobList::orderBy('id', 'DESC')
+            ->where('status', 0)
+            ->get();
+
+        return view('job.jobSearchFilter', ['qualifications'=>$qualifications,'experience'=>$experience,'offerSalary'=>$offerSalary,'jobShifts' => $jobShifts, 'jobCategory' => $jobCategory,'searchJob' => $searchJob]);
 
     }
 

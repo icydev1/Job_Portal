@@ -232,222 +232,70 @@
                 </div>
             </div>
             <div class="row">
+                @foreach ($searchJob as $job)
                 <div class="col-sm-6 col-lg-4 mb-4">
                     <div class="candidate-list candidate-grid">
-                        <div class="candidate-list-image">
-                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                        </div>
+                        @if (!empty($job->company_logo))
+                        <a href="{{ route('JobPortal.GetJobDetail', ['job_id' => $job->id]) }}">
+
+                                <div class="candidate-list-image">
+                                    <img class="img-fluid" src="{{ asset('uploads/company_logo/' . $job->company_logo) }}" alt="">
+                                </div>
+                            </a>
+                    @else
+                        <a href="{{ route('JobPortal.GetJobDetail', ['job_id' => $job->id]) }}">
+                            <div class="candidate-list-image">
+                                <img class="img-fluid" src="{{ asset('img/nologo.png') }}" alt="">
+                            </div>
+                            </a>
+                    @endif
+
+
                         <div class="candidate-list-details">
                             <div class="candidate-list-info">
                                 <div class="candidate-list-title">
-                                    <h5><a href="candidate-detail.html">Rafael Briggs</a></h5>
+                                    <h5><a href="candidate-detail.html">{{$job->job_name}}</a></h5>
                                 </div>
                                 <div class="candidate-list-option">
                                     <ul class="list-unstyled">
-                                        <li><i class="fas fa-filter pr-1"></i>Recruitment Consultancy</li>
-                                        <li><i class="fas fa-map-marker-alt pr-1"></i>Haines City, FL 33844</li>
+                                        <li><i class="fas fa-filter pr-1"></i>
+
+                                            @foreach ($jobCategory as $jobCat)
+                                            @if($jobCat->id == $job->job_category_id) {{$jobCat->job_category_name}} @endif
+                                            @endforeach
+                                        </li>
+                                        <li><i class="fas fa-map-marker-alt pr-1"></i>{{$job->job_location}}</li>
+                                        <li><i class="fas fa-map-marker-alt pr-1"></i>
+                                            @foreach ($jobShifts as $jobShift)
+                                            @if($jobShift->id == $job->job_shift_id) {{$jobShift->job_shift_name}} @endif
+                                            @endforeach
+                                        </li>
+                                        <li><i class="fas fa-map-marker-alt pr-1"></i>
+                                            @foreach ($experience as $exp)
+                                            @if($exp->id == $job->experience_id) {{$exp->experience_name}} @endif
+                                            @endforeach
+                                        </li>
+                                        <li><i class="fas fa-map-marker-alt pr-1"></i>
+                                            @foreach ($qualifications as $qualification)
+                                            @if($qualification->id == $job->qualification_id) {{$qualification->qualification_name}} @endif
+                                            @endforeach
+                                        </li>
+                                        <li><i class="fas fa-map-marker-alt pr-1"></i>
+                                            @foreach ($offerSalary as $salary)
+                                            @if($salary->id == $job->job_salary) {{$salary->salary_name}} @endif
+                                            @endforeach
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="candidate-list-favourite-time">
                                 <a class="candidate-list-favourite order-2" href="#"><i class="far fa-heart"></i></a>
-                                <span class="candidate-list-time order-1"><i class="far fa-clock pr-1"></i>1M ago</span>
+                                <span class="candidate-list-time order-1"><i class="far fa-clock pr-1"></i>{{$job->created_at->diffForHumans()}}</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                    <div class="candidate-list candidate-grid">
-                        <div class="candidate-list-image">
-                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
-                        </div>
-                        <div class="candidate-list-details">
-                            <div class="candidate-list-info">
-                                <div class="candidate-list-title">
-                                    <h5><a href="candidate-detail.html">Roderick Moss</a></h5>
-                                </div>
-                                <div class="candidate-list-option">
-                                    <ul class="list-unstyled">
-                                        <li><i class="fas fa-filter pr-1"></i>Information Technology</li>
-                                        <li><i class="fas fa-map-marker-alt pr-1"></i>Lynch Lane, Weymouth</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="candidate-list-favourite-time">
-                                <a class="candidate-list-favourite order-2" href="#"><i class="far fa-heart"></i></a>
-                                <span class="candidate-list-time order-1"><i class="far fa-clock pr-1"></i>3M ago</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                    <div class="candidate-list candidate-grid">
-                        <div class="candidate-list-image">
-                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
-                        </div>
-                        <div class="candidate-list-details">
-                            <div class="candidate-list-info">
-                                <div class="candidate-list-title">
-                                    <h5><a href="candidate-detail.html">Ronald Bradley</a></h5>
-                                </div>
-                                <div class="candidate-list-option">
-                                    <ul class="list-unstyled">
-                                        <li><i class="fas fa-filter pr-1"></i>Human Resources</li>
-                                        <li><i class="fas fa-map-marker-alt pr-1"></i>Monroe Township, NJ 08831</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="candidate-list-favourite-time">
-                                <a class="candidate-list-favourite order-2" href="#"><i class="far fa-heart"></i></a>
-                                <span class="candidate-list-time order-1"><i class="far fa-clock pr-1"></i>3D ago</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                    <div class="candidate-list candidate-grid">
-                        <div class="candidate-list-image">
-                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="">
-                        </div>
-                        <div class="candidate-list-details">
-                            <div class="candidate-list-info">
-                                <div class="candidate-list-title">
-                                    <h5><a href="candidate-detail.html">Nichole Haynes</a></h5>
-                                </div>
-                                <div class="candidate-list-option">
-                                    <ul class="list-unstyled">
-                                        <li><i class="fas fa-filter pr-1"></i>IT Contractor</li>
-                                        <li><i class="fas fa-map-marker-alt pr-1"></i>Botchergate, Carlisle</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="candidate-list-favourite-time">
-                                <a class="candidate-list-favourite order-2" href="#"><i class="far fa-heart"></i></a>
-                                <span class="candidate-list-time order-1"><i class="far fa-clock pr-1"></i>6D ago</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                    <div class="candidate-list candidate-grid">
-                        <div class="candidate-list-image">
-                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="">
-                        </div>
-                        <div class="candidate-list-details">
-                            <div class="candidate-list-info">
-                                <div class="candidate-list-title">
-                                    <h5><a href="candidate-detail.html">Vickie Meyer</a></h5>
-                                </div>
-                                <div class="candidate-list-option">
-                                    <ul class="list-unstyled">
-                                        <li><i class="fas fa-filter pr-1"></i>Human Resources</li>
-                                        <li><i class="fas fa-map-marker-alt pr-1"></i>Minneapolis, MN 55406</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="candidate-list-favourite-time">
-                                <a class="candidate-list-favourite order-2" href="#"><i class="far fa-heart"></i></a>
-                                <span class="candidate-list-time order-1"><i class="far fa-clock pr-1"></i>2D ago</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                    <div class="candidate-list candidate-grid">
-                        <div class="candidate-list-image">
-                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
-                        </div>
-                        <div class="candidate-list-details">
-                            <div class="candidate-list-info">
-                                <div class="candidate-list-title">
-                                    <h5><a href="candidate-detail.html">Brooke Kelly</a></h5>
-                                </div>
-                                <div class="candidate-list-option">
-                                    <ul class="list-unstyled">
-                                        <li><i class="fas fa-filter pr-1"></i>Information Technology</li>
-                                        <li><i class="fas fa-map-marker-alt pr-1"></i>Rolling Meadows, IL 60008</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="candidate-list-favourite-time">
-                                <a class="candidate-list-favourite order-2" href="#"><i class="far fa-heart"></i></a>
-                                <span class="candidate-list-time order-1"><i class="far fa-clock pr-1"></i>3W ago</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                    <div class="candidate-list candidate-grid">
-                        <div class="candidate-list-image">
-                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
-                        </div>
-                        <div class="candidate-list-details">
-                            <div class="candidate-list-info">
-                                <div class="candidate-list-title">
-                                    <h5><a href="candidate-detail.html">Reyna Chung</a></h5>
-                                </div>
-                                <div class="candidate-list-option">
-                                    <ul class="list-unstyled">
-                                        <li><i class="fas fa-filter pr-1"></i>Transport &amp; Logistics</li>
-                                        <li><i class="fas fa-map-marker-alt pr-1"></i>Glen Cove, NY 11542</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="candidate-list-favourite-time">
-                                <a class="candidate-list-favourite order-2" href="#"><i class="far fa-heart"></i></a>
-                                <span class="candidate-list-time order-1"><i class="far fa-clock pr-1"></i>1H ago</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                    <div class="candidate-list candidate-grid">
-                        <div class="candidate-list-image">
-                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="">
-                        </div>
-                        <div class="candidate-list-details">
-                            <div class="candidate-list-info">
-                                <div class="candidate-list-title">
-                                    <h5><a href="candidate-detail.html">Rafael Briggs</a></h5>
-                                </div>
-                                <div class="candidate-list-option">
-                                    <ul class="list-unstyled">
-                                        <li><i class="fas fa-filter pr-1"></i>Architecture</li>
-                                        <li><i class="fas fa-map-marker-alt pr-1"></i>Botchergate, Carlisle</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="candidate-list-favourite-time">
-                                <a class="candidate-list-favourite order-2" href="#"><i class="far fa-heart"></i></a>
-                                <span class="candidate-list-time order-1"><i class="far fa-clock pr-1"></i>3M ago</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 mb-4 mb-md-0">
-                    <div class="candidate-list candidate-grid">
-                        <div class="candidate-list-image">
-                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                        </div>
-                        <div class="candidate-list-details">
-                            <div class="candidate-list-info">
-                                <div class="candidate-list-title">
-                                    <h5><a href="candidate-detail.html">Michael Bean</a></h5>
-                                </div>
-                                <div class="candidate-list-option">
-                                    <ul class="list-unstyled">
-                                        <li><i class="fas fa-filter pr-1"></i>Estate Agency</li>
-                                        <li><i class="fas fa-map-marker-alt pr-1"></i>Richmond Hill, NY 11418</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="candidate-list-favourite-time">
-                                <a class="candidate-list-favourite order-2" href="#"><i class="far fa-heart"></i></a>
-                                <span class="candidate-list-time order-1"><i class="far fa-clock pr-1"></i>6D ago</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
             {{-- <div class="row">
                 <div class="col-12 text-center mt-4 mt-sm-5">
