@@ -54,26 +54,15 @@
                     </div>
                     <div class="collapse show" id="specialism">
                         <div class="widget-content">
+
+                            @foreach ($jobCategory as $jobcat)
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="specialism1">
-                                <label class="custom-control-label" for="specialism1">IT Contractor</label>
+                                <label class="custom-control-label" for="specialism1">{{$jobcat->job_category_name}}</label>
                             </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="specialism2">
-                                <label class="custom-control-label" for="specialism2">Clinical Psychology</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="specialism3">
-                                <label class="custom-control-label" for="specialism3">Digital &amp; Creative</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="specialism4">
-                                <label class="custom-control-label" for="specialism4">Estate Agency</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="specialism5">
-                                <label class="custom-control-label" for="specialism5">Graduate</label>
-                            </div>
+                            @endforeach
+
+
                         </div>
                     </div>
                 </div>
@@ -84,22 +73,14 @@
                     </div>
                     <div class="collapse show" id="jobtype">
                         <div class="widget-content">
+                            @foreach ($jobShifts as $jobShift)
                             <div class="custom-control custom-checkbox fulltime-job">
                                 <input type="checkbox" class="custom-control-input" id="jobtype1">
-                                <label class="custom-control-label" for="jobtype1">Full Time</label>
+                                <label class="custom-control-label" for="jobtype1">{{$jobShift->job_shift_name}}</label>
                             </div>
-                            <div class="custom-control custom-checkbox parttime-job">
-                                <input type="checkbox" class="custom-control-input" id="jobtype2">
-                                <label class="custom-control-label" for="jobtype2">Part-Time</label>
-                            </div>
-                            <div class="custom-control custom-checkbox freelance-job">
-                                <input type="checkbox" class="custom-control-input" id="jobtype3">
-                                <label class="custom-control-label" for="jobtype3">Freelance</label>
-                            </div>
-                            <div class="custom-control custom-checkbox temporary-job">
-                                <input type="checkbox" class="custom-control-input" id="jobtype4">
-                                <label class="custom-control-label" for="jobtype4">Temporary</label>
-                            </div>
+                            @endforeach
+
+
                         </div>
                     </div>
                 </div>
@@ -110,26 +91,14 @@
                     </div>
                     <div class="collapse show" id="experience">
                         <div class="widget-content">
+                            @foreach ($experience as $exp)
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="experience1">
-                                <label class="custom-control-label" for="experience1">fresher</label>
+                                <label class="custom-control-label" for="experience1">{{$exp->experience_name}}</label>
                             </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="experience2">
-                                <label class="custom-control-label" for="experience2">Less than 1 year</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="experience3">
-                                <label class="custom-control-label" for="experience3">2 Year</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="experience4">
-                                <label class="custom-control-label" for="experience4">3 Year</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="experience5">
-                                <label class="custom-control-label" for="experience5">4 Year</label>
-                            </div>
+                            @endforeach
+
+
                         </div>
                     </div>
                 </div>
@@ -140,26 +109,14 @@
                     </div>
                     <div class="collapse show" id="Offeredsalary">
                         <div class="widget-content">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="Offeredsalary1">
-                                <label class="custom-control-label" for="Offeredsalary1">10k - 20k</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="Offeredsalary2">
-                                <label class="custom-control-label" for="Offeredsalary2">20k - 30k</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="Offeredsalary3">
-                                <label class="custom-control-label" for="Offeredsalary3">30k - 40k</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="Offeredsalary4">
-                                <label class="custom-control-label" for="Offeredsalary4">40k - 50k</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="Offeredsalary5">
-                                <label class="custom-control-label" for="Offeredsalary5">50k - 60k</label>
-                            </div>
+                        @foreach ($offerSalary as $salary)
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Offeredsalary1">
+                            <label class="custom-control-label" for="Offeredsalary1">{{$salary->salary_name}}</label>
+                        </div>
+                        @endforeach
+
+
                         </div>
                     </div>
                 </div>
@@ -188,18 +145,14 @@
                     </div>
                     <div class="collapse show" id="qualification">
                         <div class="widget-content">
+
+
+                            @foreach ($qualifications as $qualification)
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="qualification1">
-                                <label class="custom-control-label" for="qualification1">Matriculation</label>
+                                <label class="custom-control-label" for="qualification1">{{$qualification->qualification_name}}</label>
                             </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="qualification2">
-                                <label class="custom-control-label" for="qualification2">Intermediate</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="qualification3">
-                                <label class="custom-control-label" for="qualification3">Graduate</label>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

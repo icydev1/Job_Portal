@@ -543,17 +543,24 @@ class JobController extends Controller
 
     public function searchJobFilter(){
 
-        $jobCategory = JobCategory::get();
-        $jobShifts   = JobShift::get();
-        $offerSalary   = OfferSalary::get();
-        $experience   = Experience::get();
-        $qualifications   = Qualification::get();
+        $data = [
 
-        $searchJob = JobList::orderBy('id', 'DESC')
-            ->where('status', 0)
-            ->get();
+            'jobCategory' => JobCategory::get(),
+            'jobShifts'   => JobShift::get(),
+            'offerSalary'   => OfferSalary::get(),
+            'experience'   => Experience::get(),
+            'qualifications'   => Qualification::get(),
 
-        return view('job.jobSearchFilter', ['qualifications'=>$qualifications,'experience'=>$experience,'offerSalary'=>$offerSalary,'jobShifts' => $jobShifts, 'jobCategory' => $jobCategory,'searchJob' => $searchJob]);
+            'searchJob' => JobList::orderBy('id', 'DESC')
+                ->where('status', 0)
+                ->get(),
+
+        ];
+
+        // dd($data);
+
+
+        return view('job.jobSearchFilter')->with($data);
 
     }
 
