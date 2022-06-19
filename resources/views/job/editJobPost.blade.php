@@ -1,13 +1,14 @@
 @extends('layout.master')
 @section('content')
     @foreach ($getJobDetails as $getJobDetail)
-        <div class="row jobform">
-
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
             <form method="POST" action="{{ route('JobPortal.UpdateJobPost', ['job_id' => $getJobDetail->id]) }}"
                 enctype="multipart/form-data">
                 @csrf
-                <div class="col-md-10">
-                    <div class="p-3 py-5">
+
+
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h6 class="text-right">Post A Job</h6>
                         </div>
@@ -241,9 +242,11 @@
 
                         <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">
                                 Update Job</button></div>
-                    </div>
-                </div>
+
+
             </form>
+        </div>
+            <div class="col-md-1"></div>
         </div>
     @endforeach
 @endsection

@@ -203,7 +203,7 @@
                             <p><i class="fa fa-angle-right text-primary me-2"></i>Experience:
 
                                 @foreach ($experience as $exp)
-                                @if($exp->id == $getJobDetail->experience_id) {{$salary->experience_name}} @endif
+                                @if($exp->id == $getJobDetail->experience_id) {{$exp->experience_name}} @endif
                              @endforeach
                             </p>
                             <p><i class="fa fa-angle-right text-primary me-2"></i>Location:

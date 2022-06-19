@@ -1,12 +1,17 @@
 @extends('layout.master')
 @section('content')
-    <div class="row jobform">
 
+
+
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
         <form method="POST" action="{{route('JobPortal.StoreJobPost')}}" enctype="multipart/form-data">
             @csrf
-        <div class="col-md-10">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
+
+
+
+                <div class="d-flex justify-content-between align-items-center mb-3 mt-2">
                     <h6 class="text-right">Post A Job</h6>
                 </div>
                 <div class="row mt-2">
@@ -159,8 +164,11 @@
 
                 <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">
                         Post Job</button></div>
-            </div>
-        </div>
+
+
+
         </form>
+    </div>
+        <div class="col-md-1"></div>
     </div>
 @endsection
