@@ -19,9 +19,11 @@ use App\Models\JobResponsibiltyList;
 use App\Models\JobShift;
 use App\Models\OfferSalary;
 use App\Models\Qualification;
+use App\Models\Time;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
+use Illuminate\Queue\Jobs\JobName;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -545,11 +547,12 @@ class JobController extends Controller
 
         $data = [
 
-            'jobCategory' => JobCategory::get(),
-            'jobShifts'   => JobShift::get(),
-            'offerSalary'   => OfferSalary::get(),
-            'experience'   => Experience::get(),
+            'jobCategory'      => JobCategory::get(),
+            'jobShifts'        => JobShift::get(),
+            'offerSalary'      => OfferSalary::get(),
+            'experience'       => Experience::get(),
             'qualifications'   => Qualification::get(),
+            'times'            => Time::get(),
 
             'searchJob' => JobList::orderBy('id', 'DESC')
                 ->where('status', 0)
@@ -557,10 +560,37 @@ class JobController extends Controller
 
         ];
 
-        // dd($data);
-
-
         return view('job.jobSearchFilter')->with($data);
+
+    }
+
+    public function getJobFilter(Request $request){
+
+        $data = [
+
+            'jobCategory'      => JobCategory::get(),
+            'jobShifts'        => JobShift::get(),
+            'offerSalary'      => OfferSalary::get(),
+            'experience'       => Experience::get(),
+            'qualifications'   => Qualification::get(),
+            'times'            => Time::get(),
+
+
+        ];
+
+        $order  = $request->input('orderBy');
+        $search = $request->input('search');
+
+        $query = JobList::query();
+
+        $searchJob = $query->applyfilter($request)->with(['getJobBenefits', 'getQualification', 'getResp'])
+        ->where(function($q) use ($search) {
+            $q->where('job_name','LIKE','%'.$search."%");
+        })
+        ->orderBy('created_at',$order)->get();
+
+        // dd($searchJob);
+        return view('job.scopeFilter',compact('searchJob'))->with($data);
 
     }
 

@@ -464,7 +464,7 @@ class LoginController extends Controller
     {
 
 
-    $products = DB::table('users')->limit(0)->get();
+    $products = DB::table('users')->where('user_type' , 0)->limit(0)->get();
 
     return view('userprofile.searchUser',compact('products'));
 
@@ -473,7 +473,7 @@ class LoginController extends Controller
 
     $search = $request->input('search');
 
-    $products = DB::table('users')->where('name','LIKE','%'.$search."%")->get();
+    $products = DB::table('users')->where('name','LIKE','%'.$search."%")->where('user_type' , 0)->get();
 
 
       return view('userprofile.searchAllUser',compact('products'));

@@ -1,15 +1,39 @@
 <?php
 
-
+use App\Http\Controllers\admin\AdminLoginController;
+use App\Http\Controllers\admin\AdminDataController;
 use App\Http\Controllers\job\AboutController;
 use App\Http\Controllers\job\ContactController;
 use App\Http\Controllers\job\IndexController;
 use App\Http\Controllers\job\JobController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\payment\PaymentController;
-use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+
+
+
+Route::prefix('Admin')
+    ->as('Admin.')
+    ->controller(AdminLoginController::class)
+    ->group(function () {
+
+        Route::get('Login', 'adminLoginView')->name('Admin');
+        Route::post('AdminLogin', 'adminLogin')->name('AdminLogin');
+
+    });
+
+Route::prefix('Admin')
+    ->as('Admin.')
+    ->middleware('is_admin')
+    ->controller(AdminDataController::class)
+    ->group(function () {
+
+        Route::get('/Dashboard', 'adminDashboard')->name('Dashboard');
+
+    });
+
 
 
 Route::prefix('JobPortal')
@@ -55,6 +79,8 @@ Route::prefix('JobPortal')
         Route::post('/DeleteBenefit', 'deleteBenefit')->name('DeleteBenefit');
         Route::post('/RejectApp', 'rejectApp')->name('RejectApp');
         Route::post('/AcceptApp', 'acceptApp')->name('AcceptApp');
+
+        Route::post('/GetJobFilter', 'getJobFilter')->name('GetJobFilter');
     });
 Route::prefix('JobPortal')
     ->as('JobPortal.')
@@ -110,3 +136,5 @@ Route::prefix('JobPortal')
         Route::get('PaymentPage', 'paymentPage')->name('PaymentPage');
         Route::post('PaymentSuccess', 'paymentSuccess')->name('PaymentSuccess');
     });
+
+

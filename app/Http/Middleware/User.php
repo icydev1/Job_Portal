@@ -18,7 +18,13 @@ class User
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check() && Auth::user()->user_type == '0'){
+
             return $next($request);
+          }
+          elseif(Auth::check() && Auth::user()->user_type == '1'){
+
+            return $next($request);
+
           }
           else {
             return redirect('JobPortal');

@@ -12,6 +12,7 @@
  <script src="{{asset('js/main.js')}}"></script>
  <script src="{{asset('js/jobPortal.js')}}"></script>
  <script src="{{asset('js/ajax.js')}}"></script>
+ <script src="{{asset('js/jobfilter.js')}}"></script>
 
 
 
