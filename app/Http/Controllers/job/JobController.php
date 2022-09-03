@@ -578,16 +578,19 @@ class JobController extends Controller
 
         ];
 
-        $order  = $request->input('orderBy');
-        $search = $request->input('search');
+        // $order  = $request->input('orderBy');
+        // $search = $request->input('search');
 
         $query = JobList::query();
 
+        // dump($query->applyfilter());
+
         $searchJob = $query->applyfilter($request)->with(['getJobBenefits', 'getQualification', 'getResp'])
-        ->where(function($q) use ($search) {
-            $q->where('job_name','LIKE','%'.$search."%");
-        })
-        ->orderBy('created_at',$order)->get();
+        // ->where(function($q) use ($search) {
+        //     $q->where('job_name','LIKE','%'.$search."%");
+        // })
+        // ->orderBy('created_at',$order)
+        ->get();
 
         // dd($searchJob);
         return view('job.scopeFilter',compact('searchJob'))->with($data);

@@ -137,12 +137,12 @@ function downloadResume($id){
 // add logo image
 
 
-document.getElementById('addLogo').onchange = function () {
-    var file=this.files[0]
-         var src = URL.createObjectURL(this.files[0])
-            document.getElementById('outputLogo').src = src
+// document.getElementById('addLogo').onchange = function () {
+//     var file=this.files[0]
+//          var src = URL.createObjectURL(this.files[0])
+//             document.getElementById('outputLogo').src = src
 
-    }
+//     }
 
 // end  add logo image
 

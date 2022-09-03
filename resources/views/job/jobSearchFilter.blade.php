@@ -6,11 +6,11 @@
         <div class="col-lg-3">
             <div class="sidebar">
                 <div class="widget border-0">
-                    <div class="search">
+                    <div class="search d-none">
                         <input name="freesearch" id="freeSearch" onkeyup="searchJobFilter()" class="form-control" type="text" placeholder="Search Keywords">
                     </div>
                 </div>
-                <div class="widget border-0">
+                <div class="widget border-0 d-none">
                     <div class="locations">
                         <input name="location" multiple onchange="searchJobFilter()" value="" class="form-control" type="text" placeholder="All Locations">
                     </div>
@@ -152,13 +152,13 @@
                     <h6 class="mb-0">Showing 1-10 of <span class="text-primary">28 Candidates</span></h6>
                 </div>
             </div> --}}
-            <div class="job-filter mb-4 d-sm-flex align-items-center">
+            <div class="job-filter mb-4 d-sm-flex align-items-center ">
                 <div class="job-alert-bt"> <a class="btn btn-md btn-dark" href="#"><i class="fa fa-envelope"></i>Get job alert </a> </div>
                 <div class="job-shortby ml-sm-auto d-flex align-items-center">
                     <form class="form-inline">
                         <div class="form-group mb-0">
                             <label class="justify-content-start mr-2">Sort by :</label>
-                            <div class="short-by">
+                            <div class="short-by d-none">
                                 <select name="order_by" onchange="searchJobFilter()" id="orderBy" class="form-control basic-select select2-hidden-accessible" data-select2-id="1" tabindex="-1" aria-hidden="true">
                                     <option value="desc">Newest</option>
                                     <option value="asc" >Oldest</option>

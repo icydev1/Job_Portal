@@ -1,12 +1,10 @@
-// const base_url = $('meta[name="base-url"]').attr("content");
-// const token = $('meta[name="csrf-token"]').attr("content");
 
 function searchJobFilter() {
     let path = $("#namePath").data("path");
     let url = `${base_url}${path}/GetJobFilter`;
 
-    let search = $('#freeSearch').val();
-    let orderBy = $('#orderBy').val();
+    // let search = $('#freeSearch').val();
+    // let orderBy = $('#orderBy').val();
 
        var dateposted = [];
         $.each($("input[name='time[]']:checked"), function() {
@@ -38,18 +36,13 @@ function searchJobFilter() {
             qualification.push($(this).val());
           });
 
-    if(search == "" && orderBy == "" && qualification == "" && dateposted == "" && jobcat == "" && jobshift == "" && experience =="" && salary == ""){
-
-        // $('#search').html('<center><span><h5>No User Found</h5></span></center>');
-
-    }else{
         $.ajax({
             type: "POST",
             url: url,
             data: {
-                search: search,
+                // search: search,
                 dateposted:dateposted,
-                orderBy:orderBy,
+                // orderBy:orderBy,
                 qualification:qualification,
                 jobcat:jobcat,
                 experience:experience,
@@ -63,8 +56,6 @@ function searchJobFilter() {
 
             success: function (resp) {
 
-console.log(resp);
-
                 if(resp){
                     $('#hideJob').hide();
                     $('#searchJob').html(resp);
@@ -74,4 +65,4 @@ console.log(resp);
     }
 
 
-}
+
