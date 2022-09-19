@@ -7,6 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-<h5>web pages</h5>
+<h5>post pages</h5>
 </body>
 </html>
