@@ -26,7 +26,7 @@ class AddColumnToWalletsTable extends Migration
     public function down()
     {
         Schema::table('wallets', function (Blueprint $table) {
-            //
+            $table->string('currency')->nullable();
         });
     }
 }

@@ -29,7 +29,8 @@ class AddColumnToJobListsTable extends Migration
     public function down()
     {
         Schema::table('job_lists', function (Blueprint $table) {
-            //
+            $table->tinyInteger('experience_id')->nullable();
+            $table->tinyInteger('qualification_id')->nullable();
         });
     }
 }

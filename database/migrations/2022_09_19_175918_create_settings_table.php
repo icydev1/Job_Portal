@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddQuantityToUsersTable extends Migration
+class CreateSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddQuantityToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->tinyInteger('quantity')->default(2)->nullable();
+        Schema::create('settings', function (Blueprint $table) {
+            $table->id();
+            $table->string('site_name')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ class AddQuantityToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->tinyInteger('quantity')->default(2)->nullable();
-        });
+        Schema::dropIfExists('settings');
     }
 }
